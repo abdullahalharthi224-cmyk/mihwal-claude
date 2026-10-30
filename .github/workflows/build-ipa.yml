@@ -14,6 +14,8 @@ jobs:
   build:
     runs-on: macos-latest
     timeout-minutes: 45
+    permissions:
+      contents: write   # needed to publish the IPA as a GitHub Release
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -102,3 +104,19 @@ jobs:
           path: Mihwal.ipa
           if-no-files-found: error
           retention-days: 30
+
+      # A direct .ipa download link (no zip): every green build on main becomes the
+      # "latest" release, so this URL always serves the newest build:
+      # https://github.com/<owner>/<repo>/releases/latest/download/Mihwal.ipa
+      - name: Publish IPA as the latest release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Mihwal build ${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          files: Mihwal.ipa
+          body: |
+            Unsigned IPA for sideloading. Bundle id `com.abdullah.mihwal.claude`.
+            Commit: ${{ github.sha }}
