@@ -11,6 +11,7 @@ enum ToolError: Error, Equatable {
     case photosAccessDenied
     case nothingToDo(reason: String)
     case writeFailed
+    case resultUnavailable
     case unknown(message: String)
 
     /// Converts any thrown error into a ToolError the UI can show.
@@ -47,6 +48,7 @@ enum ToolError: Error, Equatable {
         case .photosAccessDenied: return String(localized: "No access to Photos")
         case .nothingToDo: return String(localized: "Nothing to do")
         case .writeFailed: return String(localized: "Couldn't save the result")
+        case .resultUnavailable: return String(localized: "Result no longer available")
         case .unknown: return String(localized: "Something went wrong")
         }
     }
@@ -71,6 +73,8 @@ enum ToolError: Error, Equatable {
             return reason
         case .writeFailed:
             return String(localized: "Something went wrong while writing the file. Please try again.")
+        case .resultUnavailable:
+            return String(localized: "The result file was removed. Run the tool again to recreate it.")
         case .unknown(let message):
             return message
         }

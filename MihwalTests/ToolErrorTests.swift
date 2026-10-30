@@ -23,7 +23,7 @@ final class ToolErrorTests: XCTestCase {
         let cases: [ToolError] = [
             .noInput, .passwordRequired(fileID: id, fileName: "a.pdf"), .wrongPassword(fileID: id, fileName: "a.pdf"),
             .corruptedFile(fileName: "a.pdf"), .unsupportedFormat(fileName: "a.xyz"), .notEnoughStorage,
-            .photosAccessDenied, .nothingToDo(reason: "x"), .writeFailed, .unknown(message: "y"),
+            .photosAccessDenied, .nothingToDo(reason: "x"), .writeFailed, .resultUnavailable, .unknown(message: "y"),
         ]
         for error in cases {
             XCTAssertFalse(error.title.isEmpty, "\(error)")

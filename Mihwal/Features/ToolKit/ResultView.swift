@@ -9,8 +9,8 @@ struct ResultView: View {
 
     @Environment(\.dismiss) private var dismiss
     @State private var previewURL: URL?
-    @State private var exportURLs: [URL] = []
-    @State private var isExporting = false
+    @State private var exporter = FileExportCoordinator()
+    @State private var savedToFiles = false
     @State private var isSavingPhotos = false
     @State private var savedToPhotos = false
     @State private var saveError: ToolError?
@@ -75,16 +75,13 @@ struct ResultView: View {
                 }
             }
             .quickLookPreview($previewURL, in: output.files)
-            .sheet(isPresented: $isExporting) {
-                DocumentExporter(urls: exportURLs) { _ in isExporting = false }
-                    .ignoresSafeArea()
-            }
             .alert(Text(saveError?.title ?? ""), isPresented: saveErrorBinding, presenting: saveError) { _ in
                 Button("OK", role: .cancel) {}
             } message: { error in
                 Text(error.message)
             }
             .sensoryFeedback(.success, trigger: savedToPhotos)
+            .sensoryFeedback(.success, trigger: savedToFiles)
         }
     }
 
@@ -103,7 +100,8 @@ struct ResultView: View {
                 Button {
                     export(output.files)
                 } label: {
-                    Label("Save to Files", systemImage: "folder")
+                    Label(savedToFiles ? LocalizedStringKey("Saved") : LocalizedStringKey("Save to Files"),
+                          systemImage: savedToFiles ? "checkmark" : "folder")
                         .frame(maxWidth: .infinity)
                 }
 
@@ -143,8 +141,16 @@ struct ResultView: View {
     }
 
     private func export(_ urls: [URL]) {
-        exportURLs = urls
-        isExporting = true
+        exporter.export(urls) { outcome in
+            switch outcome {
+            case .saved:
+                savedToFiles = true
+            case .cancelled:
+                break
+            case .failed(let error):
+                saveError = error
+            }
+        }
     }
 
     private func exportAsZip() {

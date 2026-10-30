@@ -1192,6 +1192,16 @@
         }
       }
     },
+    "Result no longer available": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النتيجة لم تعد متاحة"
+          }
+        }
+      }
+    },
     "Reverse Order": {
       "localizations": {
         "ar": {
@@ -1512,12 +1522,32 @@
         }
       }
     },
+    "The Files app couldn't be opened. Please try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر فتح تطبيق الملفات. حاول مرة أخرى."
+          }
+        }
+      }
+    },
     "The buttons rotate the selected pages.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "الأزرار تدوّر الصفحات المحددة."
+          }
+        }
+      }
+    },
+    "The result file was removed. Run the tool again to recreate it.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حُذف ملف النتيجة. شغّل الأداة مرة أخرى لإنشائه من جديد."
           }
         }
       }
