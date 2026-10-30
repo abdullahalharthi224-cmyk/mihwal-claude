@@ -350,6 +350,16 @@
         }
       }
     },
+    "Dismiss": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إغلاق"
+          }
+        }
+      }
+    },
     "Done": {
       "localizations": {
         "ar": {

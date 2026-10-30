@@ -30,7 +30,10 @@ targets:
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         ITSAppUsesNonExemptEncryption: false
         LSRequiresIPhoneOS: true
-        UILaunchScreen: {}
+        # Must not be empty: some re-signing tools drop empty dictionaries, and without a
+        # launch screen iOS runs the app letterboxed (black bars) in compatibility mode.
+        UILaunchScreen:
+          UIColorName: LaunchBackground
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false

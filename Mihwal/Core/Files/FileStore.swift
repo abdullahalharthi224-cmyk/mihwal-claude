@@ -16,10 +16,12 @@ enum FileStore {
     /// Copies a file into tmp/Inputs/<UUID>/ and inspects it.
     /// `coordinated` uses NSFileCoordinator so iCloud files are downloaded first.
     static func importCopy(of source: URL, coordinated: Bool = true) throws -> ImportedFile {
+        // Access stays open until this function returns, i.e. until the copy below is finished.
         let isScoped = source.startAccessingSecurityScopedResource()
         defer {
             if isScoped { source.stopAccessingSecurityScopedResource() }
         }
+        Log.importing.debug("Copying file, security-scoped access: \(isScoped)")
 
         let folder = inputsDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)

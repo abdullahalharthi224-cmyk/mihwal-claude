@@ -60,3 +60,18 @@ enum TestFixtures {
         try FileStore.importCopy(of: url, coordinated: false)
     }
 }
+
+extension XCTestCase {
+    /// Polls until `condition` is true (async work such as importing or running a tool).
+    @MainActor
+    func waitUntil(timeout: TimeInterval = 10, _ condition: () -> Bool) async throws {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() {
+            if Date() > deadline {
+                XCTFail("Timed out waiting for condition")
+                return
+            }
+            try await Task.sleep(for: .milliseconds(20))
+        }
+    }
+}

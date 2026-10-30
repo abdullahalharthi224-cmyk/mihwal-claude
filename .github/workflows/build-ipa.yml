@@ -88,6 +88,9 @@ jobs:
           BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$APP/Info.plist")
           echo "Bundle id: $BUNDLE_ID"
           test "$BUNDLE_ID" = "com.abdullah.mihwal.claude" || { echo "::error::Unexpected bundle id $BUNDLE_ID"; exit 1; }
+          LAUNCH=$(/usr/libexec/PlistBuddy -c "Print UILaunchScreen:UIColorName" "$APP/Info.plist" 2>/dev/null || true)
+          echo "Launch screen color: ${LAUNCH:-MISSING}"
+          test -n "$LAUNCH" || { echo "::error::UILaunchScreen is missing or empty: the app would run letterboxed"; exit 1; }
           echo "Name under the icon:"
           for LANG_DIR in ar en; do
             echo "  $LANG_DIR: $(plutil -extract CFBundleDisplayName raw "$APP/$LANG_DIR.lproj/InfoPlist.strings" 2>/dev/null || echo missing)"

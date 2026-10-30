@@ -14,22 +14,39 @@ struct ToolScreen<Options: View>: View {
     let onRun: () -> Void
     @ViewBuilder let options: () -> Options
 
-    @State private var showFileImporter = false
+    @State private var activeSheet: ToolSheet?
     @State private var photoItems: [PhotosPickerItem] = []
     @State private var passwordRequest: PasswordRequest?
     @State private var passwordText = ""
+    /// Set when a run stopped for a password, so it restarts once the right one is entered.
+    @State private var retryRunAfterUnlock = false
+
+    /// One sheet slot for everything this screen presents. Separate `.fileImporter` and
+    /// `.sheet` modifiers on the same view compete for the same presentation, and the
+    /// file importer's result could be lost.
+    enum ToolSheet: Identifiable {
+        case filePicker
+        case result(ToolOutput)
+
+        var id: String {
+            switch self {
+            case .filePicker: return "filePicker"
+            case .result(let output): return output.id.uuidString
+            }
+        }
+    }
 
     var body: some View {
         content
-            .fileImporter(isPresented: $showFileImporter,
-                          allowedContentTypes: files.accepts,
-                          allowsMultipleSelection: files.allowsMultiple) { result in
-                files.importFromFiles(result)
-            }
             .onChange(of: photoItems) { _, items in
                 guard !items.isEmpty else { return }
                 files.importPhotos(items)
                 photoItems = []
+            }
+            .onChange(of: runner.successCount) { _, _ in
+                if let output = runner.output {
+                    activeSheet = .result(output)
+                }
             }
             .overlay {
                 if runner.isProcessing {
@@ -43,23 +60,47 @@ struct ToolScreen<Options: View>: View {
                 }
             }
             .animation(DS.Motion.standard, value: runner.isProcessing)
-            .sheet(item: resultBinding) { output in
-                ResultView(output: output) { runner.reset() }
-            }
-            .alert(Text(visibleError?.title ?? ""), isPresented: errorBinding, presenting: visibleError) { _ in
-                Button("OK", role: .cancel) {}
-            } message: { error in
-                Text(error.message)
-            }
-            .alert(Text("Password needed"), isPresented: passwordBinding, presenting: activePasswordRequest) { request in
-                SecureField("Password", text: $passwordText)
-                Button("Unlock") { submitPassword(for: request) }
-                Button("Cancel", role: .cancel) {}
-            } message: { request in
-                Text(request.message)
+            .sheet(item: $activeSheet, onDismiss: {
+                // Closing the result (swipe or Done) clears it; closing the picker changes nothing.
+                if runner.output != nil { runner.reset() }
+            }, content: { sheetContent($0) })
+            .alert(Text(activeAlert?.title ?? ""), isPresented: alertBinding, presenting: activeAlert) { alert in
+                switch alert {
+                case .password(let request):
+                    SecureField("Password", text: $passwordText)
+                    Button("Unlock") { submitPassword(for: request) }
+                    Button("Cancel", role: .cancel) {}
+                case .failure:
+                    Button("OK", role: .cancel) {}
+                }
+            } message: { alert in
+                Text(alert.message)
             }
             .sensoryFeedback(.success, trigger: runner.successCount)
             .sensoryFeedback(.error, trigger: runner.failureCount)
+            .sensoryFeedback(.error, trigger: files.importError) { _, newValue in newValue != nil }
+    }
+
+    @ViewBuilder
+    private func sheetContent(_ sheet: ToolSheet) -> some View {
+        switch sheet {
+        case .filePicker:
+            DocumentPicker(contentTypes: files.accepts, allowsMultipleSelection: files.allowsMultiple) { urls in
+                activeSheet = nil
+                files.importURLs(urls, deleteSources: true)
+            }
+            .ignoresSafeArea()
+        case .result(let output):
+            ResultView(output: output) {
+                activeSheet = nil
+                runner.reset()
+            }
+        }
+    }
+
+    private func chooseFiles() {
+        files.importError = nil
+        activeSheet = .filePicker
     }
 
     @ViewBuilder
@@ -74,12 +115,22 @@ struct ToolScreen<Options: View>: View {
             } description: {
                 Text(tool.subtitle)
             } actions: {
-                ImportSourceButtons(files: files, photoItems: $photoItems,
-                                    onChooseFiles: { showFileImporter = true }, isProminent: true)
+                VStack(spacing: DS.Spacing.m) {
+                    ImportSourceButtons(files: files, photoItems: $photoItems,
+                                        onChooseFiles: { chooseFiles() }, isProminent: true)
+                    if let error = files.importError {
+                        ImportErrorBanner(error: error) { files.importError = nil }
+                    }
+                }
             }
             .background(DS.Palette.background)
         } else {
             List {
+                if let error = files.importError {
+                    Section {
+                        ImportErrorBanner(error: error) { files.importError = nil }
+                    }
+                }
                 fileSection
                 options()
             }
@@ -101,10 +152,10 @@ struct ToolScreen<Options: View>: View {
 
             if files.allowsMultiple {
                 ImportSourceButtons(files: files, photoItems: $photoItems,
-                                    onChooseFiles: { showFileImporter = true })
+                                    onChooseFiles: { chooseFiles() })
             } else {
                 Button {
-                    showFileImporter = true
+                    chooseFiles()
                 } label: {
                     Label("Choose another file", systemImage: "arrow.triangle.2.circlepath")
                 }
@@ -152,63 +203,64 @@ struct ToolScreen<Options: View>: View {
 
     // MARK: Errors & passwords
 
-    /// Import errors and tool failures, except password problems (they get their own prompt).
-    private var visibleError: ToolError? {
-        if let error = runner.error, !error.isPasswordProblem {
-            return error
-        }
-        return files.importError
-    }
+    /// The single alert of this screen: a failed run, or a PDF password prompt.
+    /// Import problems are shown inline instead (see ImportErrorBanner), because an alert
+    /// raised while the Files picker is still closing is dropped by iOS.
+    enum ToolAlert {
+        case failure(ToolError)
+        case password(PasswordRequest)
 
-    private var errorBinding: Binding<Bool> {
-        Binding(
-            get: { visibleError != nil },
-            set: { isShown in
-                guard !isShown else { return }
-                if runner.error != nil { runner.reset() }
-                files.importError = nil
+        var title: String {
+            switch self {
+            case .failure(let error): return error.title
+            case .password: return String(localized: "Password needed")
             }
-        )
+        }
+
+        var message: String {
+            switch self {
+            case .failure(let error): return error.message
+            case .password(let request): return request.message
+            }
+        }
     }
 
-    private var activePasswordRequest: PasswordRequest? {
+    private var activeAlert: ToolAlert? {
         if let passwordRequest {
-            return passwordRequest
+            return .password(passwordRequest)
         }
         if let error = runner.error {
-            return PasswordRequest(error)
+            if let request = PasswordRequest(error) {
+                return .password(request)
+            }
+            return .failure(error)
         }
         return nil
     }
 
-    private var passwordBinding: Binding<Bool> {
+    private var alertBinding: Binding<Bool> {
         Binding(
-            get: { activePasswordRequest != nil },
+            get: { activeAlert != nil },
             set: { isShown in
                 guard !isShown else { return }
                 passwordRequest = nil
-                if runner.error?.isPasswordProblem == true { runner.reset() }
+                if runner.error != nil { runner.reset() }
             }
-        )
-    }
-
-    private var resultBinding: Binding<ToolOutput?> {
-        Binding(
-            get: { runner.output },
-            set: { if $0 == nil { runner.reset() } }
         )
     }
 
     private func submitPassword(for request: PasswordRequest) {
         let password = passwordText
         passwordText = ""
-        let shouldRetryRun = runner.error?.isPasswordProblem == true
+        let shouldRetryRun = retryRunAfterUnlock || runner.error?.isPasswordProblem == true
+        retryRunAfterUnlock = false
         if files.unlock(request.fileID, password: password) {
             if shouldRetryRun {
                 runner.reset()
                 onRun()
             }
         } else {
+            retryRunAfterUnlock = shouldRetryRun
             // Ask again once this alert has finished closing.
             Task {
                 try? await Task.sleep(for: .milliseconds(400))

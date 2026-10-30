@@ -3,8 +3,8 @@ import SwiftUI
 struct ToolCard: View {
     let tool: ToolDescriptor
     let isFavorite: Bool
-    /// Two-column layout: titles stay on one line and subtitles reserve two lines,
-    /// so every card in a row has the same height.
+    /// Two-column layout: titles and subtitles each reserve two lines,
+    /// so long Arabic titles are never cut and every card has the same height.
     var isCompact = true
 
     var body: some View {
@@ -24,8 +24,7 @@ struct ToolCard: View {
                 Text(tool.title)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.primary)
-                    .lineLimit(isCompact ? 1 : nil)
-                    .minimumScaleFactor(0.85)
+                    .lineLimit(isCompact ? 2 : 6, reservesSpace: isCompact)
                 Text(tool.subtitle)
                     .font(.caption)
                     .foregroundStyle(.secondary)

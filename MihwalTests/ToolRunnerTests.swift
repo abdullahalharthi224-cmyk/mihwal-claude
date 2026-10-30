@@ -31,15 +31,4 @@ final class ToolRunnerTests: XCTestCase {
         try await waitUntil { !runner.isProcessing }
         XCTAssertEqual(runner.error, .passwordRequired(fileID: file.id, fileName: file.name))
     }
-
-    private func waitUntil(timeout: TimeInterval = 10, _ condition: () -> Bool) async throws {
-        let deadline = Date().addingTimeInterval(timeout)
-        while !condition() {
-            if Date() > deadline {
-                XCTFail("Timed out")
-                return
-            }
-            try await Task.sleep(for: .milliseconds(20))
-        }
-    }
 }

@@ -36,25 +36,20 @@ final class FileListModel {
 
     // MARK: Importing
 
-    func importFromFiles(_ result: Result<[URL], Error>) {
-        switch result {
-        case .success(let urls):
-            importURLs(urls)
-        case .failure(let error):
-            importError = ToolError(error)
-        }
-    }
-
-    func importURLs(_ urls: [URL]) {
+    /// Imports files. `deleteSources` removes the originals afterwards (used for the copies
+    /// the Files picker makes for us). Every failure ends up in `importError`.
+    func importURLs(_ urls: [URL], deleteSources: Bool = false) {
         guard !urls.isEmpty else { return }
+        Log.importing.info("Importing \(urls.count) file(s)")
         isImporting = true
         Task {
-            let result = await Self.copy(urls)
+            let result = await Self.copy(urls, deleteSources: deleteSources)
             add(result.files)
             if let error = result.error {
                 importError = error
             }
             isImporting = false
+            Log.importing.info("Import finished: \(result.files.count) copied, failed: \(result.error != nil)")
         }
     }
 
@@ -82,14 +77,18 @@ final class FileListModel {
     }
 
     /// Copies files off the main thread (large or iCloud files can take a moment).
-    nonisolated private static func copy(_ urls: [URL]) async -> (files: [ImportedFile], error: ToolError?) {
+    nonisolated private static func copy(_ urls: [URL], deleteSources: Bool) async -> (files: [ImportedFile], error: ToolError?) {
         var files: [ImportedFile] = []
         var firstError: ToolError?
         for url in urls {
             do {
                 files.append(try FileStore.importCopy(of: url))
             } catch {
+                Log.importing.error("Copy failed: \(error.localizedDescription, privacy: .public)")
                 firstError = firstError ?? ToolError(error)
+            }
+            if deleteSources {
+                FileStore.remove(url)
             }
         }
         return (files, firstError)
@@ -98,7 +97,9 @@ final class FileListModel {
     private func add(_ newFiles: [ImportedFile]) {
         let accepted = newFiles.filter { $0.accepted(by: accepts) }
         if let rejected = newFiles.first(where: { !$0.accepted(by: accepts) }) {
+            Log.importing.error("Rejected unsupported type: \(rejected.contentType.identifier, privacy: .public)")
             importError = .unsupportedFormat(fileName: rejected.name)
+            newFiles.filter { !$0.accepted(by: accepts) }.forEach { FileStore.remove($0.url) }
         }
         guard !accepted.isEmpty else { return }
         withAnimation(DS.Motion.standard) {
