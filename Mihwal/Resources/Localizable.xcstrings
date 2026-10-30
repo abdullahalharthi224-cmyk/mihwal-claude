@@ -1,0 +1,576 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "Add numbers to every page": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف أرقاماً إلى الصفحات"
+          }
+        }
+      }
+    },
+    "Add to Favorites": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة إلى المفضلة"
+          }
+        }
+      }
+    },
+    "Add your text on top of photos": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف نصك فوق الصور"
+          }
+        }
+      }
+    },
+    "Change width and height": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غيّر العرض والارتفاع"
+          }
+        }
+      }
+    },
+    "Clear": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مسح"
+          }
+        }
+      }
+    },
+    "Combine several PDFs into one": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اجمع عدة ملفات في ملف واحد"
+          }
+        }
+      }
+    },
+    "Coming soon": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قريباً"
+          }
+        }
+      }
+    },
+    "Compress Images": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضغط الصور"
+          }
+        }
+      }
+    },
+    "Compress PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضغط PDF"
+          }
+        }
+      }
+    },
+    "Convert": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحويل"
+          }
+        }
+      }
+    },
+    "Convert Image": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحويل صيغة الصورة"
+          }
+        }
+      }
+    },
+    "Copy text, even from scans": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انسخ النص حتى من الصفحات الممسوحة"
+          }
+        }
+      }
+    },
+    "Delete Pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف صفحات"
+          }
+        }
+      }
+    },
+    "Erase author, dates and hidden info": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "امسح اسم المؤلف والتواريخ والمعلومات المخفية"
+          }
+        }
+      }
+    },
+    "Extract Pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخراج صفحات"
+          }
+        }
+      }
+    },
+    "Favorite": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفضّلة"
+          }
+        }
+      }
+    },
+    "Favorites": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المفضلة"
+          }
+        }
+      }
+    },
+    "Get the text as a Word document": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انقل النص إلى مستند Word"
+          }
+        }
+      }
+    },
+    "Images": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصور"
+          }
+        }
+      }
+    },
+    "Images to PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صور إلى PDF"
+          }
+        }
+      }
+    },
+    "JPG, PNG or HEIC from any photo": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JPG أو PNG أو HEIC من أي صورة"
+          }
+        }
+      }
+    },
+    "Make the file smaller": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صغّر حجم الملف"
+          }
+        }
+      }
+    },
+    "Merge PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دمج PDF"
+          }
+        }
+      }
+    },
+    "Mihwal": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مِحوَل"
+          }
+        }
+      }
+    },
+    "Opens the tool": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يفتح الأداة"
+          }
+        }
+      }
+    },
+    "Organize PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تنظيم PDF"
+          }
+        }
+      }
+    },
+    "PDF to Images": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF إلى صور"
+          }
+        }
+      }
+    },
+    "PDF to Text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF إلى نص"
+          }
+        }
+      }
+    },
+    "PDF to Word": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF إلى Word"
+          }
+        }
+      }
+    },
+    "Page Numbers": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ترقيم الصفحات"
+          }
+        }
+      }
+    },
+    "Put the last page first": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اجعل الصفحة الأخيرة أولاً"
+          }
+        }
+      }
+    },
+    "Recent": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المستخدمة مؤخراً"
+          }
+        }
+      }
+    },
+    "Remove Metadata": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف البيانات الوصفية"
+          }
+        }
+      }
+    },
+    "Remove from Favorites": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة من المفضلة"
+          }
+        }
+      }
+    },
+    "Remove protection with your password": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أزل الحماية بكلمة المرور الخاصة بك"
+          }
+        }
+      }
+    },
+    "Remove the pages you don't need": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احذف الصفحات التي لا تحتاجها"
+          }
+        }
+      }
+    },
+    "Resize Images": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تغيير مقاس الصور"
+          }
+        }
+      }
+    },
+    "Reverse Order": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عكس الترتيب"
+          }
+        }
+      }
+    },
+    "Rotate & Flip": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تدوير وقلب"
+          }
+        }
+      }
+    },
+    "Rotate Pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تدوير الصفحات"
+          }
+        }
+      }
+    },
+    "Save chosen pages as a new PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احفظ صفحات مختارة في ملف جديد"
+          }
+        }
+      }
+    },
+    "Save every page as a picture": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احفظ كل صفحة كصورة"
+          }
+        }
+      }
+    },
+    "Search tools": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابحث في الأدوات"
+          }
+        }
+      }
+    },
+    "Smaller photos, same look": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صور أصغر بنفس الشكل تقريباً"
+          }
+        }
+      }
+    },
+    "Split PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تقسيم PDF"
+          }
+        }
+      }
+    },
+    "Stamp text across your pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اطبع نصاً على صفحاتك"
+          }
+        }
+      }
+    },
+    "Text to PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نص إلى PDF"
+          }
+        }
+      }
+    },
+    "This tool arrives in a coming update.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ستصل هذه الأداة في تحديث قادم."
+          }
+        }
+      }
+    },
+    "Turn or mirror your photos": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دوّر صورك أو اقلبها"
+          }
+        }
+      }
+    },
+    "Turn pages into separate files": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حوّل الصفحات إلى ملفات منفصلة"
+          }
+        }
+      }
+    },
+    "Turn pages the right way": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عدّل اتجاه الصفحات"
+          }
+        }
+      }
+    },
+    "Turn photos into one PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حوّل الصور إلى ملف PDF واحد"
+          }
+        }
+      }
+    },
+    "Unlock PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فك حماية PDF"
+          }
+        }
+      }
+    },
+    "Watermark Images": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "علامة مائية على الصور"
+          }
+        }
+      }
+    },
+    "Watermark PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "علامة مائية على PDF"
+          }
+        }
+      }
+    },
+    "Works offline · Your files never leave your iPhone": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعمل دون إنترنت · ملفاتك لا تغادر جهازك"
+          }
+        }
+      }
+    },
+    "Write Arabic or English, get a PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتب بالعربية أو الإنجليزية واحصل على PDF"
+          }
+        }
+      }
+    }
+  }
+}
