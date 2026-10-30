@@ -63,7 +63,28 @@ jobs:
             -scheme Mihwal \
             -destination "id=${{ steps.sim.outputs.id }}" \
             -derivedDataPath build/test \
+            -resultBundlePath build/TestResults.xcresult \
             -quiet
+
+      # -quiet hides why a test failed; print each failing test and its message.
+      - name: Show failing tests
+        if: failure()
+        run: |
+          xcrun xcresulttool get test-results tests --path build/TestResults.xcresult \
+            | python3 -c '
+          import json, sys
+          def walk(node, path=""):
+              name = node.get("name", "")
+              kind = node.get("nodeType")
+              if kind == "Test Case" and node.get("result") == "Failed":
+                  print("FAILED " + name)
+              elif kind == "Failure Message":
+                  print("   " + name)
+              for child in node.get("children", []):
+                  walk(child, path + "/" + name)
+          for node in json.load(sys.stdin).get("testNodes", []):
+              walk(node)
+          ' || true
 
       - name: Build Release for device (unsigned)
         run: |

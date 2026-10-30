@@ -179,6 +179,22 @@ final class ImageToolEngineTests: XCTestCase {
 
     // MARK: Watermark
 
+    /// Every glyph of a line with the index of the character it came from.
+    private func glyphs(of line: CTLine) -> [(index: CFIndex, glyph: CGGlyph)] {
+        var result: [(index: CFIndex, glyph: CGGlyph)] = []
+        for run in (CTLineGetGlyphRuns(line) as? [CTRun]) ?? [] {
+            let count = CTRunGetGlyphCount(run)
+            var glyphs = [CGGlyph](repeating: 0, count: count)
+            var indices = [CFIndex](repeating: 0, count: count)
+            CTRunGetGlyphs(run, CFRange(location: 0, length: 0), &glyphs)
+            CTRunGetStringIndices(run, CFRange(location: 0, length: 0), &indices)
+            for (index, glyph) in zip(indices, glyphs) {
+                result.append((index: index, glyph: glyph))
+            }
+        }
+        return result
+    }
+
     func testArabicWatermarkIsShapedRightToLeft() {
         let color = CGColor(gray: 1, alpha: 1)
         let arabic = WatermarkRenderer.makeLine(text: "مِحوَل ٢٠٢٦", fontSize: 40, color: color)
@@ -186,14 +202,19 @@ final class ImageToolEngineTests: XCTestCase {
         XCTAssertFalse(runs.isEmpty)
         XCTAssertTrue(runs.contains { CTRunGetStatus($0).contains(.rightToLeft) }, "Arabic must be laid out right to left")
 
-        // Connected letters: the shaped line uses contextual forms, so it is narrower than
-        // the same letters drawn in isolation.
+        // Connected letters: in «محول» the م (initial form) and ح (medial form) must use
+        // different glyphs than the same letters drawn alone. That is what shaping does.
         let word = "محول"
-        let joinedWidth = CTLineGetTypographicBounds(WatermarkRenderer.makeLine(text: word, fontSize: 40, color: color), nil, nil, nil)
-        let isolatedWidth = word.map { String($0) }.reduce(0.0) { total, letter in
-            total + CTLineGetTypographicBounds(WatermarkRenderer.makeLine(text: letter, fontSize: 40, color: color), nil, nil, nil)
+        let shaped = glyphs(of: WatermarkRenderer.makeLine(text: word, fontSize: 40, color: color))
+        var reshaped = 0
+        for (offset, letter) in word.enumerated() {
+            let isolated = glyphs(of: WatermarkRenderer.makeLine(text: String(letter), fontSize: 40, color: color)).first?.glyph
+            let inWord = shaped.first { $0.index == offset }?.glyph
+            if let isolated, let inWord, isolated != inWord {
+                reshaped += 1
+            }
         }
-        XCTAssertLessThan(joinedWidth, isolatedWidth)
+        XCTAssertGreaterThanOrEqual(reshaped, 2, "Arabic letters must take their connected forms")
 
         let english = WatermarkRenderer.makeLine(text: "Mihwal", fontSize: 40, color: color)
         let englishRuns = (CTLineGetGlyphRuns(english) as? [CTRun]) ?? []
