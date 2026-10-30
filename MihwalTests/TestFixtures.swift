@@ -64,7 +64,7 @@ enum TestFixtures {
 extension XCTestCase {
     /// Polls until `condition` is true (async work such as importing or running a tool).
     @MainActor
-    func waitUntil(timeout: TimeInterval = 10, _ condition: () -> Bool) async throws {
+    func waitUntil(timeout: TimeInterval = 10, _ condition: @escaping @MainActor () -> Bool) async throws {
         let deadline = Date().addingTimeInterval(timeout)
         while !condition() {
             if Date() > deadline {
