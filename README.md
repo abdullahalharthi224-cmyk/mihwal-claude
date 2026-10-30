@@ -10,7 +10,8 @@
 ## Getting the app (no Mac needed)
 1. Open the **Actions** tab → **Build IPA** → the latest green run.
 2. Download the **Mihwal-ipa** artifact (a zip that contains `Mihwal.ipa`).
-3. Sign and install it with your signing service. Bundle id: `com.abdullah.mihwal`.
+3. Sign and install it with your signing service. Bundle id: `com.abdullah.mihwal.claude`, name under the icon: «مِحوَل C»
+   (so it can be installed next to another build).
 
 ## Layout
 ```

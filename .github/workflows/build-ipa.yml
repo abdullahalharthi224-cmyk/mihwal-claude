@@ -83,6 +83,13 @@ jobs:
           APP=build/device/Build/Products/Release-iphoneos/Mihwal.app
           test -d "$APP" || { echo "::error::Mihwal.app was not produced"; exit 1; }
           ls "$APP" | grep -q "ar.lproj" || echo "::warning::ar.lproj is missing from the app"
+          BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" "$APP/Info.plist")
+          echo "Bundle id: $BUNDLE_ID"
+          test "$BUNDLE_ID" = "com.abdullah.mihwal.claude" || { echo "::error::Unexpected bundle id $BUNDLE_ID"; exit 1; }
+          echo "Name under the icon:"
+          for LANG_DIR in ar en; do
+            echo "  $LANG_DIR: $(plutil -extract CFBundleDisplayName raw "$APP/$LANG_DIR.lproj/InfoPlist.strings" 2>/dev/null || echo missing)"
+          done
           mkdir -p Payload
           cp -R "$APP" Payload/
           zip -qry Mihwal.ipa Payload
