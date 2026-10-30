@@ -9,6 +9,12 @@ final class AppState {
     private(set) var favorites: [ToolID]
     private(set) var recents: [ToolID]
 
+    /// Home's navigation stack, so "Open in" can jump straight into a tool.
+    var path: [ToolRoute] = []
+    /// Files shared into the app, waiting for the user to pick a tool.
+    var incoming: IncomingFiles?
+    var incomingError: ToolError?
+
     private let defaults: UserDefaults
 
     private enum Keys {
@@ -48,10 +54,45 @@ final class AppState {
         defaults.removeObject(forKey: Keys.recents)
     }
 
+    // MARK: "Open in" / Share to Mihwal
+
+    /// Copies a file another app shared with us, then asks which tool to use.
+    @MainActor
+    func receive(_ url: URL) async {
+        let result = await Task.detached(priority: .userInitiated) { () -> Result<ImportedFile, ToolError> in
+            defer {
+                if FileStore.isInboxFile(url) { FileStore.remove(url) }
+            }
+            do {
+                return .success(try FileStore.importCopy(of: url))
+            } catch {
+                return .failure(ToolError(error))
+            }
+        }.value
+
+        switch result {
+        case .success(let file):
+            incoming = IncomingFiles(files: [file])
+        case .failure(let error):
+            incomingError = error
+        }
+    }
+
+    /// Opens a tool with files already loaded, replacing whatever screen was open.
+    func open(_ tool: ToolID, with files: [ImportedFile]) {
+        incoming = nil
+        path = [ToolRoute(tool: tool, files: files)]
+    }
+
     private static func load(_ key: String, from defaults: UserDefaults) -> [ToolID] {
         var seen = Set<ToolID>()
         return (defaults.stringArray(forKey: key) ?? [])
             .compactMap(ToolID.init(rawValue:))
             .filter { seen.insert($0).inserted }
     }
+}
+
+struct IncomingFiles: Identifiable {
+    let id = UUID()
+    let files: [ImportedFile]
 }

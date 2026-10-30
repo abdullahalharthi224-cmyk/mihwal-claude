@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 import UniformTypeIdentifiers
 
 /// The single list of tools. Adding a tool = one entry here + its own folder in Tools/.
@@ -6,7 +6,7 @@ enum ToolRegistry {
     static let all: [ToolDescriptor] = [
         // MARK: Organize PDF
         ToolDescriptor(id: .merge, title: "Merge PDF", subtitle: "Combine several PDFs into one",
-                       symbol: "doc.on.doc", category: .organize, accepts: [.pdf]),
+                       symbol: "doc.on.doc", category: .organize, accepts: [.pdf], allowsMultipleFiles: true),
         ToolDescriptor(id: .split, title: "Split PDF", subtitle: "Turn pages into separate files",
                        symbol: "scissors", category: .organize, accepts: [.pdf]),
         ToolDescriptor(id: .compressPDF, title: "Compress PDF", subtitle: "Make the file smaller",
@@ -18,7 +18,8 @@ enum ToolRegistry {
         ToolDescriptor(id: .extractPages, title: "Extract Pages", subtitle: "Save chosen pages as a new PDF",
                        symbol: "arrow.up.doc", category: .organize, accepts: [.pdf]),
         ToolDescriptor(id: .reversePages, title: "Reverse Order", subtitle: "Put the last page first",
-                       symbol: "arrow.up.arrow.down", category: .organize, accepts: [.pdf]),
+                       symbol: "arrow.up.arrow.down", category: .organize, accepts: [.pdf],
+                       makeView: { AnyView(ReversePagesView(initialFiles: $0)) }),
         ToolDescriptor(id: .pageNumbers, title: "Page Numbers", subtitle: "Add numbers to every page",
                        symbol: "number", category: .organize, accepts: [.pdf]),
         ToolDescriptor(id: .watermarkPDF, title: "Watermark PDF", subtitle: "Stamp text across your pages",
@@ -36,21 +37,21 @@ enum ToolRegistry {
         ToolDescriptor(id: .textToPDF, title: "Text to PDF", subtitle: "Write Arabic or English, get a PDF",
                        symbol: "text.badge.plus", category: .convert, accepts: [.plainText]),
         ToolDescriptor(id: .imagesToPDF, title: "Images to PDF", subtitle: "Turn photos into one PDF",
-                       symbol: "photo.on.rectangle", category: .convert, accepts: [.image]),
+                       symbol: "photo.on.rectangle", category: .convert, accepts: [.image], allowsMultipleFiles: true),
         ToolDescriptor(id: .pdfToImages, title: "PDF to Images", subtitle: "Save every page as a picture",
                        symbol: "photo.on.rectangle.angled", category: .convert, accepts: [.pdf]),
 
         // MARK: Images
         ToolDescriptor(id: .convertImage, title: "Convert Image", subtitle: "JPG, PNG or HEIC from any photo",
-                       symbol: "arrow.triangle.2.circlepath", category: .images, accepts: [.image]),
+                       symbol: "arrow.triangle.2.circlepath", category: .images, accepts: [.image], allowsMultipleFiles: true),
         ToolDescriptor(id: .compressImage, title: "Compress Images", subtitle: "Smaller photos, same look",
-                       symbol: "rectangle.compress.vertical", category: .images, accepts: [.image]),
+                       symbol: "rectangle.compress.vertical", category: .images, accepts: [.image], allowsMultipleFiles: true),
         ToolDescriptor(id: .resizeImage, title: "Resize Images", subtitle: "Change width and height",
-                       symbol: "arrow.up.left.and.arrow.down.right", category: .images, accepts: [.image]),
+                       symbol: "arrow.up.left.and.arrow.down.right", category: .images, accepts: [.image], allowsMultipleFiles: true),
         ToolDescriptor(id: .rotateImage, title: "Rotate & Flip", subtitle: "Turn or mirror your photos",
-                       symbol: "rotate.left", category: .images, accepts: [.image]),
+                       symbol: "rotate.left", category: .images, accepts: [.image], allowsMultipleFiles: true),
         ToolDescriptor(id: .watermarkImage, title: "Watermark Images", subtitle: "Add your text on top of photos",
-                       symbol: "textformat", category: .images, accepts: [.image]),
+                       symbol: "textformat", category: .images, accepts: [.image], allowsMultipleFiles: true),
     ]
 
     static func descriptor(for id: ToolID) -> ToolDescriptor? {
@@ -59,6 +60,11 @@ enum ToolRegistry {
 
     static func tools(in category: ToolCategory) -> [ToolDescriptor] {
         all.filter { $0.category == category }
+    }
+
+    /// Tools that can open a file of this type (used by "Open in").
+    static func tools(accepting type: UTType) -> [ToolDescriptor] {
+        all.filter { tool in tool.accepts.contains { type.conforms(to: $0) } }
     }
 
     /// Matches the localized title/subtitle and the English title, ignoring case and

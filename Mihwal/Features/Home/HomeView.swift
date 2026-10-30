@@ -6,7 +6,9 @@ struct HomeView: View {
     @State private var query = ""
 
     var body: some View {
-        NavigationStack {
+        @Bindable var appState = appState
+
+        NavigationStack(path: $appState.path) {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: DS.Spacing.l) {
                     if query.isEmpty {
@@ -16,17 +18,35 @@ struct HomeView: View {
                     }
                 }
                 .padding(.horizontal, DS.Spacing.m)
-                .padding(.bottom, DS.Spacing.xl)
+                .padding(.bottom, DS.Spacing.l)
                 .animation(DS.Motion.standard, value: appState.favorites)
             }
+            .contentMargins(.bottom, DS.Size.floatingBarClearance, for: .scrollContent)
             .background(DS.Palette.background)
             .navigationTitle("Mihwal")
             .searchable(text: $query, prompt: Text("Search tools"))
-            .navigationDestination(for: ToolID.self) { id in
-                ToolDestinationView(id: id)
+            .navigationDestination(for: ToolRoute.self) { route in
+                ToolDestinationView(route: route)
             }
         }
         .sensoryFeedback(.selection, trigger: appState.favorites)
+        .sheet(item: $appState.incoming) { incoming in
+            IncomingFilesSheet(incoming: incoming) { toolID in
+                appState.open(toolID, with: incoming.files)
+            }
+        }
+        .alert(Text("Can't open this file"), isPresented: incomingErrorBinding, presenting: appState.incomingError) { _ in
+            Button("OK", role: .cancel) {}
+        } message: { error in
+            Text(error.message)
+        }
+    }
+
+    private var incomingErrorBinding: Binding<Bool> {
+        Binding(
+            get: { appState.incomingError != nil },
+            set: { if !$0 { appState.incomingError = nil } }
+        )
     }
 
     // MARK: Sections
@@ -53,7 +73,7 @@ struct HomeView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: DS.Spacing.xs) {
                         ForEach(recentTools) { tool in
-                            NavigationLink(value: tool.id) {
+                            NavigationLink(value: ToolRoute(tool: tool.id)) {
                                 RecentChip(tool: tool)
                             }
                             .buttonStyle(PressableStyle())
@@ -86,8 +106,8 @@ struct HomeView: View {
     private func grid(_ tools: [ToolDescriptor]) -> some View {
         LazyVGrid(columns: columns, spacing: DS.Spacing.s) {
             ForEach(tools) { tool in
-                NavigationLink(value: tool.id) {
-                    ToolCard(tool: tool, isFavorite: appState.isFavorite(tool.id))
+                NavigationLink(value: ToolRoute(tool: tool.id)) {
+                    ToolCard(tool: tool, isFavorite: appState.isFavorite(tool.id), isCompact: !isSingleColumn)
                 }
                 .buttonStyle(PressableStyle())
                 .contextMenu { favoriteButton(for: tool.id) }
@@ -115,12 +135,15 @@ struct HomeView: View {
 
     // MARK: Data
 
-    /// One column at accessibility text sizes so titles never get cut off.
+    /// The "Larger Accessibility Sizes" text sizes get one column so nothing is cut off.
+    private var isSingleColumn: Bool {
+        dynamicTypeSize.isAccessibilitySize
+    }
+
+    /// Always exactly two columns otherwise, on every iPhone width.
     private var columns: [GridItem] {
-        if dynamicTypeSize.isAccessibilitySize {
-            return [GridItem(.flexible())]
-        }
-        return [GridItem(.adaptive(minimum: DS.Size.gridMinimum), spacing: DS.Spacing.s)]
+        let column = GridItem(.flexible(), spacing: DS.Spacing.s, alignment: .top)
+        return isSingleColumn ? [column] : [column, column]
     }
 
     private var favoriteTools: [ToolDescriptor] {

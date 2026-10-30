@@ -4,10 +4,18 @@ import SwiftUI
 struct MihwalApp: App {
     @State private var appState = AppState()
 
+    init() {
+        // Nothing from a previous session is kept: inputs and results live only in tmp.
+        FileStore.removeTemporaryFiles()
+    }
+
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .environment(appState)
+                .onOpenURL { url in
+                    Task { await appState.receive(url) }
+                }
         }
     }
 }

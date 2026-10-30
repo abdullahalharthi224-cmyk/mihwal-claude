@@ -21,8 +21,12 @@ enum DS {
 
     enum Size {
         static let toolIcon: CGFloat = 42
+        static let cardIcon: CGFloat = 34
         static let chipIcon: CGFloat = 28
-        static let gridMinimum: CGFloat = 150
+        static let rowThumbnail: CGFloat = 44
+        /// Space kept free under scroll content so the floating search/tab bar
+        /// never covers the last row.
+        static let floatingBarClearance: CGFloat = 72
     }
 
     enum Palette {

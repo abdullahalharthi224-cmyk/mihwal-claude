@@ -2,6 +2,144 @@
   "sourceLanguage": "en",
   "version": "1.0",
   "strings": {
+    "%lld files · %@": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld file · %@"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld files · %@"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لا ملفات · %@"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "ملف واحد · %@"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "ملفان · %@"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ملفات · %@"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ملفاً · %@"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ملف · %@"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld pages": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld page"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pages"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لا صفحات"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صفحة واحدة"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صفحتان"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحات"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحة"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحة"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Add a file to get started.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف ملفاً للبدء."
+          }
+        }
+      }
+    },
     "Add numbers to every page": {
       "localizations": {
         "ar": {
@@ -32,12 +170,82 @@
         }
       }
     },
+    "After": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بعد"
+          }
+        }
+      }
+    },
+    "Allow Mihwal to add photos in Settings › Privacy › Photos.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسمح لمِحوَل بإضافة الصور من الإعدادات › الخصوصية › الصور."
+          }
+        }
+      }
+    },
+    "Before": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قبل"
+          }
+        }
+      }
+    },
+    "Can't open this file": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر فتح هذا الملف"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلغاء"
+          }
+        }
+      }
+    },
     "Change width and height": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "غيّر العرض والارتفاع"
+          }
+        }
+      }
+    },
+    "Choose a tool": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر أداة"
+          }
+        }
+      }
+    },
+    "Choose another file": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر ملفاً آخر"
           }
         }
       }
@@ -122,12 +330,52 @@
         }
       }
     },
+    "Couldn't save the result": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعذّر حفظ النتيجة"
+          }
+        }
+      }
+    },
     "Delete Pages": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "حذف صفحات"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم"
+          }
+        }
+      }
+    },
+    "Done!": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم!"
+          }
+        }
+      }
+    },
+    "Enter password": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل كلمة المرور"
           }
         }
       }
@@ -168,6 +416,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "المفضلة"
+          }
+        }
+      }
+    },
+    "File": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الملف"
+          }
+        }
+      }
+    },
+    "Files": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الملفات"
+          }
+        }
+      }
+    },
+    "Free up some space on your iPhone, then try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "وفّر بعض المساحة في جهازك، ثم حاول مرة أخرى."
           }
         }
       }
@@ -242,6 +520,86 @@
         }
       }
     },
+    "Mihwal files": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملفات مِحوَل"
+          }
+        }
+      }
+    },
+    "Mihwal works with PDFs, images and text files.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعمل مِحوَل مع ملفات PDF والصور والملفات النصية."
+          }
+        }
+      }
+    },
+    "No access to Photos": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد إذن للوصول إلى الصور"
+          }
+        }
+      }
+    },
+    "No file selected": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم اختيار ملف"
+          }
+        }
+      }
+    },
+    "Not enough storage": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد مساحة كافية"
+          }
+        }
+      }
+    },
+    "Nothing to do": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد ما يمكن فعله"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حسناً"
+          }
+        }
+      }
+    },
+    "Open in Mihwal": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فتح في مِحوَل"
+          }
+        }
+      }
+    },
     "Opens the tool": {
       "localizations": {
         "ar": {
@@ -292,12 +650,52 @@
         }
       }
     },
+    "Page %lld will become page 1.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصفحة %lld ستصبح الصفحة الأولى."
+          }
+        }
+      }
+    },
     "Page Numbers": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "ترقيم الصفحات"
+          }
+        }
+      }
+    },
+    "Password": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلمة المرور"
+          }
+        }
+      }
+    },
+    "Password needed": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلمة المرور مطلوبة"
+          }
+        }
+      }
+    },
+    "Photos": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصور"
           }
         }
       }
@@ -372,12 +770,32 @@
         }
       }
     },
+    "Result": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النتيجة"
+          }
+        }
+      }
+    },
     "Reverse Order": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "عكس الترتيب"
+          }
+        }
+      }
+    },
+    "Reverse Pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اعكس الصفحات"
           }
         }
       }
@@ -402,6 +820,16 @@
         }
       }
     },
+    "Save as ZIP": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حفظ كملف ZIP"
+          }
+        }
+      }
+    },
     "Save chosen pages as a new PDF": {
       "localizations": {
         "ar": {
@@ -422,6 +850,36 @@
         }
       }
     },
+    "Save to Files": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حفظ في الملفات"
+          }
+        }
+      }
+    },
+    "Save to Photos": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حفظ في الصور"
+          }
+        }
+      }
+    },
+    "Saved": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم الحفظ"
+          }
+        }
+      }
+    },
     "Search tools": {
       "localizations": {
         "ar": {
@@ -432,12 +890,52 @@
         }
       }
     },
+    "Share": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشاركة"
+          }
+        }
+      }
+    },
+    "Shows a preview": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعرض معاينة"
+          }
+        }
+      }
+    },
     "Smaller photos, same look": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "صور أصغر بنفس الشكل تقريباً"
+          }
+        }
+      }
+    },
+    "Something went wrong": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدث خطأ ما"
+          }
+        }
+      }
+    },
+    "Something went wrong while writing the file. Please try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدث خطأ أثناء كتابة الملف. حاول مرة أخرى."
           }
         }
       }
@@ -468,6 +966,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "نص إلى PDF"
+          }
+        }
+      }
+    },
+    "That password didn't open “%@”. Check it and try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلمة المرور هذه لم تفتح «%@». تحقّق منها وحاول مرة أخرى."
+          }
+        }
+      }
+    },
+    "This PDF has only one page, so there is nothing to reverse.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا الملف فيه صفحة واحدة فقط، فلا يوجد ما يُعكس."
+          }
+        }
+      }
+    },
+    "This PDF has only one page.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا الملف فيه صفحة واحدة فقط."
           }
         }
       }
@@ -522,12 +1050,42 @@
         }
       }
     },
+    "Unlock": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فتح"
+          }
+        }
+      }
+    },
     "Unlock PDF": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "فك حماية PDF"
+          }
+        }
+      }
+    },
+    "Unlocked": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتوح"
+          }
+        }
+      }
+    },
+    "Unsupported file": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملف غير مدعوم"
           }
         }
       }
@@ -552,6 +1110,16 @@
         }
       }
     },
+    "Working…": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارٍ العمل…"
+          }
+        }
+      }
+    },
     "Works offline · Your files never leave your iPhone": {
       "localizations": {
         "ar": {
@@ -568,6 +1136,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "اكتب بالعربية أو الإنجليزية واحصل على PDF"
+          }
+        }
+      }
+    },
+    "Wrong password": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلمة المرور غير صحيحة"
+          }
+        }
+      }
+    },
+    "Your files stayed on this iPhone.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملفاتك بقيت على هذا الجهاز."
+          }
+        }
+      }
+    },
+    "reversed": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معكوس"
+          }
+        }
+      }
+    },
+    "“%@” is damaged or isn't a valid file.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الملف «%@» تالف أو غير صالح."
+          }
+        }
+      }
+    },
+    "“%@” is protected. Enter its password to continue.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الملف «%@» محمي. أدخل كلمة المرور للمتابعة."
+          }
+        }
+      }
+    },
+    "“%@” isn't a file type this tool can use.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نوع الملف «%@» لا تدعمه هذه الأداة."
           }
         }
       }
