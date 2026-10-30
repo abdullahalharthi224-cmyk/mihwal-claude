@@ -13,18 +13,9 @@ struct RotateImageView: View {
                    actionTitle: "Save Images", isReady: model.isReady,
                    footnote: model.options.hasChanges ? nil : "Rotate or flip to continue.",
                    onRun: { model.run() }) {
-            if let first = model.files.files.first {
+            if !model.files.files.isEmpty {
                 Section {
-                    // Same order as the engine: flip first, then rotate.
-                    ThumbnailView(source: .image(first.url), maxPixelSize: 600)
-                        .scaleEffect(x: model.flipHorizontal ? -1 : 1, y: model.flipVertical ? -1 : 1)
-                        .rotationEffect(.degrees(Double(model.rotationSteps) * 90))
-                        .animation(DS.Motion.standard, value: model.rotationSteps)
-                        .animation(DS.Motion.standard, value: model.flipHorizontal)
-                        .animation(DS.Motion.standard, value: model.flipVertical)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: previewHeight)
-                        .padding(.vertical, DS.Spacing.s)
+                    previewView
                 } header: {
                     Text("Preview")
                 } footer: {
@@ -35,15 +26,17 @@ struct RotateImageView: View {
             }
 
             Section {
+                // Turning directions are physical, so this row keeps the same order in Arabic.
                 HStack(spacing: DS.Spacing.s) {
-                    transformButton("Rotate Left", symbol: "rotate.left") { model.rotateLeft() }
-                    transformButton("Rotate Right", symbol: "rotate.right") { model.rotateRight() }
+                    transformButton("Rotate Counterclockwise", symbol: "rotate.left") { model.rotateCounterclockwise() }
+                    transformButton("Rotate Clockwise", symbol: "rotate.right") { model.rotateClockwise() }
                 }
+                .environment(\.layoutDirection, .leftToRight)
                 HStack(spacing: DS.Spacing.s) {
-                    transformButton("Flip Horizontal", symbol: "arrow.left.and.right.righttriangle.left.righttriangle.right") {
+                    transformButton("Mirror", symbol: "arrow.left.and.right.righttriangle.left.righttriangle.right") {
                         model.flipHorizontal.toggle()
                     }
-                    transformButton("Flip Vertical", symbol: "arrow.up.and.down.righttriangle.up.righttriangle.down") {
+                    transformButton("Flip Upside Down", symbol: "arrow.up.and.down.righttriangle.up.righttriangle.down") {
                         model.flipVertical.toggle()
                     }
                 }
@@ -57,6 +50,29 @@ struct RotateImageView: View {
             LocationSection(removeLocation: $model.removeLocation)
         }
         .sensoryFeedback(.impact(weight: .light), trigger: model.options)
+        .task(id: model.previewKey) {
+            await model.refreshPreview()
+        }
+    }
+
+    @ViewBuilder
+    private var previewView: some View {
+        if let preview = model.preview {
+            Image(decorative: preview, scale: 1)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .infinity)
+                .frame(height: previewHeight)
+                .clipShape(RoundedRectangle(cornerRadius: DS.Radius.s, style: .continuous))
+                .id(model.previewKey)
+                .transition(.opacity)
+                .animation(DS.Motion.standard, value: model.previewKey)
+                .padding(.vertical, DS.Spacing.xs)
+                .accessibilityLabel(Text("Preview of the first photo as it will be saved"))
+        } else {
+            ProgressView()
+                .frame(maxWidth: .infinity, minHeight: previewHeight)
+        }
     }
 
     private func transformButton(_ title: LocalizedStringKey, symbol: String, action: @escaping () -> Void) -> some View {

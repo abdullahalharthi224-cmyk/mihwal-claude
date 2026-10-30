@@ -37,6 +37,15 @@ enum ImageReader {
                          properties: properties)
     }
 
+    /// Width × height as the user sees it, read from the file header only (fast).
+    static func pixelSize(at url: URL) -> (width: Int, height: Int)? {
+        let options = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, options), let info = info(of: source) else {
+            return nil
+        }
+        return (info.width, info.height)
+    }
+
     /// Decodes the image upright (EXIF orientation baked into the pixels).
     /// `maxPixelSize` scales it down; nil keeps full resolution. Never scales up.
     static func uprightImage(from source: CGImageSource, info: ImageInfo, maxPixelSize: Int? = nil) -> CGImage? {
@@ -55,7 +64,9 @@ enum ImageMetadata {
     /// Metadata to write with a processed image. Only standard dictionaries are kept
     /// (EXIF, TIFF, IPTC, GPS, DPI); orientation is set to "up" because the pixels are
     /// already upright; location is removed unless the user chose to keep it.
-    static func prepared(_ source: [String: Any], removeLocation: Bool) -> [String: Any] {
+    /// The dates become `date` (now): the result is a new photo, so Photos lists it
+    /// with today's pictures instead of next to the original.
+    static func prepared(_ source: [String: Any], removeLocation: Bool, date: Date = Date()) -> [String: Any] {
         var result: [String: Any] = [:]
         let kept = [kCGImagePropertyExifDictionary, kCGImagePropertyTIFFDictionary, kCGImagePropertyIPTCDictionary,
                     kCGImagePropertyGPSDictionary, kCGImagePropertyDPIWidth, kCGImagePropertyDPIHeight]
@@ -66,17 +77,39 @@ enum ImageMetadata {
             result[kCGImagePropertyGPSDictionary as String] = nil
         }
         result[kCGImagePropertyOrientation as String] = 1
-        if var tiff = result[kCGImagePropertyTIFFDictionary as String] as? [String: Any] {
-            tiff[kCGImagePropertyTIFFOrientation as String] = 1
-            result[kCGImagePropertyTIFFDictionary as String] = tiff
+        let stamp = exifDate(date)
+        var exif = result[kCGImagePropertyExifDictionary as String] as? [String: Any] ?? [:]
+        exif[kCGImagePropertyExifPixelXDimension as String] = nil
+        exif[kCGImagePropertyExifPixelYDimension as String] = nil
+        exif[kCGImagePropertyExifDateTimeOriginal as String] = stamp
+        exif[kCGImagePropertyExifDateTimeDigitized as String] = stamp
+        // Old time-zone offsets and sub-seconds would contradict the new dates.
+        for key in [kCGImagePropertyExifOffsetTime, kCGImagePropertyExifOffsetTimeOriginal,
+                    kCGImagePropertyExifOffsetTimeDigitized, kCGImagePropertyExifSubsecTime,
+                    kCGImagePropertyExifSubsecTimeOriginal, kCGImagePropertyExifSubsecTimeDigitized] {
+            exif[key as String] = nil
         }
-        if var exif = result[kCGImagePropertyExifDictionary as String] as? [String: Any] {
-            exif[kCGImagePropertyExifPixelXDimension as String] = nil
-            exif[kCGImagePropertyExifPixelYDimension as String] = nil
-            result[kCGImagePropertyExifDictionary as String] = exif
-        }
+        result[kCGImagePropertyExifDictionary as String] = exif
+        var tiff = result[kCGImagePropertyTIFFDictionary as String] as? [String: Any] ?? [:]
+        tiff[kCGImagePropertyTIFFOrientation as String] = 1
+        tiff[kCGImagePropertyTIFFDateTime as String] = stamp
+        result[kCGImagePropertyTIFFDictionary as String] = tiff
         return result
     }
+
+    /// EXIF date format: "2026:10:30 18:45:00" in local time.
+    static func exifDate(_ date: Date) -> String {
+        exifFormatter.string(from: date)
+    }
+
+    private static let exifFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.timeZone = .current
+        formatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
+        return formatter
+    }()
 }
 
 enum ImageWriter {

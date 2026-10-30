@@ -1060,6 +1060,16 @@
         }
       }
     },
+    "Flip Upside Down": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قلب رأساً على عقب"
+          }
+        }
+      }
+    },
     "Flip Vertical": {
       "localizations": {
         "ar": {
@@ -1296,6 +1306,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "يعمل مِحوَل مع ملفات PDF والصور والملفات النصية."
+          }
+        }
+      }
+    },
+    "Mirror": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عكس كالمرآة"
           }
         }
       }
@@ -1590,6 +1610,16 @@
         }
       }
     },
+    "Preview of the first photo as it will be saved": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معاينة الصورة الأولى كما ستُحفظ"
+          }
+        }
+      }
+    },
     "Preview of the first photo with the watermark": {
       "localizations": {
         "ar": {
@@ -1786,6 +1816,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "تدوير وقلب"
+          }
+        }
+      }
+    },
+    "Rotate Clockwise": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مع عقارب الساعة"
+          }
+        }
+      }
+    },
+    "Rotate Counterclockwise": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عكس عقارب الساعة"
           }
         }
       }

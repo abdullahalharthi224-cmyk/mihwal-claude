@@ -11,6 +11,8 @@ enum PhotoSaver {
         try await PHPhotoLibrary.shared().performChanges {
             for url in urls {
                 let request = PHAssetCreationRequest.forAsset()
+                // A new photo: dated now, so it shows up with today's pictures.
+                request.creationDate = Date()
                 request.addResource(with: .photo, fileURL: url, options: nil)
             }
         }

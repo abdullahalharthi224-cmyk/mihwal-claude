@@ -24,6 +24,11 @@ struct FileRow: View {
                         Text(verbatim: "·")
                         Text("\(pages) pages")
                     }
+                    if file.isImage, let size = ImageReader.pixelSize(at: file.url) {
+                        Text(verbatim: "·")
+                        Text(verbatim: "\(size.width) × \(size.height)")
+                            .monospacedDigit()
+                    }
                 }
                 .font(.footnote)
                 .foregroundStyle(.secondary)

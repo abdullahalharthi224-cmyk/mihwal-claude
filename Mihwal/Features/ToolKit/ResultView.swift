@@ -197,9 +197,16 @@ private struct OutputFileRow: View {
                     .foregroundStyle(.primary)
                     .lineLimit(1)
                     .truncationMode(.middle)
-                Text(FileStore.byteCount(of: url).formatted(.byteCount(style: .file)))
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                HStack(spacing: DS.Spacing.xxs) {
+                    Text(FileStore.byteCount(of: url).formatted(.byteCount(style: .file)))
+                    if !isPDF, let size = ImageReader.pixelSize(at: url) {
+                        Text(verbatim: "·")
+                        Text(verbatim: "\(size.width) × \(size.height)")
+                            .monospacedDigit()
+                    }
+                }
+                .font(.footnote)
+                .foregroundStyle(.secondary)
             }
             Spacer(minLength: 0)
             Image(systemName: "eye")
