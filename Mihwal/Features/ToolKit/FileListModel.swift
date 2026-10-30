@@ -128,6 +128,15 @@ final class FileListModel {
         files.move(fromOffsets: source, toOffset: destination)
     }
 
+    /// Moves a file to a new position (used by drag and drop in Merge).
+    func move(_ id: UUID, toIndex target: Int) {
+        guard let from = files.firstIndex(where: { $0.id == id }), !files.isEmpty else { return }
+        let destination = max(0, min(target, files.count - 1))
+        guard from != destination else { return }
+        let file = files.remove(at: from)
+        files.insert(file, at: destination)
+    }
+
     /// Checks the password against the PDF. On success it is remembered for this session only.
     func unlock(_ fileID: UUID, password: String) -> Bool {
         guard let index = files.firstIndex(where: { $0.id == fileID }) else { return false }

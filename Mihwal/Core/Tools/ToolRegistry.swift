@@ -6,17 +6,22 @@ enum ToolRegistry {
     static let all: [ToolDescriptor] = [
         // MARK: Organize PDF
         ToolDescriptor(id: .merge, title: "Merge PDF", subtitle: "Combine several PDFs into one",
-                       symbol: "doc.on.doc", category: .organize, accepts: [.pdf], allowsMultipleFiles: true),
+                       symbol: "doc.on.doc", category: .organize, accepts: [.pdf], allowsMultipleFiles: true,
+                       makeView: { AnyView(MergePDFView(initialFiles: $0)) }),
         ToolDescriptor(id: .split, title: "Split PDF", subtitle: "Turn pages into separate files",
-                       symbol: "scissors", category: .organize, accepts: [.pdf]),
+                       symbol: "scissors", category: .organize, accepts: [.pdf],
+                       makeView: { AnyView(SplitPDFView(initialFiles: $0)) }),
         ToolDescriptor(id: .compressPDF, title: "Compress PDF", subtitle: "Make the file smaller",
                        symbol: "arrow.down.right.and.arrow.up.left", category: .organize, accepts: [.pdf]),
         ToolDescriptor(id: .rotatePDF, title: "Rotate Pages", subtitle: "Turn pages the right way",
-                       symbol: "rotate.right", category: .organize, accepts: [.pdf]),
+                       symbol: "rotate.right", category: .organize, accepts: [.pdf],
+                       makeView: { AnyView(RotatePagesView(initialFiles: $0)) }),
         ToolDescriptor(id: .deletePages, title: "Delete Pages", subtitle: "Remove the pages you don't need",
-                       symbol: "trash", category: .organize, accepts: [.pdf]),
+                       symbol: "trash", category: .organize, accepts: [.pdf],
+                       makeView: { AnyView(DeletePagesView(initialFiles: $0)) }),
         ToolDescriptor(id: .extractPages, title: "Extract Pages", subtitle: "Save chosen pages as a new PDF",
-                       symbol: "arrow.up.doc", category: .organize, accepts: [.pdf]),
+                       symbol: "arrow.up.doc", category: .organize, accepts: [.pdf],
+                       makeView: { AnyView(ExtractPagesView(initialFiles: $0)) }),
         ToolDescriptor(id: .reversePages, title: "Reverse Order", subtitle: "Put the last page first",
                        symbol: "arrow.up.arrow.down", category: .organize, accepts: [.pdf],
                        makeView: { AnyView(ReversePagesView(initialFiles: $0)) }),
@@ -56,6 +61,11 @@ enum ToolRegistry {
 
     static func descriptor(for id: ToolID) -> ToolDescriptor? {
         all.first { $0.id == id }
+    }
+
+    /// The descriptor of a tool that is known to be registered (tests check all are).
+    static func tool(_ id: ToolID) -> ToolDescriptor {
+        descriptor(for: id) ?? all[0]
     }
 
     static func tools(in category: ToolCategory) -> [ToolDescriptor] {

@@ -11,6 +11,9 @@ struct ToolScreen<Options: View>: View {
     let actionTitle: LocalizedStringResource
     var isReady = true
     var footnote: LocalizedStringResource? = nil
+    /// `.list` for simple tools; `.scroll` for tools with big lazy grids (pages, merge),
+    /// because a lazy grid inside a List row would load every thumbnail at once.
+    var layout: Layout = .list
     let onRun: () -> Void
     @ViewBuilder let options: () -> Options
 
@@ -20,6 +23,11 @@ struct ToolScreen<Options: View>: View {
     @State private var passwordText = ""
     /// Set when a run stopped for a password, so it restarts once the right one is entered.
     @State private var retryRunAfterUnlock = false
+
+    enum Layout {
+        case list
+        case scroll
+    }
 
     /// One sheet slot for everything this screen presents. Separate `.fileImporter` and
     /// `.sheet` modifiers on the same view compete for the same presentation, and the
@@ -124,6 +132,29 @@ struct ToolScreen<Options: View>: View {
                 }
             }
             .background(DS.Palette.background)
+        } else if layout == .scroll {
+            ScrollView {
+                VStack(alignment: .leading, spacing: DS.Spacing.l) {
+                    if let error = files.importError {
+                        ImportErrorBanner(error: error) { files.importError = nil }
+                    }
+                    if !files.allowsMultiple, let file = files.files.first {
+                        singleFileCard(file)
+                    }
+                    options()
+                    if files.allowsMultiple {
+                        ImportSourceButtons(files: files, photoItems: $photoItems,
+                                            onChooseFiles: { chooseFiles() })
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+                .padding(.horizontal, DS.Spacing.m)
+                .padding(.vertical, DS.Spacing.s)
+            }
+            .background(DS.Palette.background)
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                actionBar
+            }
         } else {
             List {
                 if let error = files.importError {
@@ -136,6 +167,21 @@ struct ToolScreen<Options: View>: View {
             }
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 actionBar
+            }
+        }
+    }
+
+    private func singleFileCard(_ file: ImportedFile) -> some View {
+        OptionCard {
+            FileRow(file: file, password: files.input.password(for: file)) {
+                passwordRequest = PasswordRequest(fileID: file.id, fileName: file.name, wasWrong: false)
+            }
+            Divider()
+            Button {
+                chooseFiles()
+            } label: {
+                Label("Choose another file", systemImage: "arrow.triangle.2.circlepath")
+                    .font(.subheadline)
             }
         }
     }

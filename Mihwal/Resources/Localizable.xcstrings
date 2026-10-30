@@ -66,6 +66,70 @@
         }
       }
     },
+    "%lld files will be created": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld file will be created"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld files will be created"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لن يُنشأ أي ملف"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "سيُنشأ ملف واحد"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "سيُنشأ ملفان"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "سيُنشأ %lld ملفات"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "سيُنشأ %lld ملفاً"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "سيُنشأ %lld ملف"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld pages": {
       "localizations": {
         "en": {
@@ -130,12 +194,160 @@
         }
       }
     },
+    "%lld pages per file": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld page per file"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pages per file"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لا صفحات في كل ملف"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صفحة واحدة في كل ملف"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صفحتان في كل ملف"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحات في كل ملف"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحة في كل ملف"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحة في كل ملف"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld selected": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld selected"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld selected"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لم يُحدَّد شيء"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صفحة واحدة محددة"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صفحتان محددتان"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحات محددة"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحة محددة"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صفحة محددة"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "A PDF needs at least one page. Leave at least one page unselected.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملف PDF يحتاج صفحة واحدة على الأقل. اترك صفحة واحدة على الأقل دون تحديد."
+          }
+        }
+      }
+    },
     "Add a file to get started.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "أضف ملفاً للبدء."
+          }
+        }
+      }
+    },
+    "Add at least two PDFs to merge.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف ملفَي PDF على الأقل للدمج."
           }
         }
       }
@@ -250,6 +462,26 @@
         }
       }
     },
+    "Choose pages and a direction to rotate.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر الصفحات واتجاه التدوير."
+          }
+        }
+      }
+    },
+    "Choose where to split to make at least two files.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر أين تريد التقسيم لتحصل على ملفين على الأقل."
+          }
+        }
+      }
+    },
     "Clear": {
       "localizations": {
         "ar": {
@@ -340,12 +572,42 @@
         }
       }
     },
+    "Custom": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مخصص"
+          }
+        }
+      }
+    },
     "Delete Pages": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "حذف صفحات"
+          }
+        }
+      }
+    },
+    "Delete Selected Pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احذف الصفحات المحددة"
+          }
+        }
+      }
+    },
+    "Deselect All": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلغاء تحديد الكل"
           }
         }
       }
@@ -380,6 +642,16 @@
         }
       }
     },
+    "Drag the files to change their order.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسحب الملفات لتغيير ترتيبها."
+          }
+        }
+      }
+    },
     "Enter password": {
       "localizations": {
         "ar": {
@@ -400,12 +672,42 @@
         }
       }
     },
+    "Every N pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل عدد من الصفحات"
+          }
+        }
+      }
+    },
+    "Every page": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل صفحة"
+          }
+        }
+      }
+    },
     "Extract Pages": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "استخراج صفحات"
+          }
+        }
+      }
+    },
+    "Extract Selected Pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخرج الصفحات المحددة"
           }
         }
       }
@@ -436,6 +738,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "الملف"
+          }
+        }
+      }
+    },
+    "File %lld: %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الملف %lld: %@"
           }
         }
       }
@@ -500,6 +812,26 @@
         }
       }
     },
+    "Keep at least one page.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أبقِ صفحة واحدة على الأقل."
+          }
+        }
+      }
+    },
+    "Locked": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مقفل"
+          }
+        }
+      }
+    },
     "Make the file smaller": {
       "localizations": {
         "ar": {
@@ -516,6 +848,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "دمج PDF"
+          }
+        }
+      }
+    },
+    "Merge PDFs": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ادمج الملفات"
           }
         }
       }
@@ -546,6 +888,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "يعمل مِحوَل مع ملفات PDF والصور والملفات النصية."
+          }
+        }
+      }
+    },
+    "Move Earlier": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقل للأمام"
+          }
+        }
+      }
+    },
+    "Move Later": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقل للخلف"
+          }
+        }
+      }
+    },
+    "Move to End": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقل إلى النهاية"
+          }
+        }
+      }
+    },
+    "Move to Start": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقل إلى البداية"
           }
         }
       }
@@ -660,6 +1042,16 @@
         }
       }
     },
+    "Page %lld": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصفحة %lld"
+          }
+        }
+      }
+    },
     "Page %lld will become page 1.": {
       "localizations": {
         "ar": {
@@ -726,6 +1118,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "المستخدمة مؤخراً"
+          }
+        }
+      }
+    },
+    "Remove": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة"
           }
         }
       }
@@ -820,12 +1222,42 @@
         }
       }
     },
+    "Rotate Left": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تدوير لليسار"
+          }
+        }
+      }
+    },
     "Rotate Pages": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "تدوير الصفحات"
+          }
+        }
+      }
+    },
+    "Rotate Right": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تدوير لليمين"
+          }
+        }
+      }
+    },
+    "Save Rotated PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احفظ الملف بعد التدوير"
           }
         }
       }
@@ -900,6 +1332,36 @@
         }
       }
     },
+    "Select All": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحديد الكل"
+          }
+        }
+      }
+    },
+    "Select the pages you want to delete.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدّد الصفحات التي تريد حذفها."
+          }
+        }
+      }
+    },
+    "Select the pages you want to extract.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدّد الصفحات التي تريد استخراجها."
+          }
+        }
+      }
+    },
     "Share": {
       "localizations": {
         "ar": {
@@ -960,12 +1422,72 @@
         }
       }
     },
+    "Split mode": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "طريقة التقسيم"
+          }
+        }
+      }
+    },
     "Stamp text across your pages": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "اطبع نصاً على صفحاتك"
+          }
+        }
+      }
+    },
+    "Tap a page to start a new file there.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على صفحة ليبدأ منها ملف جديد."
+          }
+        }
+      }
+    },
+    "Tap pages to choose them, or rotate all at once.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على الصفحات لتحديدها، أو دوّرها كلها مرة واحدة."
+          }
+        }
+      }
+    },
+    "Tap the lock above and enter its password to see the pages.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على القفل في الأعلى وأدخل كلمة المرور لترى الصفحات."
+          }
+        }
+      }
+    },
+    "Tap the pages to copy into a new PDF.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على الصفحات التي تريد نسخها إلى ملف جديد."
+          }
+        }
+      }
+    },
+    "Tap the pages you want to remove.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على الصفحات التي تريد إزالتها."
           }
         }
       }
@@ -990,6 +1512,26 @@
         }
       }
     },
+    "The buttons rotate the selected pages.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الأزرار تدوّر الصفحات المحددة."
+          }
+        }
+      }
+    },
+    "This PDF has only one page, so it can't be split.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا الملف فيه صفحة واحدة فقط، فلا يمكن تقسيمه."
+          }
+        }
+      }
+    },
     "This PDF has only one page, so there is nothing to reverse.": {
       "localizations": {
         "ar": {
@@ -1010,12 +1552,42 @@
         }
       }
     },
+    "This PDF is protected": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا الملف محمي"
+          }
+        }
+      }
+    },
     "This tool arrives in a coming update.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "ستصل هذه الأداة في تحديث قادم."
+          }
+        }
+      }
+    },
+    "This would make only one file. Choose where to split.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سينتج ملف واحد فقط. اختر أين تريد التقسيم."
+          }
+        }
+      }
+    },
+    "Turn at least one page to save.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دوّر صفحة واحدة على الأقل للحفظ."
           }
         }
       }
@@ -1170,12 +1742,72 @@
         }
       }
     },
+    "edited": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معدّل"
+          }
+        }
+      }
+    },
+    "extracted": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مستخرج"
+          }
+        }
+      }
+    },
+    "merged": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مدمج"
+          }
+        }
+      }
+    },
+    "page %lld": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صفحة %lld"
+          }
+        }
+      }
+    },
+    "pages %lld–%lld": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصفحات %lld–%lld"
+          }
+        }
+      }
+    },
     "reversed": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "معكوس"
+          }
+        }
+      }
+    },
+    "rotated": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مدوّر"
           }
         }
       }
