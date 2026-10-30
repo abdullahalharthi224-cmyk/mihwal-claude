@@ -130,6 +130,134 @@
         }
       }
     },
+    "%lld images were already small, so they were kept as they were.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld image was already small, so it was kept as it was."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld images were already small, so they were kept as they were."
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لم تُترك أي صورة كما هي."
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صورة واحدة كانت صغيرة أصلاً، فتُركت كما هي."
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صورتان كانتا صغيرتين أصلاً، فتُركتا كما هما."
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صور كانت صغيرة أصلاً، فتُركت كما هي."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صورة كانت صغيرة أصلاً، فتُركت كما هي."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صورة كانت صغيرة أصلاً، فتُركت كما هي."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld images were already that small, so their size was kept.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld image was already that small, so its size was kept."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld images were already that small, so their size was kept."
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لم يبقَ مقاس أي صورة كما هو."
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صورة واحدة كانت بهذا المقاس أو أصغر، فبقي مقاسها."
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صورتان كانتا بهذا المقاس أو أصغر، فبقي مقاسهما."
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صور كانت بهذا المقاس أو أصغر، فبقي مقاسها."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صورة كانت بهذا المقاس أو أصغر، فبقي مقاسها."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صورة كانت بهذا المقاس أو أصغر، فبقي مقاسها."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld pages": {
       "localizations": {
         "en": {
@@ -332,12 +460,32 @@
         }
       }
     },
+    "Add Watermark": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف العلامة المائية"
+          }
+        }
+      }
+    },
     "Add a file to get started.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "أضف ملفاً للبدء."
+          }
+        }
+      }
+    },
+    "Add a photo and type your text to see a preview.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف صورة واكتب النص لترى المعاينة."
           }
         }
       }
@@ -402,12 +550,92 @@
         }
       }
     },
+    "Angle": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الزاوية"
+          }
+        }
+      }
+    },
+    "Arabic and English can be mixed.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكنك المزج بين العربية والإنجليزية."
+          }
+        }
+      }
+    },
+    "Balanced": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متوازنة"
+          }
+        }
+      }
+    },
+    "Balanced is hard to tell apart from the original on a phone screen.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الجودة المتوازنة يصعب تمييزها عن الأصل على شاشة الجوال."
+          }
+        }
+      }
+    },
     "Before": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "قبل"
+          }
+        }
+      }
+    },
+    "Black": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أسود"
+          }
+        }
+      }
+    },
+    "Blue": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أزرق"
+          }
+        }
+      }
+    },
+    "Bottom left": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أسفل اليسار"
+          }
+        }
+      }
+    },
+    "Bottom right": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أسفل اليمين"
           }
         }
       }
@@ -432,12 +660,32 @@
         }
       }
     },
+    "Center": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوسط"
+          }
+        }
+      }
+    },
     "Change width and height": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "غيّر العرض والارتفاع"
+          }
+        }
+      }
+    },
+    "Choose a rotation or a flip first.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختر تدويراً أو قلباً أولاً."
           }
         }
       }
@@ -488,6 +736,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "مسح"
+          }
+        }
+      }
+    },
+    "Color": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اللون"
           }
         }
       }
@@ -548,6 +806,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "تحويل صيغة الصورة"
+          }
+        }
+      }
+    },
+    "Convert Images": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حوّل الصور"
+          }
+        }
+      }
+    },
+    "Convert to": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التحويل إلى"
           }
         }
       }
@@ -762,6 +1040,56 @@
         }
       }
     },
+    "First photo": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصورة الأولى"
+          }
+        }
+      }
+    },
+    "Flip Horizontal": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قلب أفقي"
+          }
+        }
+      }
+    },
+    "Flip Vertical": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قلب عمودي"
+          }
+        }
+      }
+    },
+    "Format": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصيغة"
+          }
+        }
+      }
+    },
+    "Format and size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصيغة والمقاس"
+          }
+        }
+      }
+    },
     "Free up some space on your iPhone, then try again.": {
       "localizations": {
         "ar": {
@@ -778,6 +1106,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "انقل النص إلى مستند Word"
+          }
+        }
+      }
+    },
+    "HEIC can't be created on this device.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن إنشاء صيغة HEIC على هذا الجهاز."
+          }
+        }
+      }
+    },
+    "HEIC is about half the size of JPG. Some Windows apps can't open it.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حجم HEIC نحو نصف حجم JPG، لكن بعض برامج ويندوز لا تفتحها."
+          }
+        }
+      }
+    },
+    "High": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عالية"
           }
         }
       }
@@ -812,12 +1170,32 @@
         }
       }
     },
+    "Keep": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كما هي"
+          }
+        }
+      }
+    },
     "Keep at least one page.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "أبقِ صفحة واحدة على الأقل."
+          }
+        }
+      }
+    },
+    "Large": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كبير"
           }
         }
       }
@@ -832,12 +1210,42 @@
         }
       }
     },
+    "Longest side": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أطول ضلع"
+          }
+        }
+      }
+    },
     "Make the file smaller": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "صغّر حجم الملف"
+          }
+        }
+      }
+    },
+    "Maximum size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أقصى مقاس"
+          }
+        }
+      }
+    },
+    "Medium": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متوسط"
           }
         }
       }
@@ -932,6 +1340,16 @@
         }
       }
     },
+    "New size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المقاس الجديد"
+          }
+        }
+      }
+    },
     "No access to Photos": {
       "localizations": {
         "ar": {
@@ -982,6 +1400,16 @@
         }
       }
     },
+    "Opacity": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الشفافية"
+          }
+        }
+      }
+    },
     "Open in Mihwal": {
       "localizations": {
         "ar": {
@@ -1012,6 +1440,16 @@
         }
       }
     },
+    "Original size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المقاس الأصلي"
+          }
+        }
+      }
+    },
     "PDF to Images": {
       "localizations": {
         "ar": {
@@ -1038,6 +1476,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "PDF إلى Word"
+          }
+        }
+      }
+    },
+    "PNG files only get smaller when they are converted or made smaller.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملفات PNG لا يصغر حجمها إلا بتحويلها أو تصغير مقاسها."
           }
         }
       }
@@ -1092,12 +1540,62 @@
         }
       }
     },
+    "Percentage": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسبة مئوية"
+          }
+        }
+      }
+    },
     "Photos": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "الصور"
+          }
+        }
+      }
+    },
+    "Photos can store where they were taken. Removing it keeps that private. Camera details are kept.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قد تحفظ الصور مكان التقاطها. إزالته تحافظ على خصوصيتك، وتبقى معلومات الكاميرا."
+          }
+        }
+      }
+    },
+    "Position": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الموضع"
+          }
+        }
+      }
+    },
+    "Preview": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معاينة"
+          }
+        }
+      }
+    },
+    "Preview of the first photo with the watermark": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معاينة الصورة الأولى مع العلامة المائية"
           }
         }
       }
@@ -1112,12 +1610,32 @@
         }
       }
     },
+    "Quality": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الجودة"
+          }
+        }
+      }
+    },
     "Recent": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "المستخدمة مؤخراً"
+          }
+        }
+      }
+    },
+    "Red": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أحمر"
           }
         }
       }
@@ -1152,6 +1670,16 @@
         }
       }
     },
+    "Remove location": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إزالة الموقع"
+          }
+        }
+      }
+    },
     "Remove protection with your password": {
       "localizations": {
         "ar": {
@@ -1172,12 +1700,42 @@
         }
       }
     },
+    "Repeat across": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تكرار على الصورة كلها"
+          }
+        }
+      }
+    },
+    "Reset": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعادة ضبط"
+          }
+        }
+      }
+    },
     "Resize Images": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "تغيير مقاس الصور"
+          }
+        }
+      }
+    },
+    "Resize by": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تغيير المقاس حسب"
           }
         }
       }
@@ -1258,6 +1816,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "تدوير لليمين"
+          }
+        }
+      }
+    },
+    "Rotate or flip to continue.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دوّر أو اقلب للمتابعة."
+          }
+        }
+      }
+    },
+    "Save Images": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احفظ الصور"
           }
         }
       }
@@ -1382,12 +1960,52 @@
         }
       }
     },
+    "Sharper": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أوضح"
+          }
+        }
+      }
+    },
     "Shows a preview": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "يعرض معاينة"
+          }
+        }
+      }
+    },
+    "Size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الحجم"
+          }
+        }
+      }
+    },
+    "Small": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صغير"
+          }
+        }
+      }
+    },
+    "Smaller": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصغر"
           }
         }
       }
@@ -1452,6 +2070,16 @@
         }
       }
     },
+    "Style": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الشكل"
+          }
+        }
+      }
+    },
     "Tap a page to start a new file there.": {
       "localizations": {
         "ar": {
@@ -1502,6 +2130,16 @@
         }
       }
     },
+    "Text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النص"
+          }
+        }
+      }
+    },
     "Text to PDF": {
       "localizations": {
         "ar": {
@@ -1548,6 +2186,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "حُذف ملف النتيجة. شغّل الأداة مرة أخرى لإنشائه من جديد."
+          }
+        }
+      }
+    },
+    "The same change is applied to every photo.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُطبَّق التغيير نفسه على كل الصور."
+          }
+        }
+      }
+    },
+    "The shape of the photo is always kept, and photos are never enlarged.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبقى شكل الصورة كما هو دائماً، ولا تُكبَّر الصور أبداً."
           }
         }
       }
@@ -1612,6 +2270,26 @@
         }
       }
     },
+    "Top left": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعلى اليسار"
+          }
+        }
+      }
+    },
+    "Top right": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعلى اليمين"
+          }
+        }
+      }
+    },
     "Turn at least one page to save.": {
       "localizations": {
         "ar": {
@@ -1658,6 +2336,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "حوّل الصور إلى ملف PDF واحد"
+          }
+        }
+      }
+    },
+    "Type the watermark text first.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتب نص العلامة المائية أولاً."
           }
         }
       }
@@ -1722,6 +2410,26 @@
         }
       }
     },
+    "Watermark text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نص العلامة المائية"
+          }
+        }
+      }
+    },
+    "White": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أبيض"
+          }
+        }
+      }
+    },
     "Working…": {
       "localizations": {
         "ar": {
@@ -1762,12 +2470,42 @@
         }
       }
     },
+    "Yellow": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصفر"
+          }
+        }
+      }
+    },
     "Your files stayed on this iPhone.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "ملفاتك بقيت على هذا الجهاز."
+          }
+        }
+      }
+    },
+    "compressed": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مضغوط"
+          }
+        }
+      }
+    },
+    "converted": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "محوّل"
           }
         }
       }
@@ -1822,6 +2560,16 @@
         }
       }
     },
+    "resized": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بمقاس جديد"
+          }
+        }
+      }
+    },
     "reversed": {
       "localizations": {
         "ar": {
@@ -1838,6 +2586,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "مدوّر"
+          }
+        }
+      }
+    },
+    "watermarked": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بعلامة مائية"
+          }
+        }
+      }
+    },
+    "© Your name": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "© اسمك"
           }
         }
       }

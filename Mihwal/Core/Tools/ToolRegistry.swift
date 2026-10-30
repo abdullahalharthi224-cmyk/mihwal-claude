@@ -48,15 +48,20 @@ enum ToolRegistry {
 
         // MARK: Images
         ToolDescriptor(id: .convertImage, title: "Convert Image", subtitle: "JPG, PNG or HEIC from any photo",
-                       symbol: "arrow.triangle.2.circlepath", category: .images, accepts: [.image], allowsMultipleFiles: true),
+                       symbol: "arrow.triangle.2.circlepath", category: .images, accepts: [.image], allowsMultipleFiles: true,
+                       makeView: { AnyView(ConvertImageView(initialFiles: $0)) }),
         ToolDescriptor(id: .compressImage, title: "Compress Images", subtitle: "Smaller photos, same look",
-                       symbol: "rectangle.compress.vertical", category: .images, accepts: [.image], allowsMultipleFiles: true),
+                       symbol: "rectangle.compress.vertical", category: .images, accepts: [.image], allowsMultipleFiles: true,
+                       makeView: { AnyView(CompressImageView(initialFiles: $0)) }),
         ToolDescriptor(id: .resizeImage, title: "Resize Images", subtitle: "Change width and height",
-                       symbol: "arrow.up.left.and.arrow.down.right", category: .images, accepts: [.image], allowsMultipleFiles: true),
+                       symbol: "arrow.up.left.and.arrow.down.right", category: .images, accepts: [.image], allowsMultipleFiles: true,
+                       makeView: { AnyView(ResizeImageView(initialFiles: $0)) }),
         ToolDescriptor(id: .rotateImage, title: "Rotate & Flip", subtitle: "Turn or mirror your photos",
-                       symbol: "rotate.left", category: .images, accepts: [.image], allowsMultipleFiles: true),
+                       symbol: "rotate.left", category: .images, accepts: [.image], allowsMultipleFiles: true,
+                       makeView: { AnyView(RotateImageView(initialFiles: $0)) }),
         ToolDescriptor(id: .watermarkImage, title: "Watermark Images", subtitle: "Add your text on top of photos",
-                       symbol: "textformat", category: .images, accepts: [.image], allowsMultipleFiles: true),
+                       symbol: "textformat", category: .images, accepts: [.image], allowsMultipleFiles: true,
+                       makeView: { AnyView(WatermarkImageView(initialFiles: $0)) }),
     ]
 
     static func descriptor(for id: ToolID) -> ToolDescriptor? {

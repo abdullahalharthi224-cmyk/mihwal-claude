@@ -1,5 +1,7 @@
+import ImageIO
 import PDFKit
 import UIKit
+import UniformTypeIdentifiers
 import XCTest
 @testable import Mihwal
 
@@ -74,4 +76,88 @@ extension XCTestCase {
             try await Task.sleep(for: .milliseconds(20))
         }
     }
+}
+
+
+/// Image fixtures: a "split" image (left half red, right half blue) makes rotation,
+/// flips and EXIF orientation checkable by looking at a few pixels.
+enum ImageFixtures {
+    static func splitCGImage(width: Int = 80, height: Int = 40) throws -> CGImage {
+        let space = try XCTUnwrap(CGColorSpace(name: CGColorSpace.sRGB))
+        let context = try XCTUnwrap(CGContext(data: nil, width: width, height: height, bitsPerComponent: 8,
+                                              bytesPerRow: 0, space: space,
+                                              bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue))
+        context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
+        context.fill(CGRect(x: 0, y: 0, width: width / 2, height: height))
+        context.setFillColor(CGColor(red: 0, green: 0, blue: 1, alpha: 1))
+        context.fill(CGRect(x: width / 2, y: 0, width: width - width / 2, height: height))
+        return try XCTUnwrap(context.makeImage())
+    }
+
+    /// Writes an image with optional EXIF orientation and GPS location.
+    static func write(_ image: CGImage, type: UTType, name: String,
+                      orientation: Int = 1, withLocation: Bool = false, quality: Double = 0.95) throws -> URL {
+        let url = try TestFixtures.scratchDirectory().appendingPathComponent(name)
+        let destination = try XCTUnwrap(CGImageDestinationCreateWithURL(url as CFURL, type.identifier as CFString, 1, nil))
+        var properties: [String: Any] = [
+            kCGImagePropertyOrientation as String: orientation,
+            kCGImageDestinationLossyCompressionQuality as String: quality,
+        ]
+        if withLocation {
+            properties[kCGImagePropertyGPSDictionary as String] = [
+                kCGImagePropertyGPSLatitude as String: 24.7136,
+                kCGImagePropertyGPSLatitudeRef as String: "N",
+                kCGImagePropertyGPSLongitude as String: 46.6753,
+                kCGImagePropertyGPSLongitudeRef as String: "E",
+            ]
+        }
+        CGImageDestinationAddImage(destination, image, properties as CFDictionary)
+        XCTAssertTrue(CGImageDestinationFinalize(destination))
+        return url
+    }
+
+    /// A photo-like gradient (compresses very differently as PNG and JPEG).
+    static func gradientCGImage(width: Int = 600, height: Int = 400) throws -> CGImage {
+        let space = try XCTUnwrap(CGColorSpace(name: CGColorSpace.sRGB))
+        let context = try XCTUnwrap(CGContext(data: nil, width: width, height: height, bitsPerComponent: 8,
+                                              bytesPerRow: 0, space: space,
+                                              bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue))
+        for x in stride(from: 0, to: width, by: 2) {
+            for y in stride(from: 0, to: height, by: 2) {
+                let r = CGFloat(x) / CGFloat(width)
+                let g = CGFloat(y) / CGFloat(height)
+                let b = CGFloat((x * 7 + y * 13) % 255) / 255
+                context.setFillColor(CGColor(red: r, green: g, blue: b, alpha: 1))
+                context.fill(CGRect(x: x, y: y, width: 2, height: 2))
+            }
+        }
+        return try XCTUnwrap(context.makeImage())
+    }
+
+    /// The image as stored (no orientation applied) and its properties.
+    static func read(_ url: URL) throws -> (image: CGImage, properties: [String: Any]) {
+        let source = try XCTUnwrap(CGImageSourceCreateWithURL(url as CFURL, nil))
+        let image = try XCTUnwrap(CGImageSourceCreateImageAtIndex(source, 0, nil))
+        let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [String: Any] ?? [:]
+        return (image, properties)
+    }
+
+    /// Color at (x, y), with (0, 0) the top-left pixel.
+    static func pixel(_ image: CGImage, x: Int, y: Int) throws -> (red: Int, green: Int, blue: Int) {
+        let space = try XCTUnwrap(CGColorSpace(name: CGColorSpace.sRGB))
+        var bytes = [UInt8](repeating: 0, count: 4)
+        let drawn = bytes.withUnsafeMutableBytes { buffer -> Bool in
+            guard let context = CGContext(data: buffer.baseAddress, width: 1, height: 1, bitsPerComponent: 8,
+                                          bytesPerRow: 4, space: space,
+                                          bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return false }
+            context.translateBy(x: -CGFloat(x), y: -CGFloat(image.height - 1 - y))
+            context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+            return true
+        }
+        XCTAssertTrue(drawn)
+        return (Int(bytes[0]), Int(bytes[1]), Int(bytes[2]))
+    }
+
+    static func isRed(_ p: (red: Int, green: Int, blue: Int)) -> Bool { p.red > 180 && p.blue < 90 }
+    static func isBlue(_ p: (red: Int, green: Int, blue: Int)) -> Bool { p.blue > 180 && p.red < 90 }
 }
