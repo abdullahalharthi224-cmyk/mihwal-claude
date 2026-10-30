@@ -164,7 +164,13 @@ struct ToolScreen<Options: View>: View {
             Text(files.allowsMultiple ? LocalizedStringKey("Files") : LocalizedStringKey("File"))
         } footer: {
             if files.files.count > 1 {
-                Text("\(files.files.count) files · \(files.totalBytes.formatted(.byteCount(style: .file)))")
+                // Plural strings take only the count. Mixing the count with another
+                // argument breaks Arabic forms that omit the number (e.g. «ملفان»).
+                HStack(spacing: DS.Spacing.xxs) {
+                    Text("\(files.files.count) files")
+                    Text(verbatim: "·")
+                    Text(files.totalBytes.formatted(.byteCount(style: .file)))
+                }
             }
         }
     }

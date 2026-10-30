@@ -2,7 +2,7 @@
   "sourceLanguage": "en",
   "version": "1.0",
   "strings": {
-    "%lld files · %@": {
+    "%lld files": {
       "localizations": {
         "en": {
           "variations": {
@@ -10,13 +10,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld file · %@"
+                  "value": "%lld file"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld files · %@"
+                  "value": "%lld files"
                 }
               }
             }
@@ -28,37 +28,37 @@
               "zero": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "لا ملفات · %@"
+                  "value": "لا ملفات"
                 }
               },
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "ملف واحد · %@"
+                  "value": "ملف واحد"
                 }
               },
               "two": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "ملفان · %@"
+                  "value": "ملفان"
                 }
               },
               "few": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld ملفات · %@"
+                  "value": "%lld ملفات"
                 }
               },
               "many": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld ملفاً · %@"
+                  "value": "%lld ملفاً"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%lld ملف · %@"
+                  "value": "%lld ملف"
                 }
               }
             }
