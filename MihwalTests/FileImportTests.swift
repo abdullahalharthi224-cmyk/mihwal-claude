@@ -124,4 +124,17 @@ final class FileImportTests: XCTestCase {
         XCTAssertNil(model.input.password(for: file))
         XCTAssertEqual(model.unlock(file.id, password: "owner"), .unlocked)
     }
+
+    func testArabicDigitsWorkAsPasswordDigits() async throws {
+        XCTAssertEqual(PasswordInput.candidates("١٢٣٤"), ["١٢٣٤", "1234"])
+        XCTAssertEqual(PasswordInput.candidates("۱۲۳۴"), ["۱۲۳۴", "1234"])
+        XCTAssertEqual(PasswordInput.candidates("abc1"), ["abc1"])
+
+        let model = FileListModel(accepts: [.pdf], allowsMultiple: false)
+        model.importURLs([try TestFixtures.makeEncryptedPDF(password: "1234")])
+        try await waitUntil { !model.isImporting }
+        let file = try XCTUnwrap(model.files.first)
+        XCTAssertEqual(model.unlock(file.id, password: "١٢٣٤"), .unlocked, "Typed on an Arabic keyboard")
+        XCTAssertEqual(model.input.password(for: file), "1234", "The working form is kept")
+    }
 }

@@ -66,6 +66,33 @@ jobs:
             -resultBundlePath build/TestResults.xcresult \
             -quiet
 
+      # Test counts for the run page and the release notes (readable without the logs).
+      - name: Test summary
+        if: always()
+        run: |
+          mkdir -p build
+          xcrun xcresulttool get test-results summary --path build/TestResults.xcresult > build/test-summary.json 2>/dev/null || true
+          python3 - <<'PY'
+          import json, os
+          try:
+              data = json.load(open("build/test-summary.json"))
+          except Exception:
+              data = {}
+          passed = data.get("passedTests")
+          failed = data.get("failedTests", 0)
+          skipped = data.get("skippedTests", 0)
+          if passed is None:
+              line = "Test results unavailable"
+          elif failed:
+              line = f"❌ {failed} tests failed, {passed} passed"
+          else:
+              line = f"✅ {passed} tests passed, {failed} failed, {skipped} skipped"
+          print(line)
+          open("build/test-line.txt", "w").write(line)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write(f"## Unit tests\n\n{line}\n")
+          PY
+
       # -quiet hides why a test failed; print each failing test and its message.
       - name: Show failing tests
         if: failure()
@@ -132,6 +159,17 @@ jobs:
       # A direct .ipa download link (no zip): every green build on main becomes the
       # "latest" release, so this URL always serves the newest build:
       # https://github.com/<owner>/<repo>/releases/latest/download/Mihwal.ipa
+      - name: Write release notes
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          {
+            echo "$(cat build/test-line.txt 2>/dev/null || echo 'Tests passed')"
+            echo ""
+            echo "Unsigned IPA for sideloading. Bundle id \`com.abdullah.mihwal.claude\`."
+            echo "Commit: ${{ github.sha }}"
+          } > build/release-notes.md
+          cat build/release-notes.md
+
       - name: Publish IPA as the latest release
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
@@ -141,6 +179,4 @@ jobs:
           target_commitish: ${{ github.sha }}
           make_latest: true
           files: Mihwal.ipa
-          body: |
-            Unsigned IPA for sideloading. Bundle id `com.abdullah.mihwal.claude`.
-            Commit: ${{ github.sha }}
+          body_path: build/release-notes.md

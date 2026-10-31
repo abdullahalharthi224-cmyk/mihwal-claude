@@ -1310,6 +1310,16 @@
         }
       }
     },
+    "Hide password": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إخفاء كلمة المرور"
+          }
+        }
+      }
+    },
     "High": {
       "localizations": {
         "ar": {
@@ -2366,6 +2376,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "أوضح"
+          }
+        }
+      }
+    },
+    "Show password": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إظهار كلمة المرور"
           }
         }
       }

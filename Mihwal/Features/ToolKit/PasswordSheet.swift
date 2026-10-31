@@ -13,6 +13,7 @@ struct PasswordSheet: View {
     @State private var password = ""
     @State private var problem: String?
     @State private var attempts = 0
+    @State private var isRevealed = false
     @FocusState private var isFocused: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -49,12 +50,41 @@ struct PasswordSheet: View {
                         .fixedSize(horizontal: false, vertical: true)
 
                     VStack(alignment: .leading, spacing: DS.Spacing.xs) {
-                        SecureField("Password", text: $password)
-                            .textContentType(.password)
+                        HStack(spacing: DS.Spacing.xs) {
+                            Group {
+                                if isRevealed {
+                                    TextField(text: $password, prompt: Text("Password").foregroundColor(.secondary)) {
+                                        Text("Password")
+                                    }
+                                } else {
+                                    SecureField(text: $password, prompt: Text("Password").foregroundColor(.secondary)) {
+                                        Text("Password")
+                                    }
+                                }
+                            }
+                            // PDF passwords are usually Latin letters and digits: start with an
+                            // English keyboard, and never autocorrect or capitalize.
+                            .keyboardType(.asciiCapable)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
                             .submitLabel(.go)
                             .focused($isFocused)
                             .onSubmit(trySubmit)
-                            .padding(DS.Spacing.s)
+                            .font(.body.monospaced())
+
+                            Button {
+                                isRevealed.toggle()
+                                isFocused = true
+                            } label: {
+                                Image(systemName: isRevealed ? "eye.slash" : "eye")
+                                    .foregroundStyle(.secondary)
+                                    .frame(minWidth: 44, minHeight: 44)
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityLabel(isRevealed ? Text("Hide password") : Text("Show password"))
+                        }
+                        .environment(\.layoutDirection, .leftToRight)
+                        .padding(.leading, DS.Spacing.s)
                             .background(DS.Palette.card, in: RoundedRectangle(cornerRadius: DS.Radius.s, style: .continuous))
                             .overlay(
                                 RoundedRectangle(cornerRadius: DS.Radius.s, style: .continuous)
@@ -92,11 +122,13 @@ struct PasswordSheet: View {
         }
         .presentationDetents([.medium, .large])
         .sensoryFeedback(.error, trigger: attempts)
-        .onAppear { isFocused = true }
         .task {
-            // Sheets sometimes ignore focus set while they are still sliding in.
-            try? await Task.sleep(for: .milliseconds(350))
-            isFocused = true
+            // Focus once, after the sheet has slid in. Setting it again while the user is
+            // typing would make the secure field clear what was typed.
+            try? await Task.sleep(for: .milliseconds(450))
+            if !isFocused {
+                isFocused = true
+            }
         }
     }
 

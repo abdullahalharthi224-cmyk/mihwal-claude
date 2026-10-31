@@ -146,9 +146,21 @@ final class FileListModel {
         case needsOwnerPassword
     }
 
-    /// Checks a password against the PDF. A password that works is remembered for this
-    /// session only (never stored on disk).
+    /// Checks a password against the PDF (also with Arabic digits turned into 0–9).
+    /// A password that works is remembered for this session only (never stored on disk).
     func unlock(_ fileID: UUID, password: String) -> UnlockOutcome {
+        var best = UnlockOutcome.wrongPassword
+        for candidate in PasswordInput.candidates(password) {
+            switch attemptUnlock(fileID, password: candidate) {
+            case .unlocked: return .unlocked
+            case .needsOwnerPassword: best = .needsOwnerPassword
+            case .wrongPassword: break
+            }
+        }
+        return best
+    }
+
+    private func attemptUnlock(_ fileID: UUID, password: String) -> UnlockOutcome {
         guard let index = files.firstIndex(where: { $0.id == fileID }),
               let document = PDFDocument(url: files[index].url) else { return .wrongPassword }
         let file = files[index]
