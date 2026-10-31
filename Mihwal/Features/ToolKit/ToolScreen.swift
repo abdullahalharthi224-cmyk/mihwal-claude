@@ -263,6 +263,7 @@ struct ToolScreen<Options: View>: View {
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .disabled(!isReady || runner.isProcessing || files.isImporting)
+            .accessibilityIdentifier("tool.run")
         }
         .padding(.horizontal, DS.Spacing.m)
         .padding(.vertical, DS.Spacing.s)

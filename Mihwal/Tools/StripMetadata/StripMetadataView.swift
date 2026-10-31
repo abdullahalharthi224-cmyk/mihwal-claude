@@ -10,6 +10,22 @@ struct StripMetadataView: View {
     var body: some View {
         ToolScreen(tool: ToolRegistry.tool(.stripMetadata), files: model.files, runner: model.runner,
                    actionTitle: "Remove Metadata", isReady: model.isReady, onRun: { model.run() }) {
+            Section {
+                Label {
+                    VStack(alignment: .leading, spacing: DS.Spacing.xxs) {
+                        Text("What is metadata?")
+                            .font(.subheadline.weight(.semibold))
+                        Text("Hidden information saved inside a PDF, not on its pages: the name of the account that made it (for example in Word), the app used, and dates. Anyone can read it in the file's properties.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                        Text("This tool removes only that hidden information. Nothing written on the pages changes, so a name on a cover page stays.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
+                } icon: {
+                    Image(systemName: "info.circle")
+                }
+            }
             if let report = model.report {
                 Section {
                     if report.fields.isEmpty && !report.hasXMP {

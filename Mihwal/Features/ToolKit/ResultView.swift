@@ -34,6 +34,7 @@ struct ResultView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, DS.Spacing.s)
                     .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("result.success")
                 }
 
                 if output.removedProtection {

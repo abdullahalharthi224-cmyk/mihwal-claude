@@ -13,8 +13,8 @@ struct PasswordSheet: View {
     @State private var password = ""
     @State private var problem: String?
     @State private var attempts = 0
-    @State private var isRevealed = false
-    @FocusState private var isFocused: Bool
+    /// PDF passwords are usually short codes: show them, with a button to hide.
+    @State private var isRevealed = true
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(request: PasswordRequest, submit: @escaping (String) -> FileListModel.UnlockOutcome,
@@ -51,30 +51,12 @@ struct PasswordSheet: View {
 
                     VStack(alignment: .leading, spacing: DS.Spacing.xs) {
                         HStack(spacing: DS.Spacing.xs) {
-                            Group {
-                                if isRevealed {
-                                    TextField(text: $password, prompt: Text("Password").foregroundColor(.secondary)) {
-                                        Text("Password")
-                                    }
-                                } else {
-                                    SecureField(text: $password, prompt: Text("Password").foregroundColor(.secondary)) {
-                                        Text("Password")
-                                    }
-                                }
-                            }
-                            // PDF passwords are usually Latin letters and digits: start with an
-                            // English keyboard, and never autocorrect or capitalize.
-                            .keyboardType(.asciiCapable)
-                            .textInputAutocapitalization(.never)
-                            .autocorrectionDisabled()
-                            .submitLabel(.go)
-                            .focused($isFocused)
-                            .onSubmit(trySubmit)
-                            .font(.body.monospaced())
+                            PasswordField(text: $password, isSecure: !isRevealed,
+                                          placeholder: String(localized: "Password"), onSubmit: trySubmit)
+                                .frame(height: 48)
 
                             Button {
                                 isRevealed.toggle()
-                                isFocused = true
                             } label: {
                                 Image(systemName: isRevealed ? "eye.slash" : "eye")
                                     .foregroundStyle(.secondary)
@@ -85,12 +67,12 @@ struct PasswordSheet: View {
                         }
                         .environment(\.layoutDirection, .leftToRight)
                         .padding(.leading, DS.Spacing.s)
-                            .background(DS.Palette.card, in: RoundedRectangle(cornerRadius: DS.Radius.s, style: .continuous))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: DS.Radius.s, style: .continuous)
-                                    .strokeBorder(problem == nil ? Color.clear : Color.red, lineWidth: 1.5)
-                            )
-                            .modifier(ShakeEffect(travel: reduceMotion ? 0 : 8, animatableData: CGFloat(attempts)))
+                        .background(DS.Palette.card, in: RoundedRectangle(cornerRadius: DS.Radius.s, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: DS.Radius.s, style: .continuous)
+                                .strokeBorder(problem == nil ? Color.clear : Color.red, lineWidth: 1.5)
+                        )
+                        .modifier(ShakeEffect(travel: reduceMotion ? 0 : 8, animatableData: CGFloat(attempts)))
 
                         if let problem {
                             Label(problem, systemImage: "exclamationmark.circle.fill")
@@ -122,14 +104,6 @@ struct PasswordSheet: View {
         }
         .presentationDetents([.medium, .large])
         .sensoryFeedback(.error, trigger: attempts)
-        .task {
-            // Focus once, after the sheet has slid in. Setting it again while the user is
-            // typing would make the secure field clear what was typed.
-            try? await Task.sleep(for: .milliseconds(450))
-            if !isFocused {
-                isFocused = true
-            }
-        }
     }
 
     private func trySubmit() {
@@ -149,7 +123,6 @@ struct PasswordSheet: View {
                     problem = nil
                 }
                 password = ""
-                isFocused = true
             }
         }
     }
@@ -160,7 +133,6 @@ struct PasswordSheet: View {
             attempts += 1
             problem = text
         }
-        isFocused = true
     }
 }
 

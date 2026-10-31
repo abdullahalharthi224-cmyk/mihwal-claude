@@ -1310,6 +1310,16 @@
         }
       }
     },
+    "Hidden information saved inside a PDF, not on its pages: the name of the account that made it (for example in Word), the app used, and dates. Anyone can read it in the file's properties.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معلومات مخفية محفوظة داخل ملف PDF، لا تظهر في صفحاته: مثل اسم الحساب الذي أنشأه (في Word مثلاً)، والبرنامج المستخدم، والتواريخ. يستطيع أي شخص قراءتها من خصائص الملف."
+          }
+        }
+      }
+    },
     "Hide password": {
       "localizations": {
         "ar": {
@@ -2080,12 +2090,12 @@
         }
       }
     },
-    "Removed: %@": {
+    "Removed from the hidden file information: %@": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "حُذف: %@"
+            "value": "حُذف من المعلومات المخفية في الملف: %@"
           }
         }
       }
@@ -2810,6 +2820,16 @@
         }
       }
     },
+    "This tool removes only that hidden information. Nothing written on the pages changes, so a name on a cover page stays.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه الأداة تحذف تلك المعلومات المخفية فقط. لا يتغير أي شيء مكتوب في الصفحات، فالاسم المكتوب على صفحة الغلاف يبقى."
+          }
+        }
+      }
+    },
     "This would make only one file. Choose where to split.": {
       "localizations": {
         "ar": {
@@ -2996,6 +3016,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "نص العلامة المائية"
+          }
+        }
+      }
+    },
+    "What is metadata?": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما هي البيانات الوصفية؟"
+          }
+        }
+      }
+    },
+    "What is written on the pages is unchanged, including names on a cover page.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ما هو مكتوب في الصفحات لم يتغير، بما في ذلك الأسماء المكتوبة على صفحة الغلاف."
           }
         }
       }

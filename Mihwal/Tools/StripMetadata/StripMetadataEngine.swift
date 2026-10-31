@@ -86,10 +86,15 @@ struct StripMetadataEngine: FileTool {
             let scrubbed = (try? PDFInfoScrubber.scrub(url)) ?? false
             progress(1)
             var output = ToolOutput(directory: folder, files: [url])
-            let names = removed.map { String(localized: $0.field.title) }
-            if !names.isEmpty {
-                output.notes.append(String(localized: "Removed: \(names.joined(separator: "، "))"))
+            // Show the values themselves, so it is clear what was removed.
+            let items = removed.map { item -> String in
+                let value = item.value.count > 40 ? String(item.value.prefix(40)) + "…" : item.value
+                return "\(String(localized: item.field.title)) (\(value))"
             }
+            if !items.isEmpty {
+                output.notes.append(String(localized: "Removed from the hidden file information: \(items.joined(separator: "، "))"))
+            }
+            output.notes.append(String(localized: "What is written on the pages is unchanged, including names on a cover page."))
             if !scrubbed {
                 output.notes.append(String(localized: "iOS adds a technical note (the PDF software name and today's date) when saving. It contains nothing about you."))
             }

@@ -9,6 +9,7 @@ struct WatermarkTextSection: View {
             Section {
                 TextField("Watermark text", text: $style.text, prompt: Text("© Your name"))
                     .submitLabel(.done)
+                    .accessibilityIdentifier("watermark.text")
             } header: {
                 Text("Text")
             } footer: {

@@ -13,7 +13,7 @@ concurrency:
 jobs:
   build:
     runs-on: macos-latest
-    timeout-minutes: 45
+    timeout-minutes: 75
     permissions:
       contents: write   # needed to publish the IPA as a GitHub Release
     steps:

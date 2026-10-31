@@ -77,17 +77,32 @@ targets:
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Mihwal.app/Mihwal"
         BUNDLE_LOADER: "$(TEST_HOST)"
 
+  MihwalUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: MihwalUITests
+    dependencies:
+      - target: Mihwal
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.abdullah.mihwal.claude.uitests
+        TEST_TARGET_NAME: Mihwal
+
 schemes:
   Mihwal:
     build:
       targets:
         Mihwal: all
         MihwalTests: [test]
+        MihwalUITests: [test]
     run:
       config: Debug
     test:
       config: Debug
       targets:
         - MihwalTests
+        - MihwalUITests
     archive:
       config: Release

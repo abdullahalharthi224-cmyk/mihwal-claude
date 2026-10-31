@@ -16,6 +16,15 @@ struct MihwalApp: App {
                 .onOpenURL { url in
                     Task { await appState.receive(url) }
                 }
+                #if DEBUG
+                .task {
+                    guard UITestSupport.isActive else { return }
+                    UITestSupport.prepare()
+                    if let route = await UITestSupport.initialRoute() {
+                        appState.path = [route]
+                    }
+                }
+                #endif
         }
     }
 }
