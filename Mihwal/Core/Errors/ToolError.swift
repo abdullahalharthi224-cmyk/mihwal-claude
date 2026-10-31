@@ -5,6 +5,8 @@ enum ToolError: Error, Equatable {
     case noInput
     case passwordRequired(fileID: UUID, fileName: String)
     case wrongPassword(fileID: UUID, fileName: String)
+    /// The PDF opens, but its owner blocked changes; the owner (permissions) password is needed.
+    case ownerPasswordRequired(fileID: UUID, fileName: String, afterAttempt: Bool)
     case corruptedFile(fileName: String)
     case unsupportedFormat(fileName: String)
     case notEnoughStorage
@@ -32,7 +34,7 @@ enum ToolError: Error, Equatable {
 
     var isPasswordProblem: Bool {
         switch self {
-        case .passwordRequired, .wrongPassword: return true
+        case .passwordRequired, .wrongPassword, .ownerPasswordRequired: return true
         default: return false
         }
     }
@@ -42,6 +44,7 @@ enum ToolError: Error, Equatable {
         case .noInput: return String(localized: "No file selected")
         case .passwordRequired: return String(localized: "Password needed")
         case .wrongPassword: return String(localized: "Wrong password")
+        case .ownerPasswordRequired: return String(localized: "Owner password needed")
         case .corruptedFile: return String(localized: "Can't open this file")
         case .unsupportedFormat: return String(localized: "Unsupported file")
         case .notEnoughStorage: return String(localized: "Not enough storage")
@@ -61,6 +64,11 @@ enum ToolError: Error, Equatable {
             return String(localized: "“\(name)” is protected. Enter its password to continue.")
         case .wrongPassword(_, let name):
             return String(localized: "That password didn't open “\(name)”. Check it and try again.")
+        case .ownerPasswordRequired(_, let name, let afterAttempt):
+            if afterAttempt {
+                return String(localized: "That isn't the owner password of “\(name)”. The owner password (also called permissions password) is needed, not only the one that opens it.")
+            }
+            return String(localized: "“\(name)” opens, but its owner blocked changes. Enter the owner password (also called permissions password) to continue.")
         case .corruptedFile(let name):
             return String(localized: "“\(name)” is damaged or isn't a valid file.")
         case .unsupportedFormat(let name):

@@ -265,7 +265,8 @@ struct ToolScreen<Options: View>: View {
         var title: String {
             switch self {
             case .failure(let error): return error.title
-            case .password: return String(localized: "Password needed")
+            case .password(let request):
+                return request.needsOwnerPassword ? String(localized: "Owner password needed") : String(localized: "Password needed")
             }
         }
 
@@ -316,7 +317,8 @@ struct ToolScreen<Options: View>: View {
             // Ask again once this alert has finished closing.
             Task {
                 try? await Task.sleep(for: .milliseconds(400))
-                passwordRequest = PasswordRequest(fileID: request.fileID, fileName: request.fileName, wasWrong: true)
+                passwordRequest = PasswordRequest(fileID: request.fileID, fileName: request.fileName, wasWrong: true,
+                                                  needsOwnerPassword: request.needsOwnerPassword)
             }
         }
     }
@@ -326,13 +328,16 @@ struct PasswordRequest: Identifiable, Equatable {
     let fileID: UUID
     let fileName: String
     let wasWrong: Bool
+    /// The owner (permissions) password is needed, not the one that opens the file.
+    var needsOwnerPassword = false
 
     var id: UUID { fileID }
 
-    init(fileID: UUID, fileName: String, wasWrong: Bool) {
+    init(fileID: UUID, fileName: String, wasWrong: Bool, needsOwnerPassword: Bool = false) {
         self.fileID = fileID
         self.fileName = fileName
         self.wasWrong = wasWrong
+        self.needsOwnerPassword = needsOwnerPassword
     }
 
     init?(_ error: ToolError) {
@@ -341,15 +346,22 @@ struct PasswordRequest: Identifiable, Equatable {
             self.init(fileID: fileID, fileName: fileName, wasWrong: false)
         case let .wrongPassword(fileID, fileName):
             self.init(fileID: fileID, fileName: fileName, wasWrong: true)
+        case let .ownerPasswordRequired(fileID, fileName, afterAttempt):
+            self.init(fileID: fileID, fileName: fileName, wasWrong: afterAttempt, needsOwnerPassword: true)
         default:
             return nil
         }
     }
 
     var message: String {
-        let error: ToolError = wasWrong
-            ? .wrongPassword(fileID: fileID, fileName: fileName)
-            : .passwordRequired(fileID: fileID, fileName: fileName)
+        let error: ToolError
+        if needsOwnerPassword {
+            error = .ownerPasswordRequired(fileID: fileID, fileName: fileName, afterAttempt: wasWrong)
+        } else if wasWrong {
+            error = .wrongPassword(fileID: fileID, fileName: fileName)
+        } else {
+            error = .passwordRequired(fileID: fileID, fileName: fileName)
+        }
         return error.message
     }
 }

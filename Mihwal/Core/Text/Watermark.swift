@@ -81,14 +81,24 @@ enum WatermarkRenderer {
         return CTLineCreateWithAttributedString(string as CFAttributedString)
     }
 
+    /// Draws the photo, then the mark on top. Used for images and their previews.
     static func render(_ image: CGImage, style: WatermarkStyle) -> CGImage? {
-        let text = style.trimmedText
-        guard !text.isEmpty,
+        guard !style.trimmedText.isEmpty,
               let context = ImageCanvas.context(width: image.width, height: image.height,
                                                 like: image, opaque: !image.hasAlpha) else { return nil }
-        let width = CGFloat(image.width)
-        let height = CGFloat(image.height)
-        context.draw(image, in: CGRect(x: 0, y: 0, width: width, height: height))
+        let size = CGSize(width: image.width, height: image.height)
+        context.draw(image, in: CGRect(origin: .zero, size: size))
+        draw(style, in: context, size: size)
+        return context.makeImage()
+    }
+
+    /// Draws the mark into any context whose origin is the bottom-left corner of an area of
+    /// `size` (a photo, or a PDF page). Text size is relative to the shorter side.
+    static func draw(_ style: WatermarkStyle, in context: CGContext, size: CGSize) {
+        let text = style.trimmedText
+        guard !text.isEmpty, size.width > 0, size.height > 0 else { return }
+        let width = size.width
+        let height = size.height
 
         let shorterSide = min(width, height)
         let fontSize = max(8, shorterSide * style.size.fraction)
@@ -102,12 +112,12 @@ enum WatermarkRenderer {
         let lineHeight = ascent + descent
         let radians = CGFloat(style.angle) * .pi / 180
 
-        // Half the size of the rotated text's bounding box, to keep corners inside the image.
+        // Half the size of the rotated text's bounding box, to keep corners inside the area.
         let halfWidth = (abs(cos(radians)) * lineWidth + abs(sin(radians)) * lineHeight) / 2
         let halfHeight = (abs(sin(radians)) * lineWidth + abs(cos(radians)) * lineHeight) / 2
         let margin = shorterSide * 0.04
 
-        func draw(at center: CGPoint) {
+        func drawLine(at center: CGPoint) {
             context.saveGState()
             context.translateBy(x: center.x, y: center.y)
             context.rotate(by: radians)
@@ -124,22 +134,22 @@ enum WatermarkRenderer {
         let bottom = margin + halfHeight
 
         switch style.position {
-        case .center: draw(at: CGPoint(x: width / 2, y: height / 2))
-        case .topLeft: draw(at: CGPoint(x: left, y: top))
-        case .topRight: draw(at: CGPoint(x: right, y: top))
-        case .bottomLeft: draw(at: CGPoint(x: left, y: bottom))
-        case .bottomRight: draw(at: CGPoint(x: right, y: bottom))
+        case .center: drawLine(at: CGPoint(x: width / 2, y: height / 2))
+        case .topLeft: drawLine(at: CGPoint(x: left, y: top))
+        case .topRight: drawLine(at: CGPoint(x: right, y: top))
+        case .bottomLeft: drawLine(at: CGPoint(x: left, y: bottom))
+        case .bottomRight: drawLine(at: CGPoint(x: right, y: bottom))
         case .tiled:
             let stepX = max(halfWidth * 2 + shorterSide * 0.12, 1)
             let stepY = max(halfHeight * 2 + shorterSide * 0.12, 1)
             var row = 0
             var y = -stepY / 2
-            // The cap keeps a tiny font on a huge image from drawing thousands of copies.
+            // The cap keeps a tiny font on a huge area from drawing thousands of copies.
             var drawn = 0
             while y < height + stepY, drawn < 600 {
                 var x = (row % 2 == 0 ? 0 : stepX / 2) - stepX / 2
                 while x < width + stepX, drawn < 600 {
-                    draw(at: CGPoint(x: x, y: y))
+                    drawLine(at: CGPoint(x: x, y: y))
                     drawn += 1
                     x += stepX
                 }
@@ -147,6 +157,5 @@ enum WatermarkRenderer {
                 row += 1
             }
         }
-        return context.makeImage()
     }
 }

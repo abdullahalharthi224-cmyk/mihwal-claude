@@ -39,12 +39,14 @@ enum FileStore {
         let type = contentType(of: url)
         var pageCount: Int?
         var isLocked = false
+        var isEncrypted = false
         if type.conforms(to: .pdf), let document = PDFDocument(url: url) {
             isLocked = document.isLocked
+            isEncrypted = document.isEncrypted
             pageCount = isLocked ? nil : document.pageCount
         }
         return ImportedFile(id: UUID(), url: url, contentType: type, byteCount: byteCount(of: url),
-                            pageCount: pageCount, isLocked: isLocked)
+                            pageCount: pageCount, isLocked: isLocked, isEncrypted: isEncrypted)
     }
 
     static func contentType(of url: URL) -> UTType {

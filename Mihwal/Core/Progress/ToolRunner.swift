@@ -47,6 +47,7 @@ final class ToolRunner {
         let runID = UUID()
         currentRun = runID
         phase = .processing
+        let inputWasProtected = input.files.contains { $0.isEncrypted }
 
         let reporter: @Sendable (Double) -> Void = { [weak self] value in
             Task { @MainActor in
@@ -60,7 +61,8 @@ final class ToolRunner {
 
         Task { [weak self] in
             do {
-                let output = try await work.value
+                var output = try await work.value
+                output.removedProtection = output.removedProtection || inputWasProtected
                 self?.finish(output, for: runID)
             } catch is CancellationError {
                 // The user cancelled; cancel() already returned to idle.

@@ -20,6 +20,8 @@ struct ToolOutput: Identifiable, Sendable {
     var inputBytes: Int64? = nil
     /// Short notes for the user, e.g. "Links were flattened".
     var notes: [String] = []
+    /// The input was a protected PDF and this result isn't: warn before it is saved.
+    var removedProtection = false
 
     var outputBytes: Int64 {
         files.reduce(0) { $0 + FileStore.byteCount(of: $1) }

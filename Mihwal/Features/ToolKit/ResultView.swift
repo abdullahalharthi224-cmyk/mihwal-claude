@@ -36,6 +36,24 @@ struct ResultView: View {
                     .accessibilityElement(children: .combine)
                 }
 
+                if output.removedProtection {
+                    Section {
+                        Label {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("This copy is not protected")
+                                    .font(.headline)
+                                Text("The original PDF had a password or restrictions. Anyone who gets this file can open, copy and change it.")
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+                        } icon: {
+                            Image(systemName: "exclamationmark.shield.fill")
+                                .foregroundStyle(.orange)
+                        }
+                        .accessibilityElement(children: .combine)
+                    }
+                }
+
                 if let inputBytes = output.inputBytes {
                     Section {
                         SizeComparisonView(before: inputBytes, after: output.outputBytes)

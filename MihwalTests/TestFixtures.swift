@@ -40,6 +40,89 @@ enum TestFixtures {
         return url
     }
 
+    /// A PDF that opens without a password but whose owner blocked copying and printing.
+    static func makeRestrictedPDF(ownerPassword: String) throws -> URL {
+        let url = try scratchDirectory().appendingPathComponent("restricted.pdf")
+        let format = UIGraphicsPDFRendererFormat()
+        format.documentInfo = [
+            kCGPDFContextOwnerPassword as String: ownerPassword,
+            kCGPDFContextAllowsCopying as String: false,
+            kCGPDFContextAllowsPrinting as String: false,
+        ]
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 200, height: 300), format: format)
+        try renderer.pdfData { context in
+            context.beginPage()
+            ("Restricted" as NSString).draw(at: CGPoint(x: 10, y: 10), withAttributes: nil)
+        }.write(to: url)
+        return url
+    }
+
+    /// A PDF with personal document information.
+    static func makePDFWithMetadata() throws -> URL {
+        let url = try scratchDirectory().appendingPathComponent("with-metadata.pdf")
+        let format = UIGraphicsPDFRendererFormat()
+        format.documentInfo = [
+            kCGPDFContextTitle as String: "Secret plan",
+            kCGPDFContextAuthor as String: "Abdullah",
+            kCGPDFContextSubject as String: "Private",
+            kCGPDFContextKeywords as String: "hidden",
+        ]
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 200, height: 300), format: format)
+        try renderer.pdfData { context in
+            context.beginPage()
+            ("Hello" as NSString).draw(at: CGPoint(x: 10, y: 10), withAttributes: nil)
+        }.write(to: url)
+        return url
+    }
+
+    /// A page split in two colors (left red, right blue in page space), optionally rotated,
+    /// to check that redrawing keeps what the user sees.
+    static func makeColoredPDF(rotation: Int, name: String = "colored.pdf") throws -> URL {
+        let plain = try scratchDirectory().appendingPathComponent("plain-\(name)")
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 200, height: 300))
+        try renderer.pdfData { context in
+            context.beginPage()
+            UIColor.red.setFill()
+            context.fill(CGRect(x: 0, y: 0, width: 100, height: 300))
+            UIColor.blue.setFill()
+            context.fill(CGRect(x: 100, y: 0, width: 100, height: 300))
+        }.write(to: plain)
+        let document = try XCTUnwrap(PDFDocument(url: plain))
+        document.page(at: 0)?.rotation = rotation
+        let url = plain.deletingLastPathComponent().appendingPathComponent(name)
+        XCTAssertTrue(document.write(to: url))
+        return url
+    }
+
+    /// A "scanned" page: one big noisy image, which compresses well as JPEG.
+    static func makeImageHeavyPDF() throws -> URL {
+        let url = try scratchDirectory().appendingPathComponent("scan.pdf")
+        let side = 900
+        var bytes = [UInt8](repeating: 0, count: side * side * 4)
+        var seed: UInt32 = 12345
+        for i in stride(from: 0, to: bytes.count, by: 4) {
+            seed = seed &* 1_103_515_245 &+ 12345
+            let value = UInt8(truncatingIfNeeded: seed >> 16)
+            bytes[i] = value
+            bytes[i + 1] = value &+ UInt8(truncatingIfNeeded: i)
+            bytes[i + 2] = 255 &- value
+            bytes[i + 3] = 255
+        }
+        let space = try XCTUnwrap(CGColorSpace(name: CGColorSpace.sRGB))
+        let provider = try XCTUnwrap(CGDataProvider(data: Data(bytes) as CFData))
+        let image = try XCTUnwrap(CGImage(width: side, height: side, bitsPerComponent: 8, bitsPerPixel: 32,
+                                          bytesPerRow: side * 4, space: space,
+                                          bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue),
+                                          provider: provider, decode: nil, shouldInterpolate: false,
+                                          intent: .defaultIntent))
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 612, height: 792))
+        try renderer.pdfData { context in
+            context.beginPage()
+            UIImage(cgImage: image).draw(in: CGRect(x: 0, y: 0, width: 612, height: 792))
+        }.write(to: url)
+        return url
+    }
+
     static func makePNG(width: Int, height: Int, name: String = "image.png") throws -> URL {
         let url = try scratchDirectory().appendingPathComponent(name)
         let format = UIGraphicsImageRendererFormat()

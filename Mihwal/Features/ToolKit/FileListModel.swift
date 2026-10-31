@@ -147,7 +147,7 @@ final class FileListModel {
         passwords[fileID] = password
         files[index] = ImportedFile(id: file.id, url: file.url, contentType: file.contentType,
                                     byteCount: file.byteCount, pageCount: document.pageCount,
-                                    isLocked: file.isLocked)
+                                    isLocked: file.isLocked, isEncrypted: file.isEncrypted)
         return true
     }
 

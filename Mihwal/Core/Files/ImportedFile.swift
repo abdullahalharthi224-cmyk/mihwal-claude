@@ -11,6 +11,8 @@ struct ImportedFile: Identifiable, Hashable, Sendable {
     let pageCount: Int?
     /// A PDF that needs a password to open.
     let isLocked: Bool
+    /// A PDF with any protection: an open password or owner restrictions.
+    var isEncrypted = false
 
     var name: String { url.lastPathComponent }
     var baseName: String { url.deletingPathExtension().lastPathComponent }

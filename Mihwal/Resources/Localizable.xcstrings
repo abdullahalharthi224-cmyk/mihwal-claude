@@ -460,6 +460,26 @@
         }
       }
     },
+    "A watermark is a visual mark, not a security feature: PDF editors can remove it.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العلامة المائية علامة مرئية وليست حماية: برامج تحرير PDF تستطيع إزالتها."
+          }
+        }
+      }
+    },
+    "Add Page Numbers": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أضف أرقام الصفحات"
+          }
+        }
+      }
+    },
     "Add Watermark": {
       "localizations": {
         "ar": {
@@ -530,12 +550,32 @@
         }
       }
     },
+    "Adding or removing pages": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة الصفحات أو حذفها"
+          }
+        }
+      }
+    },
     "After": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "بعد"
+          }
+        }
+      }
+    },
+    "All of this is removed. The pages themselves don't change.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سيُحذف كل هذا، والصفحات نفسها لا تتغير."
           }
         }
       }
@@ -566,6 +606,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "يمكنك المزج بين العربية والإنجليزية."
+          }
+        }
+      }
+    },
+    "Arabic-Indic digits (١٢٣)": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أرقام عربية (١٢٣)"
+          }
+        }
+      }
+    },
+    "Author": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المؤلف"
           }
         }
       }
@@ -616,6 +676,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "أزرق"
+          }
+        }
+      }
+    },
+    "Bottom center": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أسفل الوسط"
           }
         }
       }
@@ -770,6 +840,16 @@
         }
       }
     },
+    "Comments": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التعليقات"
+          }
+        }
+      }
+    },
     "Compress Images": {
       "localizations": {
         "ar": {
@@ -840,12 +920,42 @@
         }
       }
     },
+    "Copying text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ النص"
+          }
+        }
+      }
+    },
     "Couldn't save the result": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "تعذّر حفظ النتيجة"
+          }
+        }
+      }
+    },
+    "Created": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تاريخ الإنشاء"
+          }
+        }
+      }
+    },
+    "Created with": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أُنشئ باستخدام"
           }
         }
       }
@@ -930,12 +1040,42 @@
         }
       }
     },
+    "Editing": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التعديل"
+          }
+        }
+      }
+    },
     "Enter password": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "أدخل كلمة المرور"
+          }
+        }
+      }
+    },
+    "Enter the password to see a preview.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل كلمة المرور لترى المعاينة."
+          }
+        }
+      }
+    },
+    "Enter the password to see the metadata.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل كلمة المرور لترى البيانات الوصفية."
           }
         }
       }
@@ -966,6 +1106,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "كل صفحة"
+          }
+        }
+      }
+    },
+    "Extra hidden metadata (XMP)": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بيانات وصفية مخفية إضافية (XMP)"
           }
         }
       }
@@ -1040,6 +1190,16 @@
         }
       }
     },
+    "Filling forms": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تعبئة النماذج"
+          }
+        }
+      }
+    },
     "First photo": {
       "localizations": {
         "ar": {
@@ -1096,6 +1256,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "الصيغة والمقاس"
+          }
+        }
+      }
+    },
+    "Found in this PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الموجود في هذا الملف"
           }
         }
       }
@@ -1200,12 +1370,42 @@
         }
       }
     },
+    "Keywords": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الكلمات المفتاحية"
+          }
+        }
+      }
+    },
     "Large": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "كبير"
+          }
+        }
+      }
+    },
+    "Level": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المستوى"
+          }
+        }
+      }
+    },
+    "Links, form fields and comments are now part of the pages (flattened).": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الروابط والحقول والتعليقات أصبحت جزءاً من الصفحات (مسطّحة)."
           }
         }
       }
@@ -1300,6 +1500,16 @@
         }
       }
     },
+    "Mihwal only removes protection with the correct password. You'll be asked for it when you continue. Passwords are never guessed or bypassed.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يزيل مِحوَل الحماية إلا بكلمة المرور الصحيحة، وسيطلبها منك عند المتابعة. لا يخمّن كلمات المرور ولا يتجاوزها أبداً."
+          }
+        }
+      }
+    },
     "Mihwal works with PDFs, images and text files.": {
       "localizations": {
         "ar": {
@@ -1316,6 +1526,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "عكس كالمرآة"
+          }
+        }
+      }
+    },
+    "Modified": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تاريخ التعديل"
           }
         }
       }
@@ -1360,6 +1580,16 @@
         }
       }
     },
+    "Needs a password to open": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يحتاج كلمة مرور لفتحه"
+          }
+        }
+      }
+    },
     "New size": {
       "localizations": {
         "ar": {
@@ -1390,6 +1620,16 @@
         }
       }
     },
+    "No metadata found in this PDF.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد بيانات وصفية في هذا الملف."
+          }
+        }
+      }
+    },
     "Not enough storage": {
       "localizations": {
         "ar": {
@@ -1406,6 +1646,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "لا يوجد ما يمكن فعله"
+          }
+        }
+      }
+    },
+    "Numbering": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الترقيم"
           }
         }
       }
@@ -1466,6 +1716,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "المقاس الأصلي"
+          }
+        }
+      }
+    },
+    "Owner password needed": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلمة مرور المالك مطلوبة"
           }
         }
       }
@@ -1540,6 +1800,26 @@
         }
       }
     },
+    "Pages are now pictures: text can't be selected or searched in this copy.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصفحات أصبحت صوراً: لا يمكن تحديد النص أو البحث فيه في هذه النسخة."
+          }
+        }
+      }
+    },
+    "Pages are redrawn: any links or form fields would become part of the page (flattened).": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تُعاد رسم الصفحات: أي روابط أو حقول ستصبح جزءاً من الصفحة (مسطّحة)."
+          }
+        }
+      }
+    },
     "Password": {
       "localizations": {
         "ar": {
@@ -1590,6 +1870,16 @@
         }
       }
     },
+    "Placement": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المكان"
+          }
+        }
+      }
+    },
     "Position": {
       "localizations": {
         "ar": {
@@ -1626,6 +1916,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "معاينة الصورة الأولى مع العلامة المائية"
+          }
+        }
+      }
+    },
+    "Preview of the page as it will be saved": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معاينة الصفحة كما ستُحفظ"
+          }
+        }
+      }
+    },
+    "Printing": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الطباعة"
+          }
+        }
+      }
+    },
+    "Produced by": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنتجه"
+          }
+        }
+      }
+    },
+    "Protection": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الحماية"
           }
         }
       }
@@ -1686,6 +2016,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "حذف البيانات الوصفية"
+          }
+        }
+      }
+    },
+    "Remove Protection": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أزل الحماية"
           }
         }
       }
@@ -2030,12 +2370,32 @@
         }
       }
     },
+    "Shrinks the pictures inside. Text stays sharp, selectable and searchable.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يصغّر الصور داخل الملف. النص يبقى واضحاً ويمكن تحديده والبحث فيه."
+          }
+        }
+      }
+    },
     "Size": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "الحجم"
+          }
+        }
+      }
+    },
+    "Skip the first page (cover)": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تخطَّ الصفحة الأولى (الغلاف)"
           }
         }
       }
@@ -2120,12 +2480,42 @@
         }
       }
     },
+    "Start at": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "البداية من"
+          }
+        }
+      }
+    },
+    "Strong": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قوي"
+          }
+        }
+      }
+    },
     "Style": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "الشكل"
+          }
+        }
+      }
+    },
+    "Subject": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الموضوع"
           }
         }
       }
@@ -2200,6 +2590,16 @@
         }
       }
     },
+    "That isn't the owner password of “%@”. The owner password (also called permissions password) is needed, not only the one that opens it.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه ليست كلمة مرور المالك للملف «%@». المطلوب كلمة مرور المالك (تُسمّى أيضاً كلمة مرور الصلاحيات)، لا كلمة فتح الملف فقط."
+          }
+        }
+      }
+    },
     "That password didn't open “%@”. Check it and try again.": {
       "localizations": {
         "ar": {
@@ -2230,6 +2630,16 @@
         }
       }
     },
+    "The original PDF had a password or restrictions. Anyone who gets this file can open, copy and change it.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الملف الأصلي كان عليه كلمة مرور أو قيود. أي شخص يحصل على هذه النسخة يستطيع فتحها ونسخها وتعديلها."
+          }
+        }
+      }
+    },
     "The result file was removed. Run the tool again to recreate it.": {
       "localizations": {
         "ar": {
@@ -2256,6 +2666,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "يبقى شكل الصورة كما هو دائماً، ولا تُكبَّر الصور أبداً."
+          }
+        }
+      }
+    },
+    "This PDF has links, form fields or comments. They will become part of the page (flattened) and stop working.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "في هذا الملف روابط أو حقول أو تعليقات. ستصبح جزءاً من الصفحة (مسطّحة) وتتوقف عن العمل."
+          }
+        }
+      }
+    },
+    "This PDF has no metadata to remove.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد بيانات وصفية في هذا الملف لحذفها."
+          }
+        }
+      }
+    },
+    "This PDF has no password or restrictions.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا الملف ليس عليه كلمة مرور أو قيود."
           }
         }
       }
@@ -2300,6 +2740,36 @@
         }
       }
     },
+    "This PDF isn't protected.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا الملف غير محمي."
+          }
+        }
+      }
+    },
+    "This copy is not protected": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه النسخة غير محمية"
+          }
+        }
+      }
+    },
+    "This level can't make the PDF smaller than it already is (%@). Your original is unchanged.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا المستوى لا يستطيع تصغير الملف أكثر من حجمه الحالي (%@). ملفك الأصلي كما هو."
+          }
+        }
+      }
+    },
     "This tool arrives in a coming update.": {
       "localizations": {
         "ar": {
@@ -2316,6 +2786,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "سينتج ملف واحد فقط. اختر أين تريد التقسيم."
+          }
+        }
+      }
+    },
+    "Title": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "العنوان"
+          }
+        }
+      }
+    },
+    "Top center": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعلى الوسط"
           }
         }
       }
@@ -2386,6 +2876,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "حوّل الصور إلى ملف PDF واحد"
+          }
+        }
+      }
+    },
+    "Turns every page into a picture. Much smaller for scans, but text can no longer be selected or searched.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يحوّل كل صفحة إلى صورة. أصغر بكثير للمستندات الممسوحة، لكن لا يمكن تحديد النص أو البحث فيه بعد ذلك."
           }
         }
       }
@@ -2530,12 +3030,32 @@
         }
       }
     },
+    "You'll see the size before and after. If the PDF can't get smaller, your original is kept.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سترى الحجم قبل وبعد. وإذا لم يمكن تصغير الملف، يبقى ملفك الأصلي كما هو."
+          }
+        }
+      }
+    },
     "Your files stayed on this iPhone.": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "ملفاتك بقيت على هذا الجهاز."
+          }
+        }
+      }
+    },
+    "clean": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نظيف"
           }
         }
       }
@@ -2590,6 +3110,16 @@
         }
       }
     },
+    "numbered": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مرقّم"
+          }
+        }
+      }
+    },
     "page %lld": {
       "localizations": {
         "ar": {
@@ -2640,6 +3170,16 @@
         }
       }
     },
+    "unlocked": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مفتوح"
+          }
+        }
+      }
+    },
     "watermarked": {
       "localizations": {
         "ar": {
@@ -2686,6 +3226,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "نوع الملف «%@» لا تدعمه هذه الأداة."
+          }
+        }
+      }
+    },
+    "“%@” opens, but its owner blocked changes. Enter the owner password (also called permissions password) to continue.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الملف «%@» يُفتح، لكن مالكه منع التعديل عليه. أدخل كلمة مرور المالك (تُسمّى أيضاً كلمة مرور الصلاحيات) للمتابعة."
           }
         }
       }

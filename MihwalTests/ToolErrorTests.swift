@@ -22,6 +22,7 @@ final class ToolErrorTests: XCTestCase {
         let id = UUID()
         let cases: [ToolError] = [
             .noInput, .passwordRequired(fileID: id, fileName: "a.pdf"), .wrongPassword(fileID: id, fileName: "a.pdf"),
+            .ownerPasswordRequired(fileID: id, fileName: "a.pdf", afterAttempt: false),
             .corruptedFile(fileName: "a.pdf"), .unsupportedFormat(fileName: "a.xyz"), .notEnoughStorage,
             .photosAccessDenied, .nothingToDo(reason: "x"), .writeFailed, .resultUnavailable, .unknown(message: "y"),
         ]
