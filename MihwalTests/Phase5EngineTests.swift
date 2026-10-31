@@ -85,9 +85,11 @@ final class Phase5EngineTests: XCTestCase {
     }
 
     func testPreviewIsMadeByTheSamePipeline() throws {
-        let file = try imported(try TestFixtures.makePDF(pageWidths: [300], name: "p.pdf"))
+        // makePDF pages are 300 pt tall, so a 200 pt wide page is portrait.
+        let file = try imported(try TestFixtures.makePDF(pageWidths: [200], name: "p.pdf"))
         let image = try XCTUnwrap(PageNumbersEngine.previewImage(file: file, password: nil, options: .init()))
         XCTAssertGreaterThan(image.height, image.width, "Portrait page stays portrait")
+        XCTAssertEqual(Double(image.width) / Double(image.height), 200.0 / 300.0, accuracy: 0.01)
     }
 
     // MARK: Watermark
