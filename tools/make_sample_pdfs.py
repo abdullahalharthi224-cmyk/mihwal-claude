@@ -18,7 +18,8 @@ def page(writer, number, total, with_link=False):
             f"BT /F1 60 Tf 1 1 1 rg 250 420 Td ({number}) Tj ET\n")
     stream = DecodedStreamObject()
     stream.set_data(text.encode())
-    p[NameObject("/Contents")] = writer._add_object(stream)
+    content_ref = writer._add_object(stream)
+    p[NameObject("/Contents")] = content_ref
     if with_link:
         link = DictionaryObject({
             NameObject("/Type"): NameObject("/Annot"),
@@ -31,7 +32,8 @@ def page(writer, number, total, with_link=False):
         p[NameObject("/Annots")] = ArrayObject([writer._add_object(link)])
         extra = DecodedStreamObject()
         extra.set_data(b"BT /F1 14 Tf 0 0 1 rg 72 685 Td (This line is a link to apple.com) Tj ET\n")
-        p[NameObject("/Contents")] = ArrayObject([p["/Contents"], writer._add_object(extra)])
+        # Streams must be referenced indirectly inside a /Contents array.
+        p[NameObject("/Contents")] = ArrayObject([content_ref, writer._add_object(extra)])
 
 def build(name, pages=3, metadata=None, link=False, user=None, owner=None, permissions=None):
     w = PdfWriter()
