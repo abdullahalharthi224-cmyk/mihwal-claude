@@ -130,12 +130,37 @@ final class Phase5EngineTests: XCTestCase {
             XCTAssertFalse(after.contains(field), "\(field) must be gone")
         }
         XCTAssertFalse(StripMetadataEngine.hasXMP(clean), "No XMP metadata stream")
+        // Not even what iOS adds while saving (producer, dates) may be left.
+        XCTAssertEqual(StripMetadataEngine.foundMetadata(in: clean).map(\.field.rawValue), [],
+                       "Every metadata field must be empty after stripping")
+        XCTAssertTrue(output.notes.contains { $0.contains(String(localized: "Author")) }, "The user sees what was removed")
         XCTAssertEqual(clean.pageCount, 1)
 
         // Read the raw file too: the values must not be anywhere in it.
         let raw = String(decoding: try Data(contentsOf: url), as: UTF8.self)
         XCTAssertFalse(raw.contains("Abdullah"))
         XCTAssertFalse(raw.contains("Secret plan"))
+    }
+
+    func testScrubberBlanksStringsWithoutMovingBytes() {
+        let source = Array("<< /Producer (iOS \\(Build 1\\) (nested) x) /Title <FEFF0041> /Count 3 >>".utf8)
+        var bytes = source
+        PDFInfoScrubber.blankStrings(in: &bytes, range: 0..<bytes.count)
+        XCTAssertEqual(bytes.count, source.count, "Nothing may move")
+        let result = String(decoding: bytes, as: UTF8.self)
+        XCTAssertFalse(result.contains("iOS"))
+        XCTAssertFalse(result.contains("nested"))
+        XCTAssertTrue(result.contains("<20202020>"), result)
+        XCTAssertTrue(result.contains("/Producer ("), "Keys and delimiters stay: \(result)")
+        XCTAssertTrue(result.contains("/Count 3"), "Numbers stay")
+    }
+
+    func testScrubberFindsTheInfoDictionaryOfAPDFKitFile() throws {
+        let url = try TestFixtures.makePDFWithMetadata()
+        XCTAssertTrue(try PDFInfoScrubber.scrub(url))
+        let document = try XCTUnwrap(PDFDocument(url: url))
+        XCTAssertEqual(document.pageCount, 1)
+        XCTAssertEqual(StripMetadataEngine.foundMetadata(in: document).count, 0)
     }
 
     // MARK: Owner restrictions & unlock

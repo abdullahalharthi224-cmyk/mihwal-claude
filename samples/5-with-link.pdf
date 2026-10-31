@@ -1,0 +1,130 @@
+%PDF-1.3
+%‚„œ”
+1 0 obj
+<<
+/Producer (pypdf)
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Count 2
+/Kids [ 4 0 R 8 0 R ]
+>>
+endobj
+3 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+4 0 obj
+<<
+/Type /Page
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+>>
+>>
+/MediaBox [ 0.0 0.0 595 842 ]
+/Parent 2 0 R
+/Contents [ <<
+/Length 208
+>>
+stream
+BT /F1 28 Tf 72 760 Td (Mihwal sample - page 1 of 2) Tj ET
+BT /F1 14 Tf 72 720 Td (This text can be selected and searched.) Tj ET
+0.2 0.5 0.9 rg 72 300 451 300 re f
+BT /F1 60 Tf 1 1 1 rg 250 420 Td (1) Tj ET
+
+endstream 7 0 R ]
+/Annots [ 6 0 R ]
+>>
+endobj
+5 0 obj
+<<
+/Length 208
+>>
+stream
+BT /F1 28 Tf 72 760 Td (Mihwal sample - page 1 of 2) Tj ET
+BT /F1 14 Tf 72 720 Td (This text can be selected and searched.) Tj ET
+0.2 0.5 0.9 rg 72 300 451 300 re f
+BT /F1 60 Tf 1 1 1 rg 250 420 Td (1) Tj ET
+
+endstream
+endobj
+6 0 obj
+<<
+/Type /Annot
+/Subtype /Link
+/Rect [ 72 680 300 700 ]
+/Border [ 0 0 0 ]
+/A <<
+/S /URI
+/URI (https\072\057\057www\056apple\056com)
+>>
+>>
+endobj
+7 0 obj
+<<
+/Length 73
+>>
+stream
+BT /F1 14 Tf 0 0 1 rg 72 685 Td (This line is a link to apple.com) Tj ET
+
+endstream
+endobj
+8 0 obj
+<<
+/Type /Page
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+>>
+>>
+/MediaBox [ 0.0 0.0 595 842 ]
+/Parent 2 0 R
+/Contents 9 0 R
+>>
+endobj
+9 0 obj
+<<
+/Length 208
+>>
+stream
+BT /F1 28 Tf 72 760 Td (Mihwal sample - page 2 of 2) Tj ET
+BT /F1 14 Tf 72 720 Td (This text can be selected and searched.) Tj ET
+0.2 0.5 0.9 rg 72 300 451 300 re f
+BT /F1 60 Tf 1 1 1 rg 250 420 Td (2) Tj ET
+
+endstream
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000015 00000 n 
+0000000054 00000 n 
+0000000119 00000 n 
+0000000168 00000 n 
+0000000615 00000 n 
+0000000874 00000 n 
+0000001027 00000 n 
+0000001150 00000 n 
+0000001331 00000 n 
+trailer
+<<
+/Size 10
+/Root 3 0 R
+/Info 1 0 R
+>>
+startxref
+1590
+%%EOF

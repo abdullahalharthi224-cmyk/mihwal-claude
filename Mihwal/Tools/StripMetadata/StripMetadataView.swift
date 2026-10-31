@@ -22,7 +22,7 @@ struct StripMetadataView: View {
                                 .lineLimit(2)
                                 .multilineTextAlignment(.trailing)
                         } label: {
-                            Text(title(item.field))
+                            Text(item.field.title)
                         }
                     }
                     if report.hasXMP {
@@ -43,19 +43,6 @@ struct StripMetadataView: View {
                         .foregroundStyle(.secondary)
                 }
             }
-        }
-    }
-
-    private func title(_ field: StripMetadataEngine.Field) -> LocalizedStringKey {
-        switch field {
-        case .title: return "Title"
-        case .author: return "Author"
-        case .subject: return "Subject"
-        case .keywords: return "Keywords"
-        case .creator: return "Created with"
-        case .producer: return "Produced by"
-        case .creationDate: return "Created"
-        case .modificationDate: return "Modified"
         }
     }
 }

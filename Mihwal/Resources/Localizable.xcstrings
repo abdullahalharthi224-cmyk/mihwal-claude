@@ -2070,6 +2070,16 @@
         }
       }
     },
+    "Removed: %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حُذف: %@"
+          }
+        }
+      }
+    },
     "Repeat across": {
       "localizations": {
         "ar": {
@@ -3096,6 +3106,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "مستخرج"
+          }
+        }
+      }
+    },
+    "iOS adds a technical note (the PDF software name and today's date) when saving. It contains nothing about you.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يضيف iOS عند الحفظ ملاحظة تقنية (اسم برنامج PDF وتاريخ اليوم)، ولا تحتوي أي شيء عنك."
           }
         }
       }

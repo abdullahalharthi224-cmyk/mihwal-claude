@@ -10,6 +10,19 @@ struct StripMetadataEngine: FileTool {
     enum Field: String, CaseIterable, Sendable {
         case title, author, subject, keywords, creator, producer, creationDate, modificationDate
 
+        var title: LocalizedStringResource {
+            switch self {
+            case .title: return "Title"
+            case .author: return "Author"
+            case .subject: return "Subject"
+            case .keywords: return "Keywords"
+            case .creator: return "Created with"
+            case .producer: return "Produced by"
+            case .creationDate: return "Created"
+            case .modificationDate: return "Modified"
+            }
+        }
+
         var attribute: PDFDocumentAttribute {
             switch self {
             case .title: return .titleAttribute
@@ -54,7 +67,8 @@ struct StripMetadataEngine: FileTool {
              progress: @escaping @Sendable (Double) -> Void) async throws -> ToolOutput {
         guard let file = input.files.first else { throw ToolError.noInput }
         let source = try PDFLoader.open(file, password: input.password(for: file))
-        guard !Self.foundMetadata(in: source).isEmpty || Self.hasXMP(source) else {
+        let removed = Self.foundMetadata(in: source)
+        guard !removed.isEmpty || Self.hasXMP(source) else {
             throw ToolError.nothingToDo(reason: String(localized: "This PDF has no metadata to remove."))
         }
         let count = source.pageCount
@@ -68,8 +82,18 @@ struct StripMetadataEngine: FileTool {
             let url = FileStore.outputURL(in: folder, baseName: file.baseName,
                                           suffix: String(localized: "clean"), pathExtension: "pdf")
             try PDFLoader.write(result, to: url, estimatedBytes: file.byteCount)
+            // Saving adds "Producer: iOS … Quartz" and new dates; blank those too.
+            let scrubbed = (try? PDFInfoScrubber.scrub(url)) ?? false
             progress(1)
-            return ToolOutput(directory: folder, files: [url])
+            var output = ToolOutput(directory: folder, files: [url])
+            let names = removed.map { String(localized: $0.field.title) }
+            if !names.isEmpty {
+                output.notes.append(String(localized: "Removed: \(names.joined(separator: "، "))"))
+            }
+            if !scrubbed {
+                output.notes.append(String(localized: "iOS adds a technical note (the PDF software name and today's date) when saving. It contains nothing about you."))
+            }
+            return output
         }
     }
 }
