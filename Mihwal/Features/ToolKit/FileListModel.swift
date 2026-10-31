@@ -137,18 +137,41 @@ final class FileListModel {
         files.insert(file, at: destination)
     }
 
-    /// Checks the password against the PDF. On success it is remembered for this session only.
-    func unlock(_ fileID: UUID, password: String) -> Bool {
-        guard let index = files.firstIndex(where: { $0.id == fileID }) else { return false }
+    enum UnlockOutcome: Equatable {
+        /// The file opens and may be changed.
+        case unlocked
+        case wrongPassword
+        /// The file opens with this password, but its owner blocked changes:
+        /// the owner (permissions) password is still needed.
+        case needsOwnerPassword
+    }
+
+    /// Checks a password against the PDF. A password that works is remembered for this
+    /// session only (never stored on disk).
+    func unlock(_ fileID: UUID, password: String) -> UnlockOutcome {
+        guard let index = files.firstIndex(where: { $0.id == fileID }),
+              let document = PDFDocument(url: files[index].url) else { return .wrongPassword }
         let file = files[index]
-        guard let document = PDFDocument(url: file.url), document.unlock(withPassword: password) else {
-            return false
+        if document.isLocked {
+            guard document.unlock(withPassword: password) else { return .wrongPassword }
+        } else if document.isEncrypted {
+            // Already open; the owner password raises access to "owner".
+            _ = document.unlock(withPassword: password)
+        }
+        if document.isLocked || file.pageCount == nil {
+            files[index] = ImportedFile(id: file.id, url: file.url, contentType: file.contentType,
+                                        byteCount: file.byteCount, pageCount: document.pageCount,
+                                        isLocked: file.isLocked, isEncrypted: file.isEncrypted)
+        }
+        if PDFLoader.hasRestrictions(document) {
+            // Keep a password that opens the file (for thumbnails), but ask for the owner's.
+            if file.isLocked {
+                passwords[fileID] = password
+            }
+            return .needsOwnerPassword
         }
         passwords[fileID] = password
-        files[index] = ImportedFile(id: file.id, url: file.url, contentType: file.contentType,
-                                    byteCount: file.byteCount, pageCount: document.pageCount,
-                                    isLocked: file.isLocked, isEncrypted: file.isEncrypted)
-        return true
+        return .unlocked
     }
 
     func isUnlocked(_ file: ImportedFile) -> Bool {

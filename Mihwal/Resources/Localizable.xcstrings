@@ -3030,6 +3030,16 @@
         }
       }
     },
+    "Wrong password. Try again.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلمة المرور خاطئة. حاول مرة أخرى."
+          }
+        }
+      }
+    },
     "Yellow": {
       "localizations": {
         "ar": {

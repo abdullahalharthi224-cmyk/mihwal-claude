@@ -57,6 +57,33 @@ enum TestFixtures {
         return url
     }
 
+    /// Needs `open` to open, and `owner` to make changes (copying is blocked).
+    static func makeLockedAndRestrictedPDF(open: String, owner: String) throws -> URL {
+        let url = try scratchDirectory().appendingPathComponent("locked-restricted.pdf")
+        let format = UIGraphicsPDFRendererFormat()
+        format.documentInfo = [
+            kCGPDFContextUserPassword as String: open,
+            kCGPDFContextOwnerPassword as String: owner,
+            kCGPDFContextAllowsCopying as String: false,
+        ]
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 200, height: 300), format: format)
+        try renderer.pdfData { context in
+            context.beginPage()
+            ("Locked and restricted" as NSString).draw(at: CGPoint(x: 10, y: 10), withAttributes: nil)
+        }.write(to: url)
+        return url
+    }
+
+    /// A file from the repository's samples/ folder (the same files the owner downloads).
+    static func sample(_ name: String) throws -> URL {
+        let url = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("samples/\(name)")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: url.path), "Missing sample \(name)")
+        return url
+    }
+
     /// A PDF with personal document information.
     static func makePDFWithMetadata() throws -> URL {
         let url = try scratchDirectory().appendingPathComponent("with-metadata.pdf")

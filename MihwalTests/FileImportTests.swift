@@ -90,11 +90,38 @@ final class FileImportTests: XCTestCase {
         let file = try XCTUnwrap(model.files.first)
         XCTAssertFalse(model.isUnlocked(file))
 
-        XCTAssertFalse(model.unlock(file.id, password: "0000"))
-        XCTAssertTrue(model.unlock(file.id, password: "1234"))
+        XCTAssertEqual(model.unlock(file.id, password: "0000"), .wrongPassword)
+        XCTAssertEqual(model.unlock(file.id, password: "1234"), .unlocked)
         let unlocked = try XCTUnwrap(model.files.first)
         XCTAssertTrue(model.isUnlocked(unlocked))
         XCTAssertEqual(unlocked.pageCount, 2)
         XCTAssertEqual(model.input.password(for: unlocked), "1234")
+    }
+
+    func testOpenPasswordThenOwnerPasswordAreAskedInTurn() async throws {
+        let model = FileListModel(accepts: [.pdf], allowsMultiple: false)
+        model.importURLs([try TestFixtures.makeLockedAndRestrictedPDF(open: "1111", owner: "2222")])
+        try await waitUntil { !model.isImporting }
+        let file = try XCTUnwrap(model.files.first)
+        XCTAssertTrue(file.isLocked)
+
+        XCTAssertEqual(model.unlock(file.id, password: "0000"), .wrongPassword)
+        XCTAssertEqual(model.unlock(file.id, password: "1111"), .needsOwnerPassword,
+                       "Opens, but changing it needs the owner password")
+        XCTAssertEqual(model.input.password(for: file), "1111", "Kept so thumbnails can show")
+        XCTAssertEqual(model.unlock(file.id, password: "1111"), .needsOwnerPassword)
+        XCTAssertEqual(model.unlock(file.id, password: "2222"), .unlocked)
+        XCTAssertEqual(model.input.password(for: file), "2222")
+        XCTAssertNoThrow(try PDFLoader.open(file, password: "2222"))
+    }
+
+    func testRestrictedOnlyPDFAsksForTheOwnerPassword() async throws {
+        let model = FileListModel(accepts: [.pdf], allowsMultiple: false)
+        model.importURLs([try TestFixtures.makeRestrictedPDF(ownerPassword: "owner")])
+        try await waitUntil { !model.isImporting }
+        let file = try XCTUnwrap(model.files.first)
+        XCTAssertEqual(model.unlock(file.id, password: "nope"), .needsOwnerPassword)
+        XCTAssertNil(model.input.password(for: file))
+        XCTAssertEqual(model.unlock(file.id, password: "owner"), .unlocked)
     }
 }

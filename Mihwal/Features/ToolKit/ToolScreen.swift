@@ -19,10 +19,8 @@ struct ToolScreen<Options: View>: View {
 
     @State private var activeSheet: ToolSheet?
     @State private var photoItems: [PhotosPickerItem] = []
-    @State private var passwordRequest: PasswordRequest?
-    @State private var passwordText = ""
-    /// Set when a run stopped for a password, so it restarts once the right one is entered.
-    @State private var retryRunAfterUnlock = false
+    /// A run that stopped for a password restarts once the password sheet has closed.
+    @State private var runAfterSheetCloses = false
 
     enum Layout {
         case list
@@ -35,11 +33,14 @@ struct ToolScreen<Options: View>: View {
     enum ToolSheet: Identifiable {
         case filePicker
         case result(ToolOutput)
+        /// `retryRun`: the tool stopped for this password and runs again once unlocked.
+        case password(PasswordRequest, retryRun: Bool)
 
         var id: String {
             switch self {
             case .filePicker: return "filePicker"
             case .result(let output): return output.id.uuidString
+            case .password(let request, _): return "password-\(request.fileID)"
             }
         }
     }
@@ -54,6 +55,13 @@ struct ToolScreen<Options: View>: View {
             .onChange(of: runner.successCount) { _, _ in
                 if let output = runner.output {
                     activeSheet = .result(output)
+                }
+            }
+            .onChange(of: runner.failureCount) { _, _ in
+                // A password problem opens the password sheet instead of an alert.
+                if let error = runner.error, let request = PasswordRequest(error) {
+                    runner.reset()
+                    activeSheet = .password(request, retryRun: true)
                 }
             }
             .overlay {
@@ -71,18 +79,15 @@ struct ToolScreen<Options: View>: View {
             .sheet(item: $activeSheet, onDismiss: {
                 // Closing the result (swipe or Done) clears it; closing the picker changes nothing.
                 if runner.output != nil { runner.reset() }
-            }, content: { sheetContent($0) })
-            .alert(Text(activeAlert?.title ?? ""), isPresented: alertBinding, presenting: activeAlert) { alert in
-                switch alert {
-                case .password(let request):
-                    SecureField("Password", text: $passwordText)
-                    Button("Unlock") { submitPassword(for: request) }
-                    Button("Cancel", role: .cancel) {}
-                case .failure:
-                    Button("OK", role: .cancel) {}
+                if runAfterSheetCloses {
+                    runAfterSheetCloses = false
+                    onRun()
                 }
-            } message: { alert in
-                Text(alert.message)
+            }, content: { sheetContent($0) })
+            .alert(Text(visibleFailure?.title ?? ""), isPresented: failureBinding, presenting: visibleFailure) { _ in
+                Button("OK", role: .cancel) {}
+            } message: { error in
+                Text(error.message)
             }
             .sensoryFeedback(.success, trigger: runner.successCount)
             .sensoryFeedback(.error, trigger: runner.failureCount)
@@ -102,6 +107,17 @@ struct ToolScreen<Options: View>: View {
             ResultView(output: output) {
                 activeSheet = nil
                 runner.reset()
+            }
+        case let .password(request, retryRun):
+            PasswordSheet(request: request) { password in
+                let outcome = files.unlock(request.fileID, password: password)
+                if outcome == .unlocked {
+                    runAfterSheetCloses = retryRun
+                    activeSheet = nil
+                }
+                return outcome
+            } cancel: {
+                activeSheet = nil
             }
         }
     }
@@ -174,7 +190,7 @@ struct ToolScreen<Options: View>: View {
     private func singleFileCard(_ file: ImportedFile) -> some View {
         OptionCard {
             FileRow(file: file, password: files.input.password(for: file)) {
-                passwordRequest = PasswordRequest(fileID: file.id, fileName: file.name, wasWrong: false)
+                activeSheet = .password(PasswordRequest(fileID: file.id, fileName: file.name, wasWrong: false), retryRun: false)
             }
             Divider()
             Button {
@@ -190,7 +206,7 @@ struct ToolScreen<Options: View>: View {
         Section {
             ForEach(files.files) { file in
                 FileRow(file: file, password: files.input.password(for: file)) {
-                    passwordRequest = PasswordRequest(fileID: file.id, fileName: file.name, wasWrong: false)
+                    activeSheet = .password(PasswordRequest(fileID: file.id, fileName: file.name, wasWrong: false), retryRun: false)
                 }
             }
             .onDelete { files.remove(atOffsets: $0) }
@@ -253,74 +269,23 @@ struct ToolScreen<Options: View>: View {
         .background(.bar)
     }
 
-    // MARK: Errors & passwords
+    // MARK: Errors
 
-    /// The single alert of this screen: a failed run, or a PDF password prompt.
+    /// Failed runs, except password problems (those open the password sheet).
     /// Import problems are shown inline instead (see ImportErrorBanner), because an alert
     /// raised while the Files picker is still closing is dropped by iOS.
-    enum ToolAlert {
-        case failure(ToolError)
-        case password(PasswordRequest)
-
-        var title: String {
-            switch self {
-            case .failure(let error): return error.title
-            case .password(let request):
-                return request.needsOwnerPassword ? String(localized: "Owner password needed") : String(localized: "Password needed")
-            }
-        }
-
-        var message: String {
-            switch self {
-            case .failure(let error): return error.message
-            case .password(let request): return request.message
-            }
-        }
+    private var visibleFailure: ToolError? {
+        guard let error = runner.error, !error.isPasswordProblem else { return nil }
+        return error
     }
 
-    private var activeAlert: ToolAlert? {
-        if let passwordRequest {
-            return .password(passwordRequest)
-        }
-        if let error = runner.error {
-            if let request = PasswordRequest(error) {
-                return .password(request)
-            }
-            return .failure(error)
-        }
-        return nil
-    }
-
-    private var alertBinding: Binding<Bool> {
+    private var failureBinding: Binding<Bool> {
         Binding(
-            get: { activeAlert != nil },
+            get: { visibleFailure != nil },
             set: { isShown in
-                guard !isShown else { return }
-                passwordRequest = nil
-                if runner.error != nil { runner.reset() }
+                if !isShown && runner.error != nil { runner.reset() }
             }
         )
-    }
-
-    private func submitPassword(for request: PasswordRequest) {
-        let password = passwordText
-        passwordText = ""
-        let shouldRetryRun = retryRunAfterUnlock || runner.error?.isPasswordProblem == true
-        retryRunAfterUnlock = false
-        if files.unlock(request.fileID, password: password) {
-            if shouldRetryRun {
-                runner.reset()
-                onRun()
-            }
-        } else {
-            retryRunAfterUnlock = shouldRetryRun
-            // Ask again once this alert has finished closing.
-            Task {
-                try? await Task.sleep(for: .milliseconds(400))
-                passwordRequest = PasswordRequest(fileID: request.fileID, fileName: request.fileName, wasWrong: true,
-                                                  needsOwnerPassword: request.needsOwnerPassword)
-            }
-        }
     }
 }
 
