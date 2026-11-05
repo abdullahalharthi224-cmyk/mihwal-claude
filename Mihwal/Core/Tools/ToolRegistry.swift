@@ -41,15 +41,20 @@ enum ToolRegistry {
 
         // MARK: Convert
         ToolDescriptor(id: .pdfToWord, title: "PDF to Word", subtitle: "Get the text as a Word document",
-                       symbol: "doc.richtext", category: .convert, accepts: [.pdf]),
+                       symbol: "doc.richtext", category: .convert, accepts: [.pdf],
+                       makeView: { AnyView(PDFToWordView(initialFiles: $0)) }),
         ToolDescriptor(id: .pdfToText, title: "PDF to Text", subtitle: "Copy text, even from scans",
-                       symbol: "doc.plaintext", category: .convert, accepts: [.pdf]),
+                       symbol: "doc.plaintext", category: .convert, accepts: [.pdf],
+                       makeView: { AnyView(PDFToTextView(initialFiles: $0)) }),
         ToolDescriptor(id: .textToPDF, title: "Text to PDF", subtitle: "Write Arabic or English, get a PDF",
-                       symbol: "text.badge.plus", category: .convert, accepts: [.plainText]),
+                       symbol: "text.badge.plus", category: .convert, accepts: [.plainText],
+                       makeView: { AnyView(TextToPDFView(initialFiles: $0)) }),
         ToolDescriptor(id: .imagesToPDF, title: "Images to PDF", subtitle: "Turn photos into one PDF",
-                       symbol: "photo.on.rectangle", category: .convert, accepts: [.image], allowsMultipleFiles: true),
+                       symbol: "photo.on.rectangle", category: .convert, accepts: [.image], allowsMultipleFiles: true,
+                       makeView: { AnyView(ImagesToPDFView(initialFiles: $0)) }),
         ToolDescriptor(id: .pdfToImages, title: "PDF to Images", subtitle: "Save every page as a picture",
-                       symbol: "photo.on.rectangle.angled", category: .convert, accepts: [.pdf]),
+                       symbol: "photo.on.rectangle.angled", category: .convert, accepts: [.pdf],
+                       makeView: { AnyView(PDFToImagesView(initialFiles: $0)) }),
 
         // MARK: Images
         ToolDescriptor(id: .convertImage, title: "Convert Image", subtitle: "JPG, PNG or HEIC from any photo",

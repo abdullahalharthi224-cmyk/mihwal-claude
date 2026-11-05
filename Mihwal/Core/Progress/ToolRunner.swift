@@ -37,10 +37,11 @@ final class ToolRunner {
         return nil
     }
 
-    func run<Tool: FileTool>(_ tool: Tool, input: ToolInput, options: Tool.Options) {
+    /// `requiresFiles: false` is for tools whose input is in the options (Text to PDF).
+    func run<Tool: FileTool>(_ tool: Tool, input: ToolInput, options: Tool.Options, requiresFiles: Bool = true) {
         cancel()
         reset()
-        guard !input.files.isEmpty else {
+        guard !input.files.isEmpty || !requiresFiles else {
             fail(.noInput)
             return
         }

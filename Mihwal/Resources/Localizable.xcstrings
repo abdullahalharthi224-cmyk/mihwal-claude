@@ -2,6 +2,70 @@
   "sourceLanguage": "en",
   "version": "1.0",
   "strings": {
+    "%lld characters": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld character"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld characters"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لا حروف"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "حرف واحد"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "حرفان"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld أحرف"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld حرفاً"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld حرف"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld files": {
       "localizations": {
         "en": {
@@ -386,6 +450,70 @@
         }
       }
     },
+    "%lld pictures": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld picture"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld pictures"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "لا صور"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صورة واحدة"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "صورتان"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صور"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صورة"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld صورة"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld selected": {
       "localizations": {
         "en": {
@@ -596,6 +724,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "الزاوية"
+          }
+        }
+      }
+    },
+    "Arabic OCR isn't available on this iOS version, so Arabic on those pages may be missing.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قراءة العربية من الصور (OCR) غير متاحة في إصدار iOS هذا، فقد ينقص النص العربي في تلك الصفحات."
           }
         }
       }
@@ -910,6 +1048,36 @@
         }
       }
     },
+    "Convert to Word": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حوّل إلى Word"
+          }
+        }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم النسخ"
+          }
+        }
+      }
+    },
+    "Copy Text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ النص"
+          }
+        }
+      }
+    },
     "Copy text, even from scans": {
       "localizations": {
         "ar": {
@@ -936,6 +1104,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "تعذّر حفظ النتيجة"
+          }
+        }
+      }
+    },
+    "Create PDF": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنشئ PDF"
           }
         }
       }
@@ -1036,6 +1214,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "اسحب الملفات لتغيير ترتيبها."
+          }
+        }
+      }
+    },
+    "Each paragraph follows its first letter: Arabic paragraphs run right to left, English ones left to right. Text continues onto new pages automatically.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كل فقرة تتبع أول حرف فيها: الفقرات العربية من اليمين لليسار، والإنجليزية من اليسار لليمين. ويستمر النص على صفحات جديدة تلقائياً."
           }
         }
       }
@@ -1210,6 +1398,16 @@
         }
       }
     },
+    "Fit photo": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بمقاس الصورة"
+          }
+        }
+      }
+    },
     "Flip Horizontal": {
       "localizations": {
         "ar": {
@@ -1276,6 +1474,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "وفّر بعض المساحة في جهازك، ثم حاول مرة أخرى."
+          }
+        }
+      }
+    },
+    "Get Text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استخرج النص"
           }
         }
       }
@@ -1356,6 +1564,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "صور إلى PDF"
+          }
+        }
+      }
+    },
+    "Import a .txt file, or type or paste below.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استورد ملف ‎.txt، أو اكتب أو الصق النص في الأسفل."
           }
         }
       }
@@ -1456,6 +1674,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "صغّر حجم الملف"
+          }
+        }
+      }
+    },
+    "Margins": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الهوامش"
           }
         }
       }
@@ -1600,6 +1828,16 @@
         }
       }
     },
+    "Narrow": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضيقة"
+          }
+        }
+      }
+    },
     "Needs a password to open": {
       "localizations": {
         "ar": {
@@ -1650,6 +1888,36 @@
         }
       }
     },
+    "No text was found in this PDF, not even with OCR.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يُعثر على نص في هذا الملف، حتى بقراءة صور الصفحات (OCR)."
+          }
+        }
+      }
+    },
+    "None": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدون"
+          }
+        }
+      }
+    },
+    "Normal": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عادية"
+          }
+        }
+      }
+    },
     "Not enough storage": {
       "localizations": {
         "ar": {
@@ -1686,6 +1954,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "حسناً"
+          }
+        }
+      }
+    },
+    "One photo per page. Drag photos to change the order.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صورة واحدة في كل صفحة. اسحب الصور لتغيير ترتيبها."
+          }
+        }
+      }
+    },
+    "Only the text is converted. Layout, pictures and tables are not kept.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُنقل النص فقط. لا يُحتفظ بالتنسيق والصور والجداول."
           }
         }
       }
@@ -1790,6 +2078,16 @@
         }
       }
     },
+    "Page": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصفحة"
+          }
+        }
+      }
+    },
     "Page %lld": {
       "localizations": {
         "ar": {
@@ -1810,12 +2108,42 @@
         }
       }
     },
+    "Page %lld: %@": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الصفحة %lld: %@"
+          }
+        }
+      }
+    },
     "Page Numbers": {
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
             "value": "ترقيم الصفحات"
+          }
+        }
+      }
+    },
+    "Page separators": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فواصل بين الصفحات"
+          }
+        }
+      }
+    },
+    "Page size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مقاس الصفحة"
           }
         }
       }
@@ -1950,6 +2278,16 @@
         }
       }
     },
+    "Print": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "طباعة"
+          }
+        }
+      }
+    },
     "Printing": {
       "localizations": {
         "ar": {
@@ -1996,6 +2334,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "الجودة"
+          }
+        }
+      }
+    },
+    "Read every page with OCR": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اقرأ كل الصفحات بـ OCR"
           }
         }
       }
@@ -2140,6 +2488,16 @@
         }
       }
     },
+    "Resolution": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الدقة"
+          }
+        }
+      }
+    },
     "Result": {
       "localizations": {
         "ar": {
@@ -2270,6 +2628,16 @@
         }
       }
     },
+    "Save as Pictures": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احفظ كصور"
+          }
+        }
+      }
+    },
     "Save as ZIP": {
       "localizations": {
         "ar": {
@@ -2330,6 +2698,26 @@
         }
       }
     },
+    "Screen": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شاشة"
+          }
+        }
+      }
+    },
+    "Screen 72 dpi · Standard 150 dpi · Print 300 dpi. Tap pages to save only some of them.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شاشة 72 نقطة/بوصة · عادية 150 · طباعة 300. اضغط على صفحات لحفظ بعضها فقط."
+          }
+        }
+      }
+    },
     "Search tools": {
       "localizations": {
         "ar": {
@@ -2366,6 +2754,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "حدّد الصفحات التي تريد استخراجها."
+          }
+        }
+      }
+    },
+    "Select the pages you want to save as pictures.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدّد الصفحات التي تريد حفظها كصور."
           }
         }
       }
@@ -2520,6 +2918,16 @@
         }
       }
     },
+    "Standard": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عادية"
+          }
+        }
+      }
+    },
     "Start at": {
       "localizations": {
         "ar": {
@@ -2620,6 +3028,36 @@
         }
       }
     },
+    "Text document": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مستند نصي"
+          }
+        }
+      }
+    },
+    "Text is copied from the PDF itself. Pages without text (scans, photos) are read from the page image (OCR, Arabic and English); the result tells you which pages.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يُنسخ النص من الملف نفسه. والصفحات التي لا نص فيها (الممسوحة ضوئياً والصور) يُقرأ نصها من صورة الصفحة (OCR بالعربية والإنجليزية)، وتخبرك النتيجة بأرقامها."
+          }
+        }
+      }
+    },
+    "Text size": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حجم الخط"
+          }
+        }
+      }
+    },
     "Text to PDF": {
       "localizations": {
         "ar": {
@@ -2706,6 +3144,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "يبقى شكل الصورة كما هو دائماً، ولا تُكبَّر الصور أبداً."
+          }
+        }
+      }
+    },
+    "These pages had no text, so it was read from the page image (OCR): %@. Check them for mistakes.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه الصفحات لم يكن فيها نص، فقُرئ النص من صورة الصفحة (OCR): %@. راجعها بحثاً عن أخطاء."
           }
         }
       }
@@ -2940,6 +3388,16 @@
         }
       }
     },
+    "Type or import some text first.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتب نصاً أو استورده أولاً."
+          }
+        }
+      }
+    },
     "Type the watermark text first.": {
       "localizations": {
         "ar": {
@@ -3050,6 +3508,16 @@
         }
       }
     },
+    "Wide": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "واسعة"
+          }
+        }
+      }
+    },
     "Working…": {
       "localizations": {
         "ar": {
@@ -3106,6 +3574,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "أصفر"
+          }
+        }
+      }
+    },
+    "You get an editable Word document (.docx) with the text. Arabic paragraphs are right-to-left. Layout, pictures and tables are not copied.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحصل على مستند Word قابل للتعديل (.docx) فيه النص، والفقرات العربية من اليمين لليسار. لا يُنسخ التنسيق والصور والجداول."
           }
         }
       }
@@ -3256,6 +3734,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "مدوّر"
+          }
+        }
+      }
+    },
+    "text": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نص"
           }
         }
       }

@@ -84,6 +84,54 @@ enum TestFixtures {
         return url
     }
 
+    /// A PDF whose pages are pictures of text (no text layer), like a scan.
+    /// `textPages` lists page numbers (0-based) that get a real text layer instead.
+    static func makeScannedPDF(text: String, pages: Int = 1, textPages: Set<Int> = []) throws -> URL {
+        let url = try scratchDirectory().appendingPathComponent("scanned.pdf")
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        let picture = UIGraphicsImageRenderer(size: CGSize(width: 1200, height: 600), format: format).image { _ in
+            UIColor.white.setFill()
+            UIRectFill(CGRect(x: 0, y: 0, width: 1200, height: 600))
+            (text as NSString).draw(at: CGPoint(x: 60, y: 220), withAttributes: [
+                .font: UIFont.boldSystemFont(ofSize: 110),
+                .foregroundColor: UIColor.black,
+            ])
+        }
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 600, height: 300))
+        try renderer.pdfData { context in
+            for page in 0..<pages {
+                context.beginPage()
+                if textPages.contains(page) {
+                    ("Real text layer" as NSString).draw(at: CGPoint(x: 20, y: 20),
+                                                         withAttributes: [.font: UIFont.systemFont(ofSize: 24)])
+                } else {
+                    picture.draw(in: CGRect(x: 0, y: 0, width: 600, height: 300))
+                }
+            }
+        }.write(to: url)
+        return url
+    }
+
+    /// Reads the entries of a ZIP written with STORE (as ZipWriter does).
+    static func zipEntries(_ data: Data) -> [String: Data] {
+        var entries: [String: Data] = [:]
+        var offset = 0
+        func le16(_ at: Int) -> Int { Int(data[at]) | Int(data[at + 1]) << 8 }
+        func le32(_ at: Int) -> Int { le16(at) | le16(at + 2) << 16 }
+        while offset + 30 <= data.count, le32(offset) == 0x0403_4B50 {
+            let size = le32(offset + 18)
+            let nameLength = le16(offset + 26)
+            let extraLength = le16(offset + 28)
+            let nameStart = offset + 30
+            let name = String(decoding: data[nameStart..<(nameStart + nameLength)], as: UTF8.self)
+            let dataStart = nameStart + nameLength + extraLength
+            entries[name] = data[dataStart..<(dataStart + size)]
+            offset = dataStart + size
+        }
+        return entries
+    }
+
     /// A PDF with personal document information.
     static func makePDFWithMetadata() throws -> URL {
         let url = try scratchDirectory().appendingPathComponent("with-metadata.pdf")

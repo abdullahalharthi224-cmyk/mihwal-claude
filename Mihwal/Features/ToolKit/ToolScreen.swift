@@ -14,6 +14,9 @@ struct ToolScreen<Options: View>: View {
     /// `.list` for simple tools; `.scroll` for tools with big lazy grids (pages, merge),
     /// because a lazy grid inside a List row would load every thumbnail at once.
     var layout: Layout = .list
+    /// Show the options before any file is chosen (Text to PDF can be typed instead).
+    var showsOptionsWithoutFiles = false
+    var emptyImportHint: LocalizedStringResource? = nil
     let onRun: () -> Void
     @ViewBuilder let options: () -> Options
 
@@ -129,7 +132,7 @@ struct ToolScreen<Options: View>: View {
 
     @ViewBuilder
     private var content: some View {
-        if files.files.isEmpty {
+        if files.files.isEmpty && !showsOptionsWithoutFiles {
             ContentUnavailableView {
                 Label {
                     Text(tool.title)
@@ -178,7 +181,18 @@ struct ToolScreen<Options: View>: View {
                         ImportErrorBanner(error: error) { files.importError = nil }
                     }
                 }
-                fileSection
+                if files.files.isEmpty {
+                    Section {
+                        ImportSourceButtons(files: files, photoItems: $photoItems,
+                                            onChooseFiles: { chooseFiles() })
+                    } footer: {
+                        if let emptyImportHint {
+                            Text(emptyImportHint)
+                        }
+                    }
+                } else {
+                    fileSection
+                }
                 options()
             }
             .safeAreaInset(edge: .bottom, spacing: 0) {

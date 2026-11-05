@@ -137,6 +137,28 @@ enum ImageWriter {
     }
 }
 
+enum ImageEncoding {
+    /// JPEG bytes for an image (used to embed pages and photos in PDFs: an image made from
+    /// JPEG data is stored in the PDF as JPEG, which keeps files small).
+    static func jpegData(_ image: CGImage, quality: Double) -> Data? {
+        let data = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(data as CFMutableData, "public.jpeg" as CFString, 1, nil) else {
+            return nil
+        }
+        CGImageDestinationAddImage(destination, image,
+                                   [kCGImageDestinationLossyCompressionQuality: quality] as CFDictionary)
+        return CGImageDestinationFinalize(destination) ? data as Data : nil
+    }
+
+    /// A CGImage backed by JPEG data, ready to be drawn into a PDF context.
+    static func jpegImage(_ image: CGImage, quality: Double) -> CGImage? {
+        guard let data = jpegData(image, quality: quality), let provider = CGDataProvider(data: data as CFData) else {
+            return nil
+        }
+        return CGImage(jpegDataProviderSource: provider, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+    }
+}
+
 enum ImageCanvas {
     /// An 8-bit drawing context, in the image's own RGB color space when possible
     /// (keeps Display P3 photos vivid), otherwise sRGB.

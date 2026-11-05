@@ -1,4 +1,5 @@
 import QuickLook
+import UIKit
 import SwiftUI
 
 /// Success screen: what was made, before/after size, and every way to get the result out:
@@ -11,6 +12,7 @@ struct ResultView: View {
     @State private var previewURL: URL?
     @State private var exporter = FileExportCoordinator()
     @State private var savedToFiles = false
+    @State private var copiedText = false
     @State private var isSavingPhotos = false
     @State private var savedToPhotos = false
     @State private var saveError: ToolError?
@@ -101,6 +103,7 @@ struct ResultView: View {
             }
             .sensoryFeedback(.success, trigger: savedToPhotos)
             .sensoryFeedback(.success, trigger: savedToFiles)
+            .sensoryFeedback(.success, trigger: copiedText)
         }
     }
 
@@ -114,6 +117,20 @@ struct ResultView: View {
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
+
+            if let text = output.copyableText {
+                Button {
+                    UIPasteboard.general.string = text
+                    copiedText = true
+                } label: {
+                    Label(copiedText ? LocalizedStringKey("Copied") : LocalizedStringKey("Copy Text"),
+                          systemImage: copiedText ? "checkmark" : "doc.on.clipboard")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .accessibilityIdentifier("result.copyText")
+            }
 
             HStack(spacing: DS.Spacing.s) {
                 Button {

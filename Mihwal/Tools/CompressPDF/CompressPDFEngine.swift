@@ -75,10 +75,7 @@ struct CompressPDFEngine: FileTool {
             try autoreleasepool {
                 guard let page = document.page(at: index),
                       let bitmap = PDFRasterizer.image(of: page, scale: strongDPI / 72),
-                      let jpeg = jpegData(bitmap, quality: strongQuality),
-                      let provider = CGDataProvider(data: jpeg as CFData),
-                      let image = CGImage(jpegDataProviderSource: provider, decode: nil,
-                                          shouldInterpolate: true, intent: .defaultIntent) else {
+                      let image = ImageEncoding.jpegImage(bitmap, quality: strongQuality) else {
                     throw ToolError.corruptedFile(fileName: fileName)
                 }
                 var mediaBox = CGRect(origin: .zero, size: PDFRedraw.displaySize(of: page))
@@ -90,15 +87,5 @@ struct CompressPDFEngine: FileTool {
             progress(index + 1)
         }
         context.closePDF()
-    }
-
-    static func jpegData(_ image: CGImage, quality: Double) -> Data? {
-        let data = NSMutableData()
-        guard let destination = CGImageDestinationCreateWithData(data as CFMutableData, UTType.jpeg.identifier as CFString, 1, nil) else {
-            return nil
-        }
-        CGImageDestinationAddImage(destination, image,
-                                   [kCGImageDestinationLossyCompressionQuality: quality] as CFDictionary)
-        return CGImageDestinationFinalize(destination) ? data as Data : nil
     }
 }

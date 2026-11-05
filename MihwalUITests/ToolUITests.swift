@@ -187,4 +187,40 @@ final class ToolUITests: XCTestCase {
         run(app)
         expectResult(app)
     }
+
+    // MARK: Convert
+
+    func testPDFToText() {
+        let app = open("pdfToText", with: ["6-ten-pages.pdf"])
+        run(app)
+        expectResult(app)
+        XCTAssertTrue(app.buttons["result.copyText"].waitForExistence(timeout: 5), "Copy Text button")
+    }
+
+    func testPDFToWord() {
+        let app = open("pdfToWord", with: ["1-metadata.pdf"])
+        run(app)
+        expectResult(app)
+    }
+
+    func testTextToPDFTyped() {
+        let app = open("textToPDF", with: [])
+        let editor = app.textViews["text.editor"]
+        tap(editor)
+        editor.typeText("Hello from Mihwal")
+        run(app)
+        expectResult(app)
+    }
+
+    func testImagesToPDF() {
+        let app = open("imagesToPDF", with: ["photo.jpg", "logo.png"])
+        run(app)
+        expectResult(app)
+    }
+
+    func testPDFToImages() {
+        let app = open("pdfToImages", with: ["1-metadata.pdf"])
+        run(app)
+        expectResult(app)
+    }
 }

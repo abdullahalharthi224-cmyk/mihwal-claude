@@ -22,6 +22,8 @@ struct ToolOutput: Identifiable, Sendable {
     var notes: [String] = []
     /// The input was a protected PDF and this result isn't: warn before it is saved.
     var removedProtection = false
+    /// Text the result screen can copy to the clipboard (PDF to Text).
+    var copyableText: String? = nil
 
     var outputBytes: Int64 {
         files.reduce(0) { $0 + FileStore.byteCount(of: $1) }
