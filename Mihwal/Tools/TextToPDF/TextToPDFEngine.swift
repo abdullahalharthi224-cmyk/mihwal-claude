@@ -38,8 +38,7 @@ struct TextToPDFEngine: FileTool {
     }
 
     static func attributedText(_ text: String, fontSize: CGFloat) -> NSAttributedString {
-        let font = CTFontCreateUIFontForLanguage(.system, fontSize, nil)
-            ?? CTFontCreateWithName("Helvetica" as CFString, fontSize, nil)
+        let font = Fonts.font(size: fontSize)
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .natural
         paragraph.baseWritingDirection = .natural

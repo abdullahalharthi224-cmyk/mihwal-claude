@@ -161,8 +161,10 @@ final class Phase6EngineTests: XCTestCase {
         // On failure, show exactly what PDFKit extracted (code points too), to see why.
         let sample = String(firstPage.prefix(120))
         let codes = raw.unicodeScalars.prefix(40).map { String(format: "%04X", $0.value) }.joined(separator: " ")
-        XCTAssertTrue(firstPage.contains("فقرة"),
+        XCTAssertTrue(firstPage.contains("فقرة") && firstPage.contains("عربية") && firstPage.contains("التفاف"),
                       "Arabic should be real, searchable text. Extracted: «\(sample)» codes: \(codes)")
+        XCTAssertNil(firstPage.range(of: "[ڡٮ]", options: .regularExpression),
+                     "No dotless letter shapes (dots split off): «\(sample)»")
     }
 
     func testTextToPDFNeedsText() async throws {

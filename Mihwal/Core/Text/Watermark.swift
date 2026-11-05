@@ -71,8 +71,7 @@ struct WatermarkStyle: Hashable, Sendable {
 /// drawn by hand.
 enum WatermarkRenderer {
     static func makeLine(text: String, fontSize: CGFloat, color: CGColor) -> CTLine {
-        let font = CTFontCreateUIFontForLanguage(.emphasizedSystem, fontSize, nil)
-            ?? CTFontCreateWithName("Helvetica-Bold" as CFString, fontSize, nil)
+        let font = Fonts.font(size: fontSize, bold: true)
         let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key(kCTFontAttributeName as String): font,
             NSAttributedString.Key(kCTForegroundColorAttributeName as String): color,

@@ -102,7 +102,9 @@ final class Phase5EngineTests: XCTestCase {
         let document = try XCTUnwrap(PDFDocument(url: try XCTUnwrap(output.files.first)))
         XCTAssertEqual(document.pageCount, 2)
         for index in 0..<2 {
-            XCTAssertTrue(document.page(at: index)?.string?.contains("CONFIDENTIAL") == true, "page \(index)")
+            let text = PDFTextExtractor.normalize(document.page(at: index)?.string ?? "")
+            XCTAssertTrue(text.contains("CONFIDENTIAL"), "page \(index)")
+            XCTAssertTrue(text.contains("سري"), "Arabic watermark is real text on page \(index): \(text)")
         }
     }
 
