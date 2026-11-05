@@ -156,8 +156,13 @@ final class Phase6EngineTests: XCTestCase {
         XCTAssertGreaterThan(document.pageCount, 1)
         XCTAssertTrue(document.page(at: 0)?.string?.contains("START") == true)
         XCTAssertTrue(document.page(at: document.pageCount - 1)?.string?.contains("END") == true, "Last line is not lost")
-        let firstPage = PDFTextExtractor.normalize(document.page(at: 0)?.string ?? "")
-        XCTAssertTrue(firstPage.contains("فقرة"), "Arabic is real text in the PDF")
+        let raw = document.page(at: 0)?.string ?? ""
+        let firstPage = PDFTextExtractor.normalize(raw)
+        // On failure, show exactly what PDFKit extracted (code points too), to see why.
+        let sample = String(firstPage.prefix(120))
+        let codes = raw.unicodeScalars.prefix(40).map { String(format: "%04X", $0.value) }.joined(separator: " ")
+        XCTAssertTrue(firstPage.contains("فقرة"),
+                      "Arabic should be real, searchable text. Extracted: «\(sample)» codes: \(codes)")
     }
 
     func testTextToPDFNeedsText() async throws {
