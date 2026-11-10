@@ -28,7 +28,7 @@ final class ToolUITests: XCTestCase {
         return app
     }
 
-    private func waitUntilEnabled(_ element: XCUIElement, timeout: TimeInterval = 20,
+    private func waitUntilEnabled(_ element: XCUIElement, timeout: TimeInterval = 30,
                                   file: StaticString = #filePath, line: UInt = #line) {
         XCTAssertTrue(element.waitForExistence(timeout: timeout), "\(element) never appeared", file: file, line: line)
         let enabled = expectation(for: NSPredicate(format: "isEnabled == true"), evaluatedWith: element)
@@ -36,13 +36,15 @@ final class ToolUITests: XCTestCase {
     }
 
     private func run(_ app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
-        let button = app.buttons["tool.run"]
+        // firstMatch stops at the first hit instead of scanning the whole tree, which keeps
+        // queries fast on busy screens (full scans can time out on slow CI machines).
+        let button = app.buttons["tool.run"].firstMatch
         waitUntilEnabled(button, file: file, line: line)
         button.tap()
     }
 
     private func expectResult(_ app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
-        let success = app.descendants(matching: .any)["result.success"]
+        let success = app.descendants(matching: .any)["result.success"].firstMatch
         let appeared = success.waitForExistence(timeout: 90)
         let alert = app.alerts.firstMatch
         XCTAssertTrue(appeared, "No result screen. Alert: \(alert.exists ? alert.label : "none")", file: file, line: line)
