@@ -188,6 +188,16 @@ final class Phase6EngineTests: XCTestCase {
         XCTAssertEqual(Double(english.origins[0].x), 0, accuracy: 2, "English line starts at the left edge")
     }
 
+    func testNumberOnlyLinesFollowTheDocumentDirection() {
+        // In an Arabic document, a line with only "21" sits on the right like the rest.
+        let arabic = lineOrigins("اسم الطالب عبدالله\n21")
+        let width = CTLineGetTypographicBounds(arabic.lines[1], nil, nil, nil)
+        XCTAssertEqual(Double(arabic.origins[1].x) + width, 500, accuracy: 2)
+        // In an English document it stays on the left.
+        let english = lineOrigins("Student name Abdullah\n21")
+        XCTAssertEqual(Double(english.origins[1].x), 0, accuracy: 2)
+    }
+
     func testMixedLinesKeepTheRightOrder() {
         // Arabic first: the paragraph is right-to-left, so the Arabic word is on the right.
         let arabicFirst = "مرحبا Mihwal"

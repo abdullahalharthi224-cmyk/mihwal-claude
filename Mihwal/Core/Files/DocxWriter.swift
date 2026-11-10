@@ -66,26 +66,16 @@ enum DocxWriter {
     // MARK: Direction
 
     static func isStrongRTL(_ scalar: Unicode.Scalar) -> Bool {
-        switch scalar.value {
-        case 0x0590...0x05FF, 0x0600...0x06FF, 0x0750...0x077F, 0x08A0...0x08FF,
-             0xFB1D...0xFDFF, 0xFE70...0xFEFF:
-            return scalar.properties.isAlphabetic
-        default:
-            return false
-        }
+        TextDirection.isStrongRTL(scalar)
     }
 
     static func isStrongLTR(_ scalar: Unicode.Scalar) -> Bool {
-        scalar.properties.isAlphabetic && !isStrongRTL(scalar)
+        TextDirection.isStrongLTR(scalar)
     }
 
     /// A paragraph is right-to-left when its first letter is Arabic (or Hebrew).
     static func isRightToLeft(_ text: String) -> Bool {
-        for scalar in text.unicodeScalars {
-            if isStrongRTL(scalar) { return true }
-            if isStrongLTR(scalar) { return false }
-        }
-        return false
+        TextDirection.firstStrongIsRTL(text) ?? false
     }
 
     /// Splits text into runs of one direction. Spaces, digits and punctuation stay with the

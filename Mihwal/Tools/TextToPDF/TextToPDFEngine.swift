@@ -45,11 +45,27 @@ struct TextToPDFEngine: FileTool {
         paragraph.lineHeightMultiple = 1.25
         paragraph.paragraphSpacing = fontSize * 0.6
         let normalized = text.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\r", with: "\n")
-        return NSAttributedString(string: normalized, attributes: [
+        let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key(kCTFontAttributeName as String): font,
             NSAttributedString.Key(kCTForegroundColorAttributeName as String): CGColor(gray: 0, alpha: 1),
             .paragraphStyle: paragraph,
-        ])
+        ]
+        let result = NSMutableAttributedString(string: normalized, attributes: attributes)
+
+        // A paragraph with no letters ("21", "— ١ —") has no direction of its own, so
+        // "natural" would put it on the left even in an Arabic document. Give it the
+        // direction of the document instead.
+        let documentRTL = TextDirection.mostlyRightToLeft(normalized)
+        let neutral = paragraph.mutableCopy() as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
+        neutral.baseWritingDirection = documentRTL ? .rightToLeft : .leftToRight
+        let string = normalized as NSString
+        string.enumerateSubstrings(in: NSRange(location: 0, length: string.length),
+                                   options: .byParagraphs) { substring, _, enclosingRange, _ in
+            if let substring, TextDirection.firstStrongIsRTL(substring) == nil {
+                result.addAttribute(.paragraphStyle, value: neutral, range: enclosingRange)
+            }
+        }
+        return result
     }
 
     /// Lays the text out page by page until all of it is placed. Returns the page count.
