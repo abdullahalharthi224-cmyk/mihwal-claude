@@ -90,6 +90,30 @@ final class Phase6EngineTests: XCTestCase {
         XCTAssertTrue(PDFTextExtractor.notes(for: pages).first?.contains("2") == true)
     }
 
+    func testMirroredBracketsInArabicLinesAreTurnedBack() {
+        XCTAssertEqual(PDFTextExtractor.fixMirroredBrackets("علامات ترقيم: )قوسان( و»علامتا تنصيص« و]مربع["),
+                       "علامات ترقيم: (قوسان) و«علامتا تنصيص» و[مربع]")
+        XCTAssertEqual(PDFTextExtractor.fixMirroredBrackets("a) first (b"), "a) first (b", "English lines are untouched")
+        XCTAssertEqual(PDFTextExtractor.fixMirroredBrackets("تكملة السطر السابق)"), "تكملة السطر السابق)",
+                       "A lone bracket continuing a line stays")
+        XCTAssertEqual(PDFTextExtractor.fixMirroredBrackets("نص (صحيح) هنا"), "نص (صحيح) هنا", "Correct text stays")
+    }
+
+    /// Text to PDF, then PDF to Text: what comes back must equal what was typed.
+    func testArabicRoundTripThroughPDFKeepsWordsOrderAndBrackets() async throws {
+        let typed = "وعلامات ترقيم: (قوسان) و«علامتا تنصيص» وأرقام ١٤٤٨ و2026 مع iPhone."
+        var options = TextToPDFEngine.Options()
+        options.text = typed
+        let pdf = try await TextToPDFEngine().run(input: ToolInput(files: []), options: options) { _ in }
+        let file = try imported(try XCTUnwrap(pdf.files.first))
+        let output = try await PDFToTextEngine().run(input: ToolInput(files: [file]),
+                                                     options: .init(pageSeparators: false)) { _ in }
+        let text = try String(contentsOf: try XCTUnwrap(output.files.first), encoding: .utf8)
+        // Only whitespace may differ (a long line wraps); words, order and brackets may not.
+        let words = { (value: String) in value.split(whereSeparator: \.isWhitespace).joined(separator: " ") }
+        XCTAssertEqual(words(text), words(typed))
+    }
+
     func testPresentationFormsBecomeNormalArabic() {
         // "سلام" stored as presentation forms (letter shapes), as some PDFs do.
         let shapes = "\u{FEB3}\u{FEE0}\u{FE8E}\u{FEE1}"

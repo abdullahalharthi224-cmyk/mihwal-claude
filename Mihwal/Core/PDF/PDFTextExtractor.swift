@@ -38,7 +38,7 @@ enum PDFTextExtractor {
         for index in 0..<document.pageCount {
             try Task.checkCancellation()
             guard let page = document.page(at: index) else { continue }
-            let layer = normalize(page.string ?? "")
+            let layer = fixMirroredBrackets(normalize(page.string ?? ""))
             if !forceOCR && hasText(layer) {
                 pages.append(PageText(index: index, text: layer.trimmingCharacters(in: .whitespacesAndNewlines),
                                       usedOCR: false))
@@ -82,6 +82,28 @@ enum PDFTextExtractor {
             (0xFB50...0xFDFF).contains($0.value) || (0xFE70...0xFEFE).contains($0.value)
         }
         return hasPresentationForms ? text.precomposedStringWithCompatibilityMapping : text
+    }
+
+    /// In right-to-left lines, PDFs draw "(" with the mirrored glyph, and text extraction
+    /// gives back ")" (and "»" for "«"): "(قوسان)" comes out as ")قوسان(". In lines with
+    /// Arabic, a closing bracket followed by its opening one, with no bracket in between,
+    /// is turned back around. English lines, and a lone bracket continuing a previous line,
+    /// are left alone.
+    static func fixMirroredBrackets(_ text: String) -> String {
+        let pairs: [(close: String, open: String)] = [(")", "("), ("]", "["), ("}", "{"), ("»", "«")]
+        return text.components(separatedBy: "\n").map { line -> String in
+            guard line.unicodeScalars.contains(where: { (0x0600...0x06FF).contains($0.value) }) else { return line }
+            var fixed = line
+            for pair in pairs {
+                let close = NSRegularExpression.escapedPattern(for: pair.close)
+                let open = NSRegularExpression.escapedPattern(for: pair.open)
+                let pattern = "\(close)([^()\\[\\]{}«»]*)\(open)"
+                fixed = fixed.replacingOccurrences(of: pattern, with: "\(pair.open)$1\(pair.close)",
+                                                   options: .regularExpression)
+            }
+            return fixed
+        }
+        .joined(separator: "\n")
     }
 
     /// "2, 5, 7" (1-based) for the pages that used OCR.
