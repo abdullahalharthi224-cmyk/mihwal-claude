@@ -93,6 +93,16 @@ jobs:
               summary.write(f"## Unit tests\n\n{line}\n")
           PY
 
+      # Real outputs of the tools (written by Phase6InspectionTests) for inspection.
+      - name: Upload tool outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tool-outputs
+          path: build/test-outputs
+          if-no-files-found: warn
+          retention-days: 14
+
       # -quiet hides why a test failed; print each failing test and its message.
       - name: Show failing tests
         if: failure()
