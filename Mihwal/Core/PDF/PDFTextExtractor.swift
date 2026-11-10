@@ -6,8 +6,10 @@ import Vision
 struct PageText: Sendable, Equatable {
     let index: Int
     let text: String
-    /// The page had no text layer, so its text was read from the page image.
+    /// The text was read from the page image.
     let usedOCR: Bool
+    /// The page had text, but it was damaged (letters missing), so OCR replaced it.
+    var replacedDamagedText = false
 }
 
 /// Reads the text of a PDF: the text layer when a page has one, otherwise OCR on the page
@@ -38,15 +40,21 @@ enum PDFTextExtractor {
         for index in 0..<document.pageCount {
             try Task.checkCancellation()
             guard let page = document.page(at: index) else { continue }
-            let layer = fixMirroredBrackets(normalize(page.string ?? ""))
-            if !forceOCR && hasText(layer) {
-                pages.append(PageText(index: index, text: layer.trimmingCharacters(in: .whitespacesAndNewlines),
-                                      usedOCR: false))
+            let layer = fixMirroredBrackets(normalize(page.string ?? "")).trimmingCharacters(in: .whitespacesAndNewlines)
+            let chosen = languages ?? ocrLanguages()
+            languages = chosen
+            let damaged = hasText(layer) && isDamaged(layer) && chosen.contains { $0.hasPrefix("ar") }
+            if !forceOCR && hasText(layer) && !damaged {
+                pages.append(PageText(index: index, text: layer, usedOCR: false))
             } else {
-                let chosen = languages ?? ocrLanguages()
-                languages = chosen
                 let text = try autoreleasepool { try recognize(page: page, languages: chosen) }
-                pages.append(PageText(index: index, text: text, usedOCR: true))
+                if damaged && !forceOCR && !hasText(text) {
+                    // OCR found nothing better: keep what the PDF had.
+                    pages.append(PageText(index: index, text: layer, usedOCR: false))
+                } else {
+                    pages.append(PageText(index: index, text: text, usedOCR: true,
+                                          replacedDamagedText: damaged && !forceOCR))
+                }
             }
             progress(index + 1)
         }
@@ -106,6 +114,19 @@ enum PDFTextExtractor {
         .joined(separator: "\n")
     }
 
+    /// Many PDFs exported with some Arabic fonts keep a text layer with letters missing:
+    /// the page shows «العربية» but the text says «العر ية». The sign is lots of Arabic
+    /// "words" of a single letter, which real Arabic text almost never has (except و).
+    static func isDamaged(_ text: String) -> Bool {
+        if text.unicodeScalars.contains(where: { $0.value == 0xFFFD }) { return true }
+        let arabicWords = text
+            .split(whereSeparator: { $0.isWhitespace || $0.isPunctuation })
+            .filter { word in word.unicodeScalars.contains { (0x0600...0x06FF).contains($0.value) } }
+        guard arabicWords.count >= 8 else { return false }
+        let singleLetters = arabicWords.filter { $0.count == 1 && $0 != "و" }.count
+        return Double(singleLetters) / Double(arabicWords.count) > 0.1
+    }
+
     /// "2, 5, 7" (1-based) for the pages that used OCR.
     static func pageList(_ pages: [PageText]) -> String {
         pages.filter(\.usedOCR).map { String($0.index + 1) }.joined(separator: ", ")
@@ -114,7 +135,15 @@ enum PDFTextExtractor {
     /// Notes for the result screen about OCR.
     static func notes(for pages: [PageText]) -> [String] {
         guard pages.contains(where: \.usedOCR) else { return [] }
-        var notes = [String(localized: "These pages had no text, so it was read from the page image (OCR): \(pageList(pages)). Check them for mistakes.")]
+        var notes: [String] = []
+        let repaired = pages.filter(\.replacedDamagedText)
+        let empty = pages.filter { $0.usedOCR && !$0.replacedDamagedText }
+        if !repaired.isEmpty {
+            notes.append(String(localized: "On these pages the PDF's own text was damaged (letters missing), so it was read from the page image instead (OCR): \(pageList(repaired)). Check them for mistakes."))
+        }
+        if !empty.isEmpty {
+            notes.append(String(localized: "These pages had no text, so it was read from the page image (OCR): \(pageList(empty)). Check them for mistakes."))
+        }
         if !supportsArabicOCR {
             notes.append(String(localized: "Arabic OCR isn't available on this iOS version, so Arabic on those pages may be missing."))
         }

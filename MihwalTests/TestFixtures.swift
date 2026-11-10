@@ -113,6 +113,37 @@ enum TestFixtures {
         return url
     }
 
+    /// Like PDFs exported with some Arabic fonts: the page shows correct Arabic, but its
+    /// (invisible) text layer has letters missing.
+    static func makeDamagedTextLayerPDF(visible: String, damagedLayer: String) throws -> URL {
+        let url = try scratchDirectory().appendingPathComponent("damaged-layer.pdf")
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .right
+        paragraph.baseWritingDirection = .rightToLeft
+        let picture = UIGraphicsImageRenderer(size: CGSize(width: 1600, height: 900), format: format).image { _ in
+            UIColor.white.setFill()
+            UIRectFill(CGRect(x: 0, y: 0, width: 1600, height: 900))
+            (visible as NSString).draw(in: CGRect(x: 60, y: 60, width: 1480, height: 780), withAttributes: [
+                .font: UIFont.boldSystemFont(ofSize: 80),
+                .foregroundColor: UIColor.black,
+                .paragraphStyle: paragraph,
+            ])
+        }
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 800, height: 450))
+        try renderer.pdfData { context in
+            context.beginPage()
+            picture.draw(in: CGRect(x: 0, y: 0, width: 800, height: 450))
+            // The damaged text, drawn invisibly: it is only in the text layer.
+            (damagedLayer as NSString).draw(in: CGRect(x: 20, y: 20, width: 760, height: 410), withAttributes: [
+                .font: UIFont.systemFont(ofSize: 12),
+                .foregroundColor: UIColor.clear,
+            ])
+        }.write(to: url)
+        return url
+    }
+
     /// Reads the entries of a ZIP written with STORE (as ZipWriter does).
     static func zipEntries(_ data: Data) -> [String: Data] {
         var entries: [String: Data] = [:]

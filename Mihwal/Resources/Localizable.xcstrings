@@ -1958,6 +1958,16 @@
         }
       }
     },
+    "On these pages the PDF's own text was damaged (letters missing), so it was read from the page image instead (OCR): %@. Check them for mistakes.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "في هذه الصفحات كان نص الملف نفسه تالفاً (حروف مفقودة)، فقُرئ النص من صورة الصفحة بدلاً منه (OCR): %@. راجعها بحثاً عن أخطاء."
+          }
+        }
+      }
+    },
     "One photo per page. Drag photos to change the order.": {
       "localizations": {
         "ar": {
@@ -3374,6 +3384,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "حوّل الصور إلى ملف PDF واحد"
+          }
+        }
+      }
+    },
+    "Turn this on if the text of the result has missing letters. Pages with damaged text are found and read with OCR automatically.": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فعّل هذا إذا ظهرت حروف مفقودة في النتيجة. الصفحات التي نصها تالف تُكتشف وتُقرأ بـ OCR تلقائياً."
           }
         }
       }

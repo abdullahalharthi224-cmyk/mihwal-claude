@@ -90,6 +90,39 @@ final class Phase6EngineTests: XCTestCase {
         XCTAssertTrue(PDFTextExtractor.notes(for: pages).first?.contains("2") == true)
     }
 
+    /// Text as PDFKit extracted it from a real school PDF exported with an Arabic font.
+    private let damagedSample = """
+    المملكة العر ية السعودية وزارة التعليم ثانو ة الشفا ر يع الآخر التنمية المستدامة ب ن تجر ة نا ة وتجر ة متع ة
+    ا مد رب العالم ن، والصلاة والسلام ع أشرف الأن ياء والمرسل ن، نب نا محمد وع آله و به أجمع ن، أما عد:
+    """
+
+    func testDamagedArabicTextLayerIsRecognised() {
+        XCTAssertTrue(PDFTextExtractor.isDamaged(damagedSample))
+        XCTAssertFalse(PDFTextExtractor.isDamaged(
+            "الحمد لله رب العالمين، والصلاة والسلام على أشرف الأنبياء والمرسلين، نبينا محمد وعلى آله وصحبه أجمعين، أما بعد"))
+        XCTAssertFalse(PDFTextExtractor.isDamaged("This is English text with a few words, all of them whole and fine here."))
+        XCTAssertFalse(PDFTextExtractor.isDamaged("قصير"), "Too little text to judge")
+    }
+
+    func testPageWithDamagedTextLayerIsReadWithOCRAndNamed() async throws {
+        try XCTSkipUnless(PDFTextExtractor.supportsArabicOCR, "No Arabic OCR on this simulator")
+        let url = try TestFixtures.makeDamagedTextLayerPDF(
+            visible: "المملكة العربية السعودية\nوزارة التعليم\nثانوية الشفا",
+            damagedLayer: damagedSample)
+        let document = try XCTUnwrap(PDFDocument(url: url))
+        XCTAssertTrue(PDFTextExtractor.isDamaged(PDFTextExtractor.normalize(document.page(at: 0)?.string ?? "")),
+                      "Fixture: the hidden text layer is the damaged one")
+
+        let pages = try PDFTextExtractor.extract(from: document)
+        XCTAssertEqual(pages.first?.usedOCR, true)
+        XCTAssertEqual(pages.first?.replacedDamagedText, true)
+        let text = pages.first?.text ?? ""
+        XCTAssertTrue(text.contains("العربية"), "OCR should read the whole word: \(text)")
+        XCTAssertTrue(text.contains("التعليم"), "\(text)")
+        XCTAssertTrue(PDFTextExtractor.notes(for: pages).first?.contains(String(localized: "damaged")) == true
+                      || PDFTextExtractor.notes(for: pages).count == 1)
+    }
+
     func testMirroredBracketsInArabicLinesAreTurnedBack() {
         XCTAssertEqual(PDFTextExtractor.fixMirroredBrackets("علامات ترقيم: )قوسان( و»علامتا تنصيص« و]مربع["),
                        "علامات ترقيم: (قوسان) و«علامتا تنصيص» و[مربع]")

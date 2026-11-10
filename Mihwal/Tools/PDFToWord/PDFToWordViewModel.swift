@@ -6,6 +6,7 @@ import Observation
 final class PDFToWordViewModel {
     let files: FileListModel
     let runner = ToolRunner()
+    var options = PDFToWordEngine.Options()
     private let engine = PDFToWordEngine()
 
     init(initialFiles: [ImportedFile]) {
@@ -15,6 +16,6 @@ final class PDFToWordViewModel {
     var isReady: Bool { !files.files.isEmpty }
 
     func run() {
-        runner.run(engine, input: files.input, options: .init())
+        runner.run(engine, input: files.input, options: options)
     }
 }

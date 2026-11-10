@@ -3,14 +3,17 @@ import PDFKit
 
 /// PDF to a real Word document with the text (no layout). Pages without text use OCR.
 struct PDFToWordEngine: FileTool {
-    struct Options: Sendable, Hashable {}
+    struct Options: Sendable, Hashable {
+        /// Read every page from its image, for PDFs whose text copies badly.
+        var forceOCR = false
+    }
 
     func run(input: ToolInput, options: Options,
              progress: @escaping @Sendable (Double) -> Void) async throws -> ToolOutput {
         guard let file = input.files.first else { throw ToolError.noInput }
         let document = try PDFLoader.open(file, password: input.password(for: file))
         let count = max(1, document.pageCount)
-        let pages = try PDFTextExtractor.extract(from: document) { done in
+        let pages = try PDFTextExtractor.extract(from: document, forceOCR: options.forceOCR) { done in
             progress(Double(done) / Double(count) * 0.9)
         }
         guard pages.contains(where: { !$0.text.isEmpty }) else {
